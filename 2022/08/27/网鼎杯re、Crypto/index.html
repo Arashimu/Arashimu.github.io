@@ -102,12 +102,12 @@ Arashimuのblog = CTFer</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicitht3xtj20zk0m8k5v.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicis3attqj20zk0m8k7l.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipeubcbajj20zk0m8h1h.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giph47e9vtj20zk0m8x6l.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclgi503lj20zk0m8hdt.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicis081o9j20zk0m8dmr.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gicm0n457cj20zk0m8e81.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclfdu6exj20zk0m87hw.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipeyhsblkj20zk0m81kx.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipeubcbajj20zk0m8h1h.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giciuja1j1j20zk0m8kjl.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclxfdlttj20zk0m8npd.jpg"></li>
         </ul>
       </div>
     </header>
@@ -206,6 +206,8 @@ cof[i][2] &amp; 0 &amp; 0
 <figure class="highlight python"><figcaption data-lang="python"><span>n</span></figcaption><table><tr><td data-num="1"></td><td><pre>s<span class="token operator">=</span><span class="token builtin">str</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">2000</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1000</span><span class="token punctuation">]</span></pre></td></tr><tr><td data-num="2"></td><td><pre>key <span class="token operator">=</span> <span class="token builtin">bytes</span><span class="token punctuation">.</span>fromhex<span class="token punctuation">(</span>md5<span class="token punctuation">(</span>s<span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>hexdigest<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="3"></td><td><pre>check <span class="token operator">=</span> sha256<span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">.</span>hexdigest<span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="4"></td><td><pre>verify <span class="token operator">=</span> <span class="token string">'2cf44ec396e3bb9ed0f2f3bdbe4fab6325ae9d9ec3107881308156069452a6d5'</span></pre></td></tr><tr><td data-num="5"></td><td><pre></pre></td></tr><tr><td data-num="6"></td><td><pre>aes <span class="token operator">=</span> AES<span class="token punctuation">.</span>new<span class="token punctuation">(</span>key<span class="token punctuation">,</span>AES<span class="token punctuation">.</span>MODE_ECB<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="7"></td><td><pre>c<span class="token operator">=</span><span class="token string">'4f12b3a3eadc4146386f4732266f02bd03114a404ba4cb2dabae213ecec451c9d52c70dc3d25154b5af8a304afafed87'</span></pre></td></tr><tr><td data-num="8"></td><td><pre>c<span class="token operator">=</span><span class="token builtin">bytes</span><span class="token punctuation">.</span>fromhex<span class="token punctuation">(</span>c<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="9"></td><td><pre><span class="token keyword">print</span><span class="token punctuation">(</span>aes<span class="token punctuation">.</span>decrypt<span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">)</span></pre></td></tr></table></figure><p>注意由于 <code>python3</code>  没有 <code>decode('hex')</code> ，所以用 <code>bytes_fromhex</code>  函数</p>
 <p><code>flag&#123;519427b3-d104-4c34-a29d-5a7c128031ff&#125;</code></p>
 <h1 id="reverse"><a class="markdownIt-Anchor" href="#reverse">#</a> Reverse</h1>
+<h2 id="re694"><a class="markdownIt-Anchor" href="#re694">#</a> re694</h2>
+<p>给了一个 <code>64</code>  位的 <code>exe</code>  文件并且加了壳，一开始用脱壳软件一直脱不掉，后来手动脱壳，虽然似乎成功了，但可读性有点差。拉近 <code>010editor</code>  一看，发现 <code>UPX</code>  被改成了 <code>FUK</code> ，怪不得无法脱壳，直接改回来导出文件再脱壳即可。积累一个阻止脱壳的小方法.</p>
 <h2 id="re693"><a class="markdownIt-Anchor" href="#re693">#</a> re693</h2>
 <p><code>challenge</code>  文件是一个二进制文件，用 010 打开，发现是 <code>go</code>  文件， <code>go</code>  语言爱好者狂喜。这这题实事上是一个查找题</p>
 <p>根据题目，先把主函数和相关函数复制下来运行，有<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 句话</p>
@@ -230,7 +232,7 @@ Input the second function, which has 3 callers and invokes the function named cH
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2022-08-27 12:55:38" itemprop="dateModified" datetime="2022-08-27T12:55:38+08:00">2022-08-27</time>
+    <time title="Modified: 2022-08-27 13:01:43" itemprop="dateModified" datetime="2022-08-27T13:01:43+08:00">2022-08-27</time>
   </span>
 </div>
 
@@ -285,7 +287,7 @@ Input the second function, which has 3 callers and invokes the function named cH
     <div class="item left">
       
 
-  <a href="/2022/08/24/%E9%95%BF%E5%9F%8E%E6%9D%AFCrypto/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giciuja1j1j20zk0m8kjl.jpg" title="长城杯Crypto">
+  <a href="/2022/08/24/%E9%95%BF%E5%9F%8E%E6%9D%AFCrypto/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipevgoki5j20zk0m84qp.jpg" title="长城杯Crypto">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>长城杯Crypto</h3>
@@ -309,7 +311,7 @@ Input the second function, which has 3 callers and invokes the function named cH
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#crypto"><span class="toc-number">1.</span> <span class="toc-text"> Crypto</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#crypto091"><span class="toc-number">1.1.</span> <span class="toc-text"> crypto091</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#problem"><span class="toc-number">1.1.1.</span> <span class="toc-text"> Problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#solve"><span class="toc-number">1.1.2.</span> <span class="toc-text"> Solve</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#crypto405"><span class="toc-number">1.2.</span> <span class="toc-text"> crypto405</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#problem-2"><span class="toc-number">1.2.1.</span> <span class="toc-text"> Problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#solve-2"><span class="toc-number">1.2.2.</span> <span class="toc-text"> Solve</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#crypto162"><span class="toc-number">1.3.</span> <span class="toc-text"> crypto162</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#problem-3"><span class="toc-number">1.3.1.</span> <span class="toc-text"> Problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#solve-3"><span class="toc-number">1.3.2.</span> <span class="toc-text"> Solve</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#reverse"><span class="toc-number">2.</span> <span class="toc-text"> Reverse</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#re693"><span class="toc-number">2.1.</span> <span class="toc-text"> re693</span></a></li></ol></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#crypto"><span class="toc-number">1.</span> <span class="toc-text"> Crypto</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#crypto091"><span class="toc-number">1.1.</span> <span class="toc-text"> crypto091</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#problem"><span class="toc-number">1.1.1.</span> <span class="toc-text"> Problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#solve"><span class="toc-number">1.1.2.</span> <span class="toc-text"> Solve</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#crypto405"><span class="toc-number">1.2.</span> <span class="toc-text"> crypto405</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#problem-2"><span class="toc-number">1.2.1.</span> <span class="toc-text"> Problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#solve-2"><span class="toc-number">1.2.2.</span> <span class="toc-text"> Solve</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#crypto162"><span class="toc-number">1.3.</span> <span class="toc-text"> crypto162</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#problem-3"><span class="toc-number">1.3.1.</span> <span class="toc-text"> Problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#solve-3"><span class="toc-number">1.3.2.</span> <span class="toc-text"> Solve</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#reverse"><span class="toc-number">2.</span> <span class="toc-text"> Reverse</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#re694"><span class="toc-number">2.1.</span> <span class="toc-text"> re694</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#re693"><span class="toc-number">2.2.</span> <span class="toc-text"> re693</span></a></li></ol></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
       </div>
@@ -392,7 +394,16 @@ Input the second function, which has 3 callers and invokes the function named cH
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/05/08/hello-world/" title="Hello World">Hello World</a></span>
+    <span><a href="/2022/08/24/%E9%95%BF%E5%9F%8E%E6%9D%AFCrypto/" title="长城杯Crypto">长城杯Crypto</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/27/%E7%BD%91%E9%BC%8E%E6%9D%AFre%E3%80%81Crypto/" title="网鼎杯re、Crypto">网鼎杯re、Crypto</a></span>
   </li>
 
       
@@ -410,25 +421,7 @@ Input the second function, which has 3 callers and invokes the function named cH
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/07/06/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0/" title="sql注入学习">sql注入学习</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
     <span><a href="/2022/08/02/%E5%BC%BA%E7%BD%91%E6%9D%AF-polydiv/" title="强网杯-polydiv">强网杯-polydiv</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/07/Lucky-7-%E4%BA%8C%E5%85%83%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B%E7%BB%84/" title="Lucky 7 二元非线性同余方程组">Lucky 7 二元非线性同余方程组</a></span>
   </li>
 
       
@@ -446,7 +439,7 @@ Input the second function, which has 3 callers and invokes the function named cH
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/24/%E9%95%BF%E5%9F%8E%E6%9D%AFCrypto/" title="长城杯Crypto">长城杯Crypto</a></span>
+    <span><a href="/2022/05/08/hello-world/" title="Hello World">Hello World</a></span>
   </li>
 
       
@@ -455,7 +448,16 @@ Input the second function, which has 3 callers and invokes the function named cH
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/27/%E7%BD%91%E9%BC%8E%E6%9D%AFre%E3%80%81Crypto/" title="网鼎杯re、Crypto">网鼎杯re、Crypto</a></span>
+    <span><a href="/2022/08/07/Lucky-7-%E4%BA%8C%E5%85%83%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B%E7%BB%84/" title="Lucky 7 二元非线性同余方程组">Lucky 7 二元非线性同余方程组</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/07/06/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0/" title="sql注入学习">sql注入学习</a></span>
   </li>
 
   </ul>

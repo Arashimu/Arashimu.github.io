@@ -88,12 +88,12 @@
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipetlbztpj20zk0m84qp.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipexw3o58j20zk0m8e81.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipeyonbf9j20zk0m8e81.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclgi503lj20zk0m8hdt.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipet4bz0yj20zk0m8e81.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicit31ffoj20zk0m8naf.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclfw2t96j20zk0m8x6p.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giciuja1j1j20zk0m8kjl.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclize41wj20zk0m87gk.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gicitspjpbj20zk0m81ky.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gicitf0kl1j20zk0m87fe.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipet8c1a2j20zk0m8kct.jpg"></li>
         </ul>
       </div>
     </header>
@@ -120,7 +120,118 @@
         
 <article class="item">
   <div class="cover">
-    <a href="/2022/09/03/Sage%E7%9A%84%E4%BD%BF%E7%94%A8/" itemprop="url" title="Sage的使用"><img data-src="https://tva2.sinaimg.cn/mw690/6833939bly1gicit31ffoj20zk0m8naf.jpg"></a>
+    <a href="/2022/09/29/Paillier%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86/" itemprop="url" title="Paillier同态加密"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1giciryrr3rj20zk0m8nhk.jpg"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="Created: 2022-09-29 15:38:20">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2022-09-29T15:38:20+08:00">2022-09-29</time>
+  </span>
+</div>
+
+    <h3><a href="/2022/09/29/Paillier%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86/" itemprop="url" title="Paillier同态加密">Paillier同态加密</a></h3>
+    <div class="excerpt">
+        # 同态加密 (Homomorphic Encryption)
+# 概念
+是一种加密方式，用于在不使用密钥的情况下对加密数据进行计算，这种计算的结果仍然是加密的。拥有密钥的用户对经过同态加密处理过的加密数据进行解密后，得到的结果还是正确的原文信息。
+# 分类
+
+半同态加密 (Partially Homomorphic Encryption（PHE))：只支持加法或乘法中的一种运算
+部分同态加密 (Somewhat Homomorphic Encryption (SHE))：支持同时进行加法和乘法运算，但运算次数有限制
+全同态加密 (Fully Homomorphic Encryption...
+    </div>
+    <a href="/2022/09/29/Paillier%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86/" itemprop="url" title="Paillier同态加密" class="btn">more...</a>
+  </div>
+</article>
+
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2022/09/23/BUU-Crypto/" itemprop="url" title="BUU_Crypto"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1gipesrnqv3j20zk0m8ava.jpg"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="Created: 2022-09-23 19:50:18">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2022-09-23T19:50:18+08:00">2022-09-23</time>
+  </span>
+</div>
+
+    <h3><a href="/2022/09/23/BUU-Crypto/" itemprop="url" title="BUU_Crypto">BUU_Crypto</a></h3>
+    <div class="excerpt">
+        # 1.[羊城杯 2020] Power
+# Problem
+nfrom Crypto.Util.number import *import gmpy2from secret import flagp = getPrime(512)q = getPrime(512)n = p**4*qe = 0x10001phi = gmpy2.lcm(p - 1, q - 1)d = gmpy2.invert(e, phi)dp = d % (p - 1)m = bytes_to_long(flag)c = pow(m, e, n)print &quot;dp = &quot; + str(dp)print...
+    </div>
+    <a href="/2022/09/23/BUU-Crypto/" itemprop="url" title="BUU_Crypto" class="btn">more...</a>
+  </div>
+</article>
+
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2022/09/17/%E7%BE%8E%E5%9B%A2%E6%9D%AF%E5%88%9D%E8%B5%9B/" itemprop="url" title="美团杯初赛"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1giph4baakhj20zk0m8h5q.jpg"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="Created: 2022-09-17 22:52:29">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2022-09-17T22:52:29+08:00">2022-09-17</time>
+  </span>
+</div>
+
+    <h3><a href="/2022/09/17/%E7%BE%8E%E5%9B%A2%E6%9D%AF%E5%88%9D%E8%B5%9B/" itemprop="url" title="美团杯初赛">美团杯初赛</a></h3>
+    <div class="excerpt">
+        
+    </div>
+    <a href="/2022/09/17/%E7%BE%8E%E5%9B%A2%E6%9D%AF%E5%88%9D%E8%B5%9B/" itemprop="url" title="美团杯初赛" class="btn">more...</a>
+  </div>
+</article>
+
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2022/09/13/Crypto%E5%A4%8D%E7%8E%B01/" itemprop="url" title="Crypto复现1"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1gicliwyw55j20zk0m8hdt.jpg"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="Created: 2022-09-13 09:41:32">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2022-09-13T09:41:32+08:00">2022-09-13</time>
+  </span>
+</div>
+
+    <h3><a href="/2022/09/13/Crypto%E5%A4%8D%E7%8E%B01/" itemprop="url" title="Crypto复现1">Crypto复现1</a></h3>
+    <div class="excerpt">
+        # ACTF :Impossible rsa
+# 知识点
+
+代换得到二次方程的思想
+
+# Problem
+nfrom Crypto.Util.number import *from Crypto.PublicKey import RSAe = 65537flag = b&#39;ACTF&amp;#123;...&amp;#125;&#39;while True: p = getPrime(1024) q = inverse(e, p) if not isPrime(q): continue n = p * q; public = RSA.construct((n, e)) with...
+    </div>
+    <a href="/2022/09/13/Crypto%E5%A4%8D%E7%8E%B01/" itemprop="url" title="Crypto复现1" class="btn">more...</a>
+  </div>
+</article>
+
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2022/09/03/Sage%E7%9A%84%E4%BD%BF%E7%94%A8/" itemprop="url" title="Sage的使用"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1gipet8c1a2j20zk0m8kct.jpg"></a>
   </div>
   <div class="info">
     
@@ -146,7 +257,7 @@ nZZ #整数环QQ #有理数环RR #实数域CC #复数域F.&amp;lt;x&gt;=Polyomia
         
 <article class="item">
   <div class="cover">
-    <a href="/2022/09/03/%E6%A0%BC%E5%AF%86%E7%A0%81/" itemprop="url" title="格密码"><img data-src="https://tva2.sinaimg.cn/mw690/6833939bly1gipetv6p75j20zk0m8x6p.jpg"></a>
+    <a href="/2022/09/03/%E6%A0%BC%E5%AF%86%E7%A0%81/" itemprop="url" title="格密码"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1giclgrvbd6j20zk0m8qv5.jpg"></a>
   </div>
   <div class="info">
     
@@ -173,7 +284,7 @@ V={a1v1⃗+a2v2⃗+⋯+anvn⃗∣ai∈Z}V=\left\{a_1\vec{v_1}+a_2\vec{v_2}+\cdot
         
 <article class="item">
   <div class="cover">
-    <a href="/2022/09/03/i%E6%98%A5%E7%A7%8B%E5%8B%87%E8%80%85%E4%B9%8B%E5%B7%85Crypto%E5%AD%A6%E4%B9%A0/" itemprop="url" title="i春秋勇者之巅Crypto学习"><img data-src="https://tva2.sinaimg.cn/mw690/6833939bly1giciusoyjnj219g0u0x56.jpg"></a>
+    <a href="/2022/09/03/i%E6%98%A5%E7%A7%8B%E5%8B%87%E8%80%85%E4%B9%8B%E5%B7%85Crypto%E5%AD%A6%E4%B9%A0/" itemprop="url" title="i春秋勇者之巅Crypto学习"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1giclffsa1cj20zk0m811l.jpg"></a>
   </div>
   <div class="info">
     
@@ -188,30 +299,14 @@ V={a1v1⃗+a2v2⃗+⋯+anvn⃗∣ai∈Z}V=\left\{a_1\vec{v_1}+a_2\vec{v_2}+\cdot
 
     <h3><a href="/2022/09/03/i%E6%98%A5%E7%A7%8B%E5%8B%87%E8%80%85%E4%B9%8B%E5%B7%85Crypto%E5%AD%A6%E4%B9%A0/" itemprop="url" title="i春秋勇者之巅Crypto学习">i春秋勇者之巅Crypto学习</a></h3>
     <div class="excerpt">
-        bob_enc
-知识点
+        # bob_enc
+# 知识点
 
 格密码难题 CVP
 域上解线性方程组
 
-Problem
-from secret import *
-import random
-
-prime = 2141
-print len(flag)
-flag = map(ord,flag)
-flag1 = flag[:21] #前21个
-flag2 = flag[21:] #后面部分
-row = 64
-
-def add(msg1,msg2):
-return [(x+y)%prime for x,y in zip(msg1,msg2)]
-
-def multi(msg1,msg2):
-out = []
-for l in msg1:
-s...
+# Problem
+from secret import *import randomprime = 2141print len(flag)flag = map(ord,flag)flag1 = flag[:21] #前 21 个flag2 = flag[21:] #后面部分row = 64def add(msg1,msg2): return [(x+y)%prime for x,y in zip(msg1,msg2)]def multi(msg1,msg2): out = [] for l in msg1: s = 0...
     </div>
     <a href="/2022/09/03/i%E6%98%A5%E7%A7%8B%E5%8B%87%E8%80%85%E4%B9%8B%E5%B7%85Crypto%E5%AD%A6%E4%B9%A0/" itemprop="url" title="i春秋勇者之巅Crypto学习" class="btn">more...</a>
   </div>
@@ -220,7 +315,7 @@ s...
         
 <article class="item">
   <div class="cover">
-    <a href="/2022/08/27/%E7%BD%91%E9%BC%8E%E6%9D%AFre%E3%80%81Crypto/" itemprop="url" title="网鼎杯re、Crypto"><img data-src="https://tva2.sinaimg.cn/mw690/6833939bly1gicis3attqj20zk0m8k7l.jpg"></a>
+    <a href="/2022/08/27/%E7%BD%91%E9%BC%8E%E6%9D%AFre%E3%80%81Crypto/" itemprop="url" title="网鼎杯re、Crypto"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1gicitf0kl1j20zk0m87fe.jpg"></a>
   </div>
   <div class="info">
     
@@ -248,7 +343,7 @@ Hash：...
         
 <article class="item">
   <div class="cover">
-    <a href="/2022/08/24/%E9%95%BF%E5%9F%8E%E6%9D%AFCrypto/" itemprop="url" title="长城杯Crypto"><img data-src="https://tva2.sinaimg.cn/mw690/6833939bly1gipexw3o58j20zk0m8e81.jpg"></a>
+    <a href="/2022/08/24/%E9%95%BF%E5%9F%8E%E6%9D%AFCrypto/" itemprop="url" title="长城杯Crypto"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1giclgrvbd6j20zk0m8qv5.jpg"></a>
   </div>
   <div class="info">
     
@@ -283,7 +378,7 @@ qqq：p−1p-1p−1 的素因子，满足2159&amp;lt;q&amp;lt;2160，即2^{159}\
         
 <article class="item">
   <div class="cover">
-    <a href="/2022/08/07/Lucky-7-%E4%BA%8C%E5%85%83%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B%E7%BB%84/" itemprop="url" title="Lucky 7 二元非线性同余方程组"><img data-src="https://tva2.sinaimg.cn/mw690/6833939bly1giclip4jbpj20zk0m87cv.jpg"></a>
+    <a href="/2022/08/07/Lucky-7-%E4%BA%8C%E5%85%83%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B%E7%BB%84/" itemprop="url" title="Lucky 7 二元非线性同余方程组"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1gipeu1usa7j20zk0m8b29.jpg"></a>
   </div>
   <div class="info">
     
@@ -309,138 +404,6 @@ Sylvester 结式法解二元多次方程
 令f(x)f(x)f(x)、g(x)g(x)g(x) 分别数域PPP 上的非常数多项式，且f(x)f(x)f(x) 的幂次为为mmm，g(x)g(x)g(x)...
     </div>
     <a href="/2022/08/07/Lucky-7-%E4%BA%8C%E5%85%83%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B%E7%BB%84/" itemprop="url" title="Lucky 7 二元非线性同余方程组" class="btn">more...</a>
-  </div>
-</article>
-
-        
-<article class="item">
-  <div class="cover">
-    <a href="/2022/08/02/%E5%BC%BA%E7%BD%91%E6%9D%AF-polydiv/" itemprop="url" title="强网杯-polydiv"><img data-src="https://tva2.sinaimg.cn/mw690/6833939bly1gicli3sbvtj20zk0m8x6p.jpg"></a>
-  </div>
-  <div class="info">
-    
-<div class="meta">
-  <span class="item" title="Created: 2022-08-02 10:07:55">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <time itemprop="dateCreated datePublished" datetime="2022-08-02T10:07:55+08:00">2022-08-02</time>
-  </span>
-</div>
-
-    <h3><a href="/2022/08/02/%E5%BC%BA%E7%BD%91%E6%9D%AF-polydiv/" itemprop="url" title="强网杯-polydiv">强网杯-polydiv</a></h3>
-    <div class="excerpt">
-        # Polydiv
-# 知识点：
-
-SHA256 加密
-模二多项式环运算
-交互式脚本编写
-
-# 下发文件
-poly2.py
-nclass Polynomial2(): &#39;&#39;&#39; 模二多项式环，定义方式有三种 一是从高到低给出每一项的系数 &gt;&gt;&gt; Polynomial2([1,1,0,1]) x^3 + x^2 + 1 二是写成01字符串形式 &gt;&gt;&gt; Polynomial2(&#39;1101&#39;) x^3 + x^2 + 1 三是直接给出系数为1的项的阶 &gt;&gt;&gt; Poly([3,1,4]) x^4 + x^3 +...
-    </div>
-    <a href="/2022/08/02/%E5%BC%BA%E7%BD%91%E6%9D%AF-polydiv/" itemprop="url" title="强网杯-polydiv" class="btn">more...</a>
-  </div>
-</article>
-
-        
-<article class="item">
-  <div class="cover">
-    <a href="/2022/07/06/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0/" itemprop="url" title="sql注入学习"><img data-src="https://tva2.sinaimg.cn/mw690/6833939bly1giclga70tsj20zk0m84mr.jpg"></a>
-  </div>
-  <div class="info">
-    
-<div class="meta">
-  <span class="item" title="Created: 2022-07-06 18:12:19">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <time itemprop="dateCreated datePublished" datetime="2022-07-06T18:12:19+08:00">2022-07-06</time>
-  </span>
-</div>
-
-    <h3><a href="/2022/07/06/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0/" itemprop="url" title="sql注入学习">sql注入学习</a></h3>
-    <div class="excerpt">
-        # SQL 注入 (DVWA)
-# 1.Low (可以手工注入)
-手工注入并且不是盲注 (盲注就是在 sql 注入过程中，sql 语句执行的选择后，选择的数据不能回显到前端页面。)
-# MYSQL 结构
-一个数据库可以创建多个表，一张表含有多列。比如我有一个’客户’的数据库，这个数据库需要’用户信息’，‘用户消费记录’，‘用户反馈’等表，对于’用户信息’这张表来说，又需要’电话号码’，’年龄‘，’姓名‘等信息，这些信息单位作为每列的表头。
-# 注入流程
-
-是否存在注入并且判断注入类型
-判断字段数： order by
-确定回显位：union select 1,2...
-    </div>
-    <a href="/2022/07/06/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0/" itemprop="url" title="sql注入学习" class="btn">more...</a>
-  </div>
-</article>
-
-        
-<article class="item">
-  <div class="cover">
-    <a href="/2022/05/17/Misc1/" itemprop="url" title="Misc1"><img data-src="https://tva2.sinaimg.cn/mw690/6833939bly1gipewr8iypj20zk0m8b29.jpg"></a>
-  </div>
-  <div class="info">
-    
-<div class="meta">
-  <span class="item" title="Created: 2022-05-17 16:37:50">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <time itemprop="dateCreated datePublished" datetime="2022-05-17T16:37:50+08:00">2022-05-17</time>
-  </span>
-</div>
-
-    <h3><a href="/2022/05/17/Misc1/" itemprop="url" title="Misc1">Misc1</a></h3>
-    <div class="excerpt">
-        # 工具
-# 16 进制编辑器
-
-sublime Hexviewer 插件
-010editor
-
-# 和文件分离合并有关的命令
-
-binwalkbinwalk filename #查看文件里面的内容binwalk -e filename #分离文件
-dd 命令dd if=filename1 of=filename2 bs=blokc_size count=num#读入文件为 filename1，输出文件为 filename2，读取前 count 个块，每个块的大小为 bsdd if=filename1 of=filename2 bs=blokc_size count=num...
-    </div>
-    <a href="/2022/05/17/Misc1/" itemprop="url" title="Misc1" class="btn">more...</a>
-  </div>
-</article>
-
-        
-<article class="item">
-  <div class="cover">
-    <a href="/2022/05/10/pwn-sandbox1/" itemprop="url" title="pwn-sandbox1"><img data-src="https://tva2.sinaimg.cn/mw690/6833939bly1giclxfdlttj20zk0m8npd.jpg"></a>
-  </div>
-  <div class="info">
-    
-<div class="meta">
-  <span class="item" title="Created: 2022-05-10 23:40:06">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <time itemprop="dateCreated datePublished" datetime="2022-05-10T23:40:06+08:00">2022-05-10</time>
-  </span>
-</div>
-
-    <h3><a href="/2022/05/10/pwn-sandbox1/" itemprop="url" title="pwn-sandbox1">pwn-sandbox1</a></h3>
-    <div class="excerpt">
-        # 沙盒利用
-# 沙盒
-
-作用：沙盒 (Sandbox) 是程序运行过程中的一种隔离机制，其目的是限制不可信进程和不可信代码的访问权限
-
-# 常见函数
-
-Secommp 库：是 Linux 内核 2.6.12 版本引入的安全模块，主要是用来限制某一进程可用的系统调用 (system call)。但它本身不是一种沙盒，一种减少 Linux 内核暴露的机制，是构建一个安全的沙盒的重要组成部分。
-
-作用： Seccomp 在最初引入的时候只支持了 strict mode，意味着只有 read ，write ，_exit ，_sigreturn 四个 system call 会被允许。一旦出现其他的...
-    </div>
-    <a href="/2022/05/10/pwn-sandbox1/" itemprop="url" title="pwn-sandbox1" class="btn">more...</a>
   </div>
 </article>
 
@@ -479,7 +442,7 @@ Secommp 库：是 Linux 内核 2.6.12 版本引入的安全模块，主要是用
 <nav class="state">
     <div class="item posts">
       <a href="/archives/">
-        <span class="count">11</span>
+        <span class="count">15</span>
         <span class="name">posts</span>
       </a>
     </div>
@@ -547,7 +510,16 @@ Secommp 库：是 Linux 内核 2.6.12 版本引入的安全模块，主要是用
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/05/10/pwn-sandbox1/" title="pwn-sandbox1">pwn-sandbox1</a></span>
+    <span><a href="/2022/09/17/%E7%BE%8E%E5%9B%A2%E6%9D%AF%E5%88%9D%E8%B5%9B/" title="美团杯初赛">美团杯初赛</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/24/%E9%95%BF%E5%9F%8E%E6%9D%AFCrypto/" title="长城杯Crypto">长城杯Crypto</a></span>
   </li>
 
       
@@ -565,7 +537,7 @@ Secommp 库：是 Linux 内核 2.6.12 版本引入的安全模块，主要是用
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/27/%E7%BD%91%E9%BC%8E%E6%9D%AFre%E3%80%81Crypto/" title="网鼎杯re、Crypto">网鼎杯re、Crypto</a></span>
+    <span><a href="/2022/05/17/Misc1/" title="Misc1">Misc1</a></span>
   </li>
 
       
@@ -583,16 +555,7 @@ Secommp 库：是 Linux 内核 2.6.12 版本引入的安全模块，主要是用
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/09/03/%E6%A0%BC%E5%AF%86%E7%A0%81/" title="格密码">格密码</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/07/06/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0/" title="sql注入学习">sql注入学习</a></span>
+    <span><a href="/2022/09/29/Paillier%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86/" title="Paillier同态加密">Paillier同态加密</a></span>
   </li>
 
       
@@ -610,7 +573,7 @@ Secommp 库：是 Linux 内核 2.6.12 版本引入的安全模块，主要是用
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/05/08/hello-world/" title="Hello World">Hello World</a></span>
+    <span><a href="/2022/07/06/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0/" title="sql注入学习">sql注入学习</a></span>
   </li>
 
       
@@ -619,7 +582,7 @@ Secommp 库：是 Linux 内核 2.6.12 版本引入的安全模块，主要是用
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/05/17/Misc1/" title="Misc1">Misc1</a></span>
+    <span><a href="/2022/08/07/Lucky-7-%E4%BA%8C%E5%85%83%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B%E7%BB%84/" title="Lucky 7 二元非线性同余方程组">Lucky 7 二元非线性同余方程组</a></span>
   </li>
 
       
@@ -628,7 +591,7 @@ Secommp 库：是 Linux 内核 2.6.12 版本引入的安全模块，主要是用
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/24/%E9%95%BF%E5%9F%8E%E6%9D%AFCrypto/" title="长城杯Crypto">长城杯Crypto</a></span>
+    <span><a href="/2022/09/13/Crypto%E5%A4%8D%E7%8E%B01/" title="Crypto复现1">Crypto复现1</a></span>
   </li>
 
   </ul>

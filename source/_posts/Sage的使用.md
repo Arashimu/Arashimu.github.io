@@ -15,7 +15,7 @@ QQ  #有理数环
 RR  #实数域
 CC  #复数域
 
-F.<x>=PolyomialRing(ZZ)  #定义在整数环上的多项式环
+F.<x>=PolyomialRing(ZZ)  #定义在整数环上的多项式环，多项式的变量定义为x
 P.<x, y> = PolynomialRing(Zmod(p)) #多变量
 # F是多项式环的名字，自定义
 # x是多项式环变量的名字，自定义
@@ -23,6 +23,7 @@ P.<x, y> = PolynomialRing(Zmod(p)) #多变量
 
 
 G=GF(p) # 定义伽罗瓦域，阶是p，并且p要是一个素数或者一个素数的幂次
+x=G(5) #定义在有限域GF(p)上的数5，可以把G看做一个类型
 ZN=Zmod(N) #一般有限环
 
 #后续使用时，如果我们想要一个元素x在某个环或域上计算，直接ZZ(x),QQ(x),ZN(X)这样
@@ -59,6 +60,10 @@ factorial(x) #求x的阶乘
 
 factor(x) #素数分解
 
+euler_phi(n) #n的欧拉函数
+binomial(n,m) #组合数
+moebius(n)  #莫比乌斯函数
+Partitions(n).list() #n的正整数划分
 divisors(x) #返回一个列表，包含x的所有因子
 prime_divisors #返回一个列表，包含x的所有素因子
 
@@ -67,8 +72,6 @@ ZZ(7^64).nth_root(64) #得到7
 ZN(x).nth_root(y,all=True) #得到所有满足 x=z^y mod N 的z
 
 ```
-
-
 
 ## 线性代数
 
@@ -98,8 +101,38 @@ print(v[i]) #去v的第i个元素
 X=A.solve_right(B) #解线性方程组 形如 AX=B ,X在右边
 X=A.solve_left(B)  #XA=B，X在左边
 
+#矩阵空间 Matrix spaces
+M = MatrixSpace(QQ,n,m) #定义在有理数域上的nxm维矩阵空间
+B = M.basis()
+```
+
+## 多项式相关
+
+``` python
+R = PolynomialRing(QQ, 't') #定义在有理数域上的多项式环，且变量为t
+R.<t> = PolynomialRing(QQ)
+t=R.0 #R.0就是这个多项式环上的未知量
+
+#多变量定义
+PolynomialRing(GF(5), 3, 'xyz')
+z = GF(5)['z0, z1, z2'].gens() #z=(z0, z1, z2)
+
+R, (x, y) = PolynomialRing(RationalField(), 2, 'xy').objgens()
+f = (x^3 + 2*y^2*x)^2
+g = x^2*y^2
+f.gcd(g) #求公因式
+```
+
+## 有限域和阿贝尔群
+
+``` python
+G = PermutationGroup(['(1,2,3)(4,5)', '(3,4)']) #置换群
+G.order() #阶
+G.center() #生成元
 
 ```
+
+
 
 ## 格相关函数
 
@@ -125,5 +158,5 @@ def approximate_closest_vector(basis, v):
     return (v - small).coefficients()
 ```
 
-## 离散对数
+## 
 

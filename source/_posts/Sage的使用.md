@@ -158,5 +158,13 @@ def approximate_closest_vector(basis, v):
     return (v - small).coefficients()
 ```
 
-## 
+## 椭圆曲线
+
+``` python
+#y^2=x^3=ax+b
+E = EllipticCurve(Zmod(N), [a, b])
+E.lift_x(x_cord) #得到三元组
+```
+
+
 

@@ -100,12 +100,12 @@ Arashimuのblog = CTFer</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclgi503lj20zk0m8hdt.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipevgoki5j20zk0m84qp.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclxfdlttj20zk0m8npd.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclxp31goj20zk0m8qv5.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicm0n457cj20zk0m8e81.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipetlbztpj20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclgi503lj20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclil3m4ej20zk0m8tn8.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicliwyw55j20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclhnx9glj20zk0m8npd.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipexoj0moj20zk0m8kgu.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicitf0kl1j20zk0m87fe.jpg"></li>
         </ul>
       </div>
     </header>
@@ -149,15 +149,144 @@ Arashimuのblog = CTFer</title>
   <div class="body md" itemprop="articleBody">
     
 
-    <h1 id="sage相关库的使用"><a class="markdownIt-Anchor" href="#sage相关库的使用">#</a> Sage 相关库的使用</h1>
-<h2 id="基本环和域"><a class="markdownIt-Anchor" href="#基本环和域">#</a> 基本环和域</h2>
-<figure class="highlight python"><figcaption data-lang="python"><span>n</span></figcaption><table><tr><td data-num="1"></td><td><pre>ZZ  <span class="token comment">#整数环</span></pre></td></tr><tr><td data-num="2"></td><td><pre>QQ  <span class="token comment">#有理数环</span></pre></td></tr><tr><td data-num="3"></td><td><pre>RR  <span class="token comment">#实数域</span></pre></td></tr><tr><td data-num="4"></td><td><pre>CC  <span class="token comment">#复数域</span></pre></td></tr><tr><td data-num="5"></td><td><pre></pre></td></tr><tr><td data-num="6"></td><td><pre>F<span class="token punctuation">.</span><span class="token operator">&lt;</span>x<span class="token operator">>=</span>PolyomialRing<span class="token punctuation">(</span>ZZ<span class="token punctuation">)</span>  <span class="token comment">#定义在整数环上的多项式环，多项式的变量定义为 x</span></pre></td></tr><tr><td data-num="7"></td><td><pre>P<span class="token punctuation">.</span><span class="token operator">&lt;</span>x<span class="token punctuation">,</span> y<span class="token operator">></span> <span class="token operator">=</span> PolynomialRing<span class="token punctuation">(</span>Zmod<span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">#多变量</span></pre></td></tr><tr><td data-num="8"></td><td><pre><span class="token comment"># F 是多项式环的名字，自定义</span></pre></td></tr><tr><td data-num="9"></td><td><pre><span class="token comment"># x 是多项式环变量的名字，自定义</span></pre></td></tr><tr><td data-num="10"></td><td><pre></pre></td></tr><tr><td data-num="11"></td><td><pre></pre></td></tr><tr><td data-num="12"></td><td><pre></pre></td></tr><tr><td data-num="13"></td><td><pre>G<span class="token operator">=</span>GF<span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token comment"># 定义伽罗瓦域，阶是 p，并且 p 要是一个素数或者一个素数的幂次</span></pre></td></tr><tr><td data-num="14"></td><td><pre>x<span class="token operator">=</span>G<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span> <span class="token comment">#定义在有限域 GF (p) 上的数 5，可以把 G 看做一个类型</span></pre></td></tr><tr><td data-num="15"></td><td><pre>ZN<span class="token operator">=</span>Zmod<span class="token punctuation">(</span>N<span class="token punctuation">)</span> <span class="token comment">#一般有限环</span></pre></td></tr><tr><td data-num="16"></td><td><pre></pre></td></tr><tr><td data-num="17"></td><td><pre><span class="token comment">#后续使用时，如果我们想要一个元素 x 在某个环或域上计算，直接 ZZ (x),QQ (x),ZN (X) 这样</span></pre></td></tr><tr><td data-num="18"></td><td><pre></pre></td></tr><tr><td data-num="19"></td><td><pre>x<span class="token punctuation">,</span> y <span class="token operator">=</span> var<span class="token punctuation">(</span><span class="token string">'x, y'</span><span class="token punctuation">)</span> <span class="token comment">#定义形式变量，可以利用这个来得到带变量的方程</span></pre></td></tr></table></figure><h2 id="数论基本函数"><a class="markdownIt-Anchor" href="#数论基本函数">#</a> 数论基本函数</h2>
-<figure class="highlight python"><figcaption data-lang="python"><span>n</span></figcaption><table><tr><td data-num="1"></td><td><pre>d<span class="token operator">=</span>gcd<span class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span> <span class="token comment">#求 a,b 的 gcd</span></pre></td></tr><tr><td data-num="2"></td><td><pre>lcm<span class="token punctuation">(</span>a<span class="token punctuation">,</span>b <span class="token punctuation">)</span> <span class="token comment">#求 a,b 的 lcm</span></pre></td></tr><tr><td data-num="3"></td><td><pre></pre></td></tr><tr><td data-num="4"></td><td><pre>d<span class="token punctuation">,</span>u<span class="token punctuation">,</span>v<span class="token operator">=</span>xgcd<span class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span> <span class="token comment">#扩展欧几里得，返回三个参数，满足 au+bv=d ,gcd (a,b)=d</span></pre></td></tr><tr><td data-num="5"></td><td><pre></pre></td></tr><tr><td data-num="6"></td><td><pre>y<span class="token operator">=</span>inverse_mod<span class="token punctuation">(</span>x<span class="token punctuation">,</span>p<span class="token punctuation">)</span> <span class="token comment">#返回 x 在模 p 下的逆元 y</span></pre></td></tr><tr><td data-num="7"></td><td><pre></pre></td></tr><tr><td data-num="8"></td><td><pre>p<span class="token operator">=</span>random_prime<span class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span> <span class="token comment">#返回 [a,b) 之间的随机素数</span></pre></td></tr><tr><td data-num="9"></td><td><pre></pre></td></tr><tr><td data-num="10"></td><td><pre>is_prime<span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token comment">#判断是否是素数</span></pre></td></tr><tr><td data-num="11"></td><td><pre></pre></td></tr><tr><td data-num="12"></td><td><pre>nth_prime<span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token comment">#返回第 n 个素数</span></pre></td></tr><tr><td data-num="13"></td><td><pre></pre></td></tr><tr><td data-num="14"></td><td><pre>next_prime<span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token comment">#素数 p 的下一个素数</span></pre></td></tr><tr><td data-num="15"></td><td><pre></pre></td></tr><tr><td data-num="16"></td><td><pre><span class="token builtin">pow</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">,</span>p<span class="token punctuation">)</span> <span class="token comment">#计算 x^y mod p</span></pre></td></tr><tr><td data-num="17"></td><td><pre></pre></td></tr><tr><td data-num="18"></td><td><pre>euler_phi<span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token comment">#计算欧拉函数</span></pre></td></tr><tr><td data-num="19"></td><td><pre></pre></td></tr><tr><td data-num="20"></td><td><pre>crt<span class="token punctuation">(</span><span class="token punctuation">[</span>a1<span class="token punctuation">,</span>a2<span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span>an<span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span>m1<span class="token punctuation">,</span>m2<span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span>m3<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">#中国剩余定义，其中 x=ai mod mi</span></pre></td></tr><tr><td data-num="21"></td><td><pre></pre></td></tr><tr><td data-num="22"></td><td><pre>factorial<span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token comment">#求 x 的阶乘</span></pre></td></tr><tr><td data-num="23"></td><td><pre></pre></td></tr><tr><td data-num="24"></td><td><pre>factor<span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token comment">#素数分解</span></pre></td></tr><tr><td data-num="25"></td><td><pre></pre></td></tr><tr><td data-num="26"></td><td><pre>euler_phi<span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token comment">#n 的欧拉函数</span></pre></td></tr><tr><td data-num="27"></td><td><pre>binomial<span class="token punctuation">(</span>n<span class="token punctuation">,</span>m<span class="token punctuation">)</span> <span class="token comment">#组合数</span></pre></td></tr><tr><td data-num="28"></td><td><pre>moebius<span class="token punctuation">(</span>n<span class="token punctuation">)</span>  <span class="token comment">#莫比乌斯函数</span></pre></td></tr><tr><td data-num="29"></td><td><pre>Partitions<span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">list</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">#n 的正整数划分</span></pre></td></tr><tr><td data-num="30"></td><td><pre>divisors<span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token comment">#返回一个列表，包含 x 的所有因子</span></pre></td></tr><tr><td data-num="31"></td><td><pre>prime_divisors <span class="token comment">#返回一个列表，包含 x 的所有素因子</span></pre></td></tr><tr><td data-num="32"></td><td><pre></pre></td></tr><tr><td data-num="33"></td><td><pre><span class="token comment">#有限域开根，比如整数域上开根</span></pre></td></tr><tr><td data-num="34"></td><td><pre>ZZ<span class="token punctuation">(</span><span class="token number">7</span><span class="token operator">^</span><span class="token number">64</span><span class="token punctuation">)</span><span class="token punctuation">.</span>nth_root<span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span> <span class="token comment">#得到 7</span></pre></td></tr><tr><td data-num="35"></td><td><pre>ZN<span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">.</span>nth_root<span class="token punctuation">(</span>y<span class="token punctuation">,</span><span class="token builtin">all</span><span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span> <span class="token comment">#得到所有满足 x=z^y mod N 的 z</span></pre></td></tr></table></figure><h2 id="线性代数"><a class="markdownIt-Anchor" href="#线性代数">#</a> 线性代数</h2>
-<figure class="highlight python"><figcaption data-lang="python"><span>n</span></figcaption><table><tr><td data-num="1"></td><td><pre>A<span class="token operator">=</span>Matrix<span class="token punctuation">(</span>ZZ<span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">#声明一个在 ZZ 上的三行三列的矩阵 A</span></pre></td></tr><tr><td data-num="2"></td><td><pre>A<span class="token operator">=</span>matrix<span class="token punctuation">(</span>Zmod<span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">#声明一个在 Zmod (7) 上的三行三列的矩阵 A</span></pre></td></tr><tr><td data-num="3"></td><td><pre>A<span class="token operator">=</span>matrix<span class="token punctuation">(</span>Zmod<span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">,</span>n<span class="token punctuation">,</span>m<span class="token punctuation">)</span> <span class="token comment">#定义在 Zmod (7) 上大小为 nxm 的矩阵，并且初始值均为 0</span></pre></td></tr><tr><td data-num="4"></td><td><pre>I<span class="token operator">=</span>matrix<span class="token punctuation">.</span>identity<span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token comment">#大小为 nxn 的单位矩阵</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token comment"># Matrix 和 matrix 一样</span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token keyword">print</span><span class="token punctuation">(</span>A<span class="token punctuation">[</span>i<span class="token punctuation">,</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">#取 A 第 i 行第 j 列的元素</span></pre></td></tr><tr><td data-num="7"></td><td><pre>A<span class="token punctuation">.</span>T <span class="token comment">#A 的矩阵转置</span></pre></td></tr><tr><td data-num="8"></td><td><pre>A<span class="token operator">^</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment">#A 的逆矩阵</span></pre></td></tr><tr><td data-num="9"></td><td><pre>A<span class="token punctuation">.</span>rank<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">#A 的秩</span></pre></td></tr><tr><td data-num="10"></td><td><pre>A<span class="token punctuation">.</span>nrows<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">#将返回矩阵行数</span></pre></td></tr><tr><td data-num="11"></td><td><pre>A<span class="token punctuation">.</span>ncols<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">#将返回矩阵列数</span></pre></td></tr><tr><td data-num="12"></td><td><pre>A<span class="token punctuation">.</span>det<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">#A 的特征值</span></pre></td></tr><tr><td data-num="13"></td><td><pre>A<span class="token punctuation">.</span>eigenvalues<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">#特征值</span></pre></td></tr><tr><td data-num="14"></td><td><pre>M<span class="token punctuation">.</span>eigenvectors_right<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">#特诊向量</span></pre></td></tr><tr><td data-num="15"></td><td><pre>A<span class="token operator">+</span>B <span class="token comment">#矩阵加法</span></pre></td></tr><tr><td data-num="16"></td><td><pre>A<span class="token operator">*</span>B <span class="token comment">#矩阵乘法</span></pre></td></tr><tr><td data-num="17"></td><td><pre></pre></td></tr><tr><td data-num="18"></td><td><pre>M<span class="token operator">=</span>block_matrix<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span>A<span class="token punctuation">,</span>B<span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span>C<span class="token punctuation">,</span>D<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">#定义分块矩阵，其中 A,B,C,D 都是在一个环或域上的矩阵</span></pre></td></tr><tr><td data-num="19"></td><td><pre></pre></td></tr><tr><td data-num="20"></td><td><pre>v<span class="token operator">=</span>vector<span class="token punctuation">(</span>Zmod<span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">#声明一个在 Zmod (7) 上的向量</span></pre></td></tr><tr><td data-num="21"></td><td><pre><span class="token keyword">print</span><span class="token punctuation">(</span>v<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">#去 v 的第 i 个元素</span></pre></td></tr><tr><td data-num="22"></td><td><pre></pre></td></tr><tr><td data-num="23"></td><td><pre>X<span class="token operator">=</span>A<span class="token punctuation">.</span>solve_right<span class="token punctuation">(</span>B<span class="token punctuation">)</span> <span class="token comment">#解线性方程组 形如 AX=B ,X 在右边</span></pre></td></tr><tr><td data-num="24"></td><td><pre>X<span class="token operator">=</span>A<span class="token punctuation">.</span>solve_left<span class="token punctuation">(</span>B<span class="token punctuation">)</span>  <span class="token comment">#XA=B，X 在左边</span></pre></td></tr><tr><td data-num="25"></td><td><pre></pre></td></tr><tr><td data-num="26"></td><td><pre><span class="token comment">#矩阵空间 Matrix spaces</span></pre></td></tr><tr><td data-num="27"></td><td><pre>M <span class="token operator">=</span> MatrixSpace<span class="token punctuation">(</span>QQ<span class="token punctuation">,</span>n<span class="token punctuation">,</span>m<span class="token punctuation">)</span> <span class="token comment">#定义在有理数域上的 nxm 维矩阵空间</span></pre></td></tr><tr><td data-num="28"></td><td><pre>B <span class="token operator">=</span> M<span class="token punctuation">.</span>basis<span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr></table></figure><h2 id="多项式相关"><a class="markdownIt-Anchor" href="#多项式相关">#</a> 多项式相关</h2>
-<figure class="highlight python"><figcaption data-lang="python"><span>n</span></figcaption><table><tr><td data-num="1"></td><td><pre>R <span class="token operator">=</span> PolynomialRing<span class="token punctuation">(</span>QQ<span class="token punctuation">,</span> <span class="token string">'t'</span><span class="token punctuation">)</span> <span class="token comment">#定义在有理数域上的多项式环，且变量为 t</span></pre></td></tr><tr><td data-num="2"></td><td><pre>R<span class="token punctuation">.</span><span class="token operator">&lt;</span>t<span class="token operator">></span> <span class="token operator">=</span> PolynomialRing<span class="token punctuation">(</span>QQ<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="3"></td><td><pre>t<span class="token operator">=</span>R<span class="token punctuation">.</span><span class="token number">0</span> <span class="token comment">#R.0 就是这个多项式环上的未知量</span></pre></td></tr><tr><td data-num="4"></td><td><pre></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token comment">#多变量定义</span></pre></td></tr><tr><td data-num="6"></td><td><pre>PolynomialRing<span class="token punctuation">(</span>GF<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">'xyz'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="7"></td><td><pre>z <span class="token operator">=</span> GF<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token string">'z0, z1, z2'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>gens<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">#z=(z0, z1, z2)</span></pre></td></tr><tr><td data-num="8"></td><td><pre></pre></td></tr><tr><td data-num="9"></td><td><pre>R<span class="token punctuation">,</span> <span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span> <span class="token operator">=</span> PolynomialRing<span class="token punctuation">(</span>RationalField<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">'xy'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>objgens<span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="10"></td><td><pre>f <span class="token operator">=</span> <span class="token punctuation">(</span>x<span class="token operator">^</span><span class="token number">3</span> <span class="token operator">+</span> <span class="token number">2</span><span class="token operator">*</span>y<span class="token operator">^</span><span class="token number">2</span><span class="token operator">*</span>x<span class="token punctuation">)</span><span class="token operator">^</span><span class="token number">2</span></pre></td></tr><tr><td data-num="11"></td><td><pre>g <span class="token operator">=</span> x<span class="token operator">^</span><span class="token number">2</span><span class="token operator">*</span>y<span class="token operator">^</span><span class="token number">2</span></pre></td></tr><tr><td data-num="12"></td><td><pre>f<span class="token punctuation">.</span>gcd<span class="token punctuation">(</span>g<span class="token punctuation">)</span> <span class="token comment">#求公因式</span></pre></td></tr></table></figure><h2 id="有限域和阿贝尔群"><a class="markdownIt-Anchor" href="#有限域和阿贝尔群">#</a> 有限域和阿贝尔群</h2>
-<figure class="highlight python"><figcaption data-lang="python"><span>n</span></figcaption><table><tr><td data-num="1"></td><td><pre>G <span class="token operator">=</span> PermutationGroup<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'(1,2,3)(4,5)'</span><span class="token punctuation">,</span> <span class="token string">'(3,4)'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">#置换群</span></pre></td></tr><tr><td data-num="2"></td><td><pre>G<span class="token punctuation">.</span>order<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">#阶</span></pre></td></tr><tr><td data-num="3"></td><td><pre>G<span class="token punctuation">.</span>center<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">#生成元</span></pre></td></tr></table></figure><h2 id="格相关函数"><a class="markdownIt-Anchor" href="#格相关函数">#</a> 格相关函数</h2>
-<figure class="highlight python"><figcaption data-lang="python"><span>n</span></figcaption><table><tr><td data-num="1"></td><td><pre>lattice <span class="token operator">=</span> IntegerLattice<span class="token punctuation">(</span>A<span class="token punctuation">,</span> lll_reduce<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span> <span class="token comment">#定义一个格，其中 A 是一个内积空间矩阵，并且自动计算 lll_reduce (格规约)</span></pre></td></tr><tr><td data-num="2"></td><td><pre></pre></td></tr><tr><td data-num="3"></td><td><pre>M<span class="token punctuation">.</span>LLL<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># LLL 算法</span></pre></td></tr><tr><td data-num="4"></td><td><pre></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token comment">#Babai 算法：需要手动实现，一般如下</span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token comment">#输入格的基 basis 和目标向量 v </span></pre></td></tr><tr><td data-num="7"></td><td><pre><span class="token keyword">def</span> <span class="token function">approximate_closest_vector</span><span class="token punctuation">(</span>basis<span class="token punctuation">,</span> v<span class="token punctuation">)</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="8"></td><td><pre>    <span class="token triple-quoted-string string">"""Returns an approximate CVP solution using Babai's nearest plane algorithm.</pre></td></tr><tr><td data-num="9"></td><td><pre>    """</span></pre></td></tr><tr><td data-num="10"></td><td><pre>    BL <span class="token operator">=</span> basis<span class="token punctuation">.</span>LLL<span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="11"></td><td><pre>    <span class="token comment"># 施密特正交化基</span></pre></td></tr><tr><td data-num="12"></td><td><pre>    G<span class="token punctuation">,</span> _ <span class="token operator">=</span> BL<span class="token punctuation">.</span>gram_schmidt<span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="13"></td><td><pre>    _<span class="token punctuation">,</span> n <span class="token operator">=</span> BL<span class="token punctuation">.</span>dimensions<span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="14"></td><td><pre>    small <span class="token operator">=</span> vector<span class="token punctuation">(</span>ZZ<span class="token punctuation">,</span> v<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="15"></td><td><pre>    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">reversed</span><span class="token punctuation">(</span><span class="token builtin">range</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="16"></td><td><pre>        c <span class="token operator">=</span> QQ<span class="token punctuation">(</span>small <span class="token operator">*</span> G<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">/</span> QQ<span class="token punctuation">(</span>G<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">*</span> G<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="17"></td><td><pre>        c <span class="token operator">=</span> c<span class="token punctuation">.</span><span class="token builtin">round</span><span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="18"></td><td><pre>        small <span class="token operator">-=</span> BL<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">*</span> c</pre></td></tr><tr><td data-num="19"></td><td><pre>    <span class="token keyword">return</span> <span class="token punctuation">(</span>v <span class="token operator">-</span> small<span class="token punctuation">)</span><span class="token punctuation">.</span>coefficients<span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr></table></figure><h2 id="椭圆曲线"><a class="markdownIt-Anchor" href="#椭圆曲线">#</a> 椭圆曲线</h2>
-<figure class="highlight python"><figcaption data-lang="python"><span>n</span></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#y^2=x^3=ax+b</span></pre></td></tr><tr><td data-num="2"></td><td><pre>E <span class="token operator">=</span> EllipticCurve<span class="token punctuation">(</span>Zmod<span class="token punctuation">(</span>N<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>a<span class="token punctuation">,</span> b<span class="token punctuation">]</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="3"></td><td><pre>E<span class="token punctuation">.</span>lift_x<span class="token punctuation">(</span>x_cord<span class="token punctuation">)</span> <span class="token comment">#得到三元组</span></pre></td></tr></table></figure>
+    <h1 id="sage相关库的使用"><a class="markdownIt-Anchor" href="#sage相关库的使用"></a> Sage相关库的使用</h1>
+<h2 id="基本环和域"><a class="markdownIt-Anchor" href="#基本环和域"></a> 基本环和域</h2>
+<pre class="highlight"><code class="python">ZZ  <span class="hljs-comment">#整数环</span>
+QQ  <span class="hljs-comment">#有理数环</span>
+RR  <span class="hljs-comment">#实数域</span>
+CC  <span class="hljs-comment">#复数域</span>
+
+F.&lt;x&gt;=PolyomialRing(ZZ)  <span class="hljs-comment">#定义在整数环上的多项式环，多项式的变量定义为x</span>
+P.&lt;x, y&gt; = PolynomialRing(Zmod(p)) <span class="hljs-comment">#多变量</span>
+<span class="hljs-comment"># F是多项式环的名字，自定义</span>
+<span class="hljs-comment"># x是多项式环变量的名字，自定义</span>
+
+
+
+G=GF(p) <span class="hljs-comment"># 定义伽罗瓦域，阶是p，并且p要是一个素数或者一个素数的幂次</span>
+x=G(<span class="hljs-number">5</span>) <span class="hljs-comment">#定义在有限域GF(p)上的数5，可以把G看做一个类型</span>
+ZN=Zmod(N) <span class="hljs-comment">#一般有限环</span>
+
+<span class="hljs-comment">#后续使用时，如果我们想要一个元素x在某个环或域上计算，直接ZZ(x),QQ(x),ZN(X)这样</span>
+
+x, y = var(<span class="hljs-string">&#x27;x, y&#x27;</span>) <span class="hljs-comment">#定义形式变量，可以利用这个来得到带变量的方程</span>
+
+</code></pre>
+<h2 id="数论基本函数"><a class="markdownIt-Anchor" href="#数论基本函数"></a> 数论基本函数</h2>
+<pre class="highlight"><code class="python">d=gcd(a,b) <span class="hljs-comment">#求a,b的gcd</span>
+lcm(a,b ) <span class="hljs-comment">#求a,b的lcm</span>
+
+d,u,v=xgcd(a,b) <span class="hljs-comment">#扩展欧几里得，返回三个参数，满足 au+bv=d ,gcd(a,b)=d</span>
+
+y=inverse_mod(x,p) <span class="hljs-comment">#返回x在模p下的逆元y</span>
+
+p=random_prime(a,b) <span class="hljs-comment">#返回[a,b)之间的随机素数</span>
+
+is_prime(p) <span class="hljs-comment">#判断是否是素数</span>
+
+nth_prime(n) <span class="hljs-comment">#返回第n个素数</span>
+
+next_prime(p) <span class="hljs-comment">#素数p的下一个素数</span>
+
+<span class="hljs-built_in">pow</span>(x,y,p) <span class="hljs-comment">#计算x^y mod p</span>
+
+euler_phi(n) <span class="hljs-comment">#计算欧拉函数</span>
+
+crt([a1,a2,...,an],[m1,m2,...,m3]) <span class="hljs-comment">#中国剩余定义，其中 x=ai mod mi</span>
+
+factorial(x) <span class="hljs-comment">#求x的阶乘</span>
+
+factor(x) <span class="hljs-comment">#素数分解</span>
+
+euler_phi(n) <span class="hljs-comment">#n的欧拉函数</span>
+binomial(n,m) <span class="hljs-comment">#组合数</span>
+moebius(n)  <span class="hljs-comment">#莫比乌斯函数</span>
+Partitions(n).<span class="hljs-built_in">list</span>() <span class="hljs-comment">#n的正整数划分</span>
+divisors(x) <span class="hljs-comment">#返回一个列表，包含x的所有因子</span>
+prime_divisors <span class="hljs-comment">#返回一个列表，包含x的所有素因子</span>
+
+<span class="hljs-comment">#有限域开根，比如整数域上开根</span>
+ZZ(<span class="hljs-number">7</span>^<span class="hljs-number">64</span>).nth_root(<span class="hljs-number">64</span>) <span class="hljs-comment">#得到7</span>
+ZN(x).nth_root(y,<span class="hljs-built_in">all</span>=<span class="hljs-literal">True</span>) <span class="hljs-comment">#得到所有满足 x=z^y mod N 的z</span>
+
+</code></pre>
+<h2 id="线性代数"><a class="markdownIt-Anchor" href="#线性代数"></a> 线性代数</h2>
+<pre class="highlight"><code class="python">A=Matrix(ZZ,[[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>],[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>],[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]]) <span class="hljs-comment">#声明一个在ZZ上的三行三列的矩阵A</span>
+A=matrix(Zmod(<span class="hljs-number">7</span>),[[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>],[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>],[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]]) <span class="hljs-comment">#声明一个在Zmod(7)上的三行三列的矩阵A</span>
+A=matrix(Zmod(<span class="hljs-number">7</span>),n,m) <span class="hljs-comment">#定义在Zmod(7)上大小为nxm的矩阵，并且初始值均为0</span>
+I=matrix.identity(n) <span class="hljs-comment">#大小为nxn的单位矩阵</span>
+<span class="hljs-comment"># Matrix 和 matrix 一样</span>
+<span class="hljs-built_in">print</span>(A[i,j]) <span class="hljs-comment">#取A第i行第j列的元素</span>
+A.T <span class="hljs-comment">#A的矩阵转置</span>
+A^(-<span class="hljs-number">1</span>) <span class="hljs-comment">#A的逆矩阵</span>
+A.rank() <span class="hljs-comment">#A的秩</span>
+A.nrows() <span class="hljs-comment">#将返回矩阵行数</span>
+A.ncols() <span class="hljs-comment">#将返回矩阵列数</span>
+A.det() <span class="hljs-comment">#A的特征值</span>
+A.eigenvalues() <span class="hljs-comment">#特征值</span>
+M.eigenvectors_right() <span class="hljs-comment">#特诊向量</span>
+A+B <span class="hljs-comment">#矩阵加法</span>
+A*B <span class="hljs-comment">#矩阵乘法</span>
+
+M=block_matrix([[A,B],[C,D]]) <span class="hljs-comment">#定义分块矩阵，其中A,B,C,D都是在一个环或域上的矩阵</span>
+
+v=vector(Zmod(<span class="hljs-number">7</span>),[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>]) <span class="hljs-comment">#声明一个在Zmod(7)上的向量</span>
+<span class="hljs-built_in">print</span>(v[i]) <span class="hljs-comment">#去v的第i个元素</span>
+
+X=A.solve_right(B) <span class="hljs-comment">#解线性方程组 形如 AX=B ,X在右边</span>
+X=A.solve_left(B)  <span class="hljs-comment">#XA=B，X在左边</span>
+
+<span class="hljs-comment">#矩阵空间 Matrix spaces</span>
+M = MatrixSpace(QQ,n,m) <span class="hljs-comment">#定义在有理数域上的nxm维矩阵空间</span>
+B = M.basis()
+</code></pre>
+<h2 id="多项式相关"><a class="markdownIt-Anchor" href="#多项式相关"></a> 多项式相关</h2>
+<pre class="highlight"><code class="python">R = PolynomialRing(QQ, <span class="hljs-string">&#x27;t&#x27;</span>) <span class="hljs-comment">#定义在有理数域上的多项式环，且变量为t</span>
+R.&lt;t&gt; = PolynomialRing(QQ)
+t=R<span class="hljs-number">.0</span> <span class="hljs-comment">#R.0就是这个多项式环上的未知量</span>
+
+<span class="hljs-comment">#多变量定义</span>
+PolynomialRing(GF(<span class="hljs-number">5</span>), <span class="hljs-number">3</span>, <span class="hljs-string">&#x27;xyz&#x27;</span>)
+z = GF(<span class="hljs-number">5</span>)[<span class="hljs-string">&#x27;z0, z1, z2&#x27;</span>].gens() <span class="hljs-comment">#z=(z0, z1, z2)</span>
+
+R, (x, y) = PolynomialRing(RationalField(), <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;xy&#x27;</span>).objgens()
+f = (x^<span class="hljs-number">3</span> + <span class="hljs-number">2</span>*y^<span class="hljs-number">2</span>*x)^<span class="hljs-number">2</span>
+g = x^<span class="hljs-number">2</span>*y^<span class="hljs-number">2</span>
+f.gcd(g) <span class="hljs-comment">#求公因式</span>
+</code></pre>
+<h2 id="有限域和阿贝尔群"><a class="markdownIt-Anchor" href="#有限域和阿贝尔群"></a> 有限域和阿贝尔群</h2>
+<pre class="highlight"><code class="python">G = PermutationGroup([<span class="hljs-string">&#x27;(1,2,3)(4,5)&#x27;</span>, <span class="hljs-string">&#x27;(3,4)&#x27;</span>]) <span class="hljs-comment">#置换群</span>
+G.order() <span class="hljs-comment">#阶</span>
+G.center() <span class="hljs-comment">#生成元</span>
+
+</code></pre>
+<h2 id="格相关函数"><a class="markdownIt-Anchor" href="#格相关函数"></a> 格相关函数</h2>
+<pre class="highlight"><code class="python">lattice = IntegerLattice(A, lll_reduce=<span class="hljs-literal">True</span>) <span class="hljs-comment">#定义一个格，其中A是一个内积空间矩阵，并且自动计算lll_reduce(格规约)</span>
+
+M.LLL() <span class="hljs-comment"># LLL算法</span>
+
+<span class="hljs-comment">#Babai算法：需要手动实现，一般如下</span>
+<span class="hljs-comment">#输入格的基basis 和目标向量v </span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">approximate_closest_vector</span>(<span class="hljs-params">basis, v</span>):
+    <span class="hljs-string">&quot;&quot;&quot;Returns an approximate CVP solution using Babai&#x27;s nearest plane algorithm.
+    &quot;&quot;&quot;</span>
+    BL = basis.LLL()
+    <span class="hljs-comment"># 施密特正交化基</span>
+    G, _ = BL.gram_schmidt()
+    _, n = BL.dimensions()
+    small = vector(ZZ, v)
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">reversed</span>(<span class="hljs-built_in">range</span>(n)):
+        c = QQ(small * G[i]) / QQ(G[i] * G[i])
+        c = c.<span class="hljs-built_in">round</span>()
+        small -= BL[i] * c
+    <span class="hljs-keyword">return</span> (v - small).coefficients()
+</code></pre>
+<h2 id="椭圆曲线"><a class="markdownIt-Anchor" href="#椭圆曲线"></a> 椭圆曲线</h2>
+<pre class="highlight"><code class="python"><span class="hljs-comment">#y^2=x^3=ax+b</span>
+E = EllipticCurve(Zmod(N), [a, b])
+E.lift_x(x_cord) <span class="hljs-comment">#得到三元组</span>
+</code></pre>
+
   </div>
 
    <footer>
@@ -223,7 +352,7 @@ Arashimuのblog = CTFer</title>
     <div class="item left">
       
 
-  <a href="/2022/09/03/%E6%A0%BC%E5%AF%86%E7%A0%81/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclfb3vzhj20zk0m8wny.jpg" title="格密码">
+  <a href="/2022/09/03/%E6%A0%BC%E5%AF%86%E7%A0%81/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicli9lfebj20zk0m84qp.jpg" title="格密码">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>格密码</h3>
@@ -233,7 +362,7 @@ Arashimuのblog = CTFer</title>
     <div class="item right">
       
 
-  <a href="/2022/09/13/Crypto%E5%A4%8D%E7%8E%B01/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipewkhf1zj20zk0m81kx.jpg" title="Crypto复现1">
+  <a href="/2022/09/13/Crypto%E5%A4%8D%E7%8E%B01/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giph4lm9i7j20zk0m84qp.jpg" title="Crypto复现1">
   <span class="type">Next Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>Crypto复现1</h3>
@@ -255,7 +384,7 @@ Arashimuのblog = CTFer</title>
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sage%E7%9B%B8%E5%85%B3%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text"> Sage 相关库的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%92%8C%E5%9F%9F"><span class="toc-number">1.1.</span> <span class="toc-text"> 基本环和域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E8%AE%BA%E5%9F%BA%E6%9C%AC%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text"> 数论基本函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0"><span class="toc-number">1.3.</span> <span class="toc-text"> 线性代数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E9%A1%B9%E5%BC%8F%E7%9B%B8%E5%85%B3"><span class="toc-number">1.4.</span> <span class="toc-text"> 多项式相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E9%99%90%E5%9F%9F%E5%92%8C%E9%98%BF%E8%B4%9D%E5%B0%94%E7%BE%A4"><span class="toc-number">1.5.</span> <span class="toc-text"> 有限域和阿贝尔群</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%BC%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="toc-number">1.6.</span> <span class="toc-text"> 格相关函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF"><span class="toc-number">1.7.</span> <span class="toc-text"> 椭圆曲线</span></a></li></ol></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sage%E7%9B%B8%E5%85%B3%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text"> Sage相关库的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%92%8C%E5%9F%9F"><span class="toc-number">1.1.</span> <span class="toc-text"> 基本环和域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E8%AE%BA%E5%9F%BA%E6%9C%AC%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text"> 数论基本函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0"><span class="toc-number">1.3.</span> <span class="toc-text"> 线性代数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E9%A1%B9%E5%BC%8F%E7%9B%B8%E5%85%B3"><span class="toc-number">1.4.</span> <span class="toc-text"> 多项式相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E9%99%90%E5%9F%9F%E5%92%8C%E9%98%BF%E8%B4%9D%E5%B0%94%E7%BE%A4"><span class="toc-number">1.5.</span> <span class="toc-text"> 有限域和阿贝尔群</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%BC%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="toc-number">1.6.</span> <span class="toc-text"> 格相关函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF"><span class="toc-number">1.7.</span> <span class="toc-text"> 椭圆曲线</span></a></li></ol></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
       </div>
@@ -270,7 +399,7 @@ Arashimuのblog = CTFer</title>
 <nav class="state">
     <div class="item posts">
       <a href="/archives/">
-        <span class="count">23</span>
+        <span class="count">24</span>
         <span class="name">posts</span>
       </a>
     </div>
@@ -340,7 +469,7 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/01/06/2022Nepnep%E8%B7%A8%E5%B9%B4%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0%E5%92%8C%E6%80%BB%E7%BB%93/" title="2022Nepnep跨年比赛复现和总结">2022Nepnep跨年比赛复现和总结</a></span>
+    <span><a href="/2022/09/23/BUU-Crypto/" title="BUU_Crypto">BUU_Crypto</a></span>
   </li>
 
       
@@ -349,7 +478,7 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/09/29/Paillier%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86/" title="Paillier同态加密">Paillier同态加密</a></span>
+    <span><a href="/2022/12/26/PWNHUB-%E5%A4%8D%E7%8E%B0/" title="PWNHUB-复现">PWNHUB-复现</a></span>
   </li>
 
       
@@ -358,16 +487,7 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/05/17/Misc1/" title="Misc1">Misc1</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/27/%E7%BD%91%E9%BC%8E%E6%9D%AFre%E3%80%81Crypto/" title="网鼎杯re、Crypto">网鼎杯re、Crypto</a></span>
+    <span><a href="/2023/03/08/SROP/" title="SROP">SROP</a></span>
   </li>
 
       
@@ -385,7 +505,7 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/09/03/i%E6%98%A5%E7%A7%8B%E5%8B%87%E8%80%85%E4%B9%8B%E5%B7%85Crypto%E5%AD%A6%E4%B9%A0/" title="i春秋勇者之巅Crypto学习">i春秋勇者之巅Crypto学习</a></span>
+    <span><a href="/2022/05/17/Misc1/" title="Misc1">Misc1</a></span>
   </li>
 
       
@@ -394,7 +514,7 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/05/08/hello-world/" title="Hello World">Hello World</a></span>
+    <span><a href="/2022/05/10/pwn-sandbox1/" title="pwn-sandbox1">pwn-sandbox1</a></span>
   </li>
 
       
@@ -403,7 +523,7 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/09/23/BUU-Crypto/" title="BUU_Crypto">BUU_Crypto</a></span>
+    <span><a href="/2023/03/26/2023-3-PWHHUB/" title="2023_3_PWHHUB">2023_3_PWHHUB</a></span>
   </li>
 
       
@@ -412,7 +532,7 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/02/21/house-of-botcake/" title="house_of_botcake">house_of_botcake</a></span>
+    <span><a href="/2022/09/03/Sage%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Sage的使用">Sage的使用</a></span>
   </li>
 
       
@@ -421,7 +541,16 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/07/06/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0/" title="sql注入学习">sql注入学习</a></span>
+    <span><a href="/2022/08/27/%E7%BD%91%E9%BC%8E%E6%9D%AFre%E3%80%81Crypto/" title="网鼎杯re、Crypto">网鼎杯re、Crypto</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/03/%E6%A0%BC%E5%AF%86%E7%A0%81/" title="格密码">格密码</a></span>
   </li>
 
   </ul>

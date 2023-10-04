@@ -100,12 +100,12 @@ Arashimuのblog = CTFer</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipev1x5e4j20zk0m8b29.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipeu1usa7j20zk0m8b29.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclimtf7dj20zk0m8qav.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giph4baakhj20zk0m8h5q.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipewf5l51j20zk0m8b29.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclh0m9pdj20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipewf5l51j20zk0m8b29.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclhpw3lwj20zk0m8gvw.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gicis081o9j20zk0m8dmr.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gicm0n457cj20zk0m8e81.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipeyhsblkj20zk0m81kx.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipexw3o58j20zk0m8e81.jpg"></li>
         </ul>
       </div>
     </header>
@@ -149,22 +149,70 @@ Arashimuのblog = CTFer</title>
   <div class="body md" itemprop="articleBody">
     
 
-    <h2 id="工具"><a class="markdownIt-Anchor" href="#工具">#</a> 工具</h2>
-<h3 id="16-进制编辑器"><a class="markdownIt-Anchor" href="#16-进制编辑器">#</a> 16 进制编辑器</h3>
+    <h2 id="工具"><a class="markdownIt-Anchor" href="#工具"></a> 工具</h2>
+<h3 id="16-进制编辑器"><a class="markdownIt-Anchor" href="#16-进制编辑器"></a> 16 进制编辑器</h3>
 <ul>
 <li>sublime Hexviewer 插件</li>
 <li>010editor</li>
 </ul>
-<h3 id="和文件分离合并有关的命令"><a class="markdownIt-Anchor" href="#和文件分离合并有关的命令">#</a> 和文件分离合并有关的命令</h3>
+<h3 id="和文件分离合并有关的命令"><a class="markdownIt-Anchor" href="#和文件分离合并有关的命令"></a> 和文件分离合并有关的命令</h3>
 <ul>
-<li>binwalk<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre>binwalk filename <span class="token comment">#查看文件里面的内容</span></pre></td></tr><tr><td data-num="2"></td><td><pre>binwalk -e filename <span class="token comment">#分离文件</span></pre></td></tr></table></figure></li>
-<li><code>dd</code>  命令<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">dd</span> <span class="token assign-left variable">if</span><span class="token operator">=</span>filename1 <span class="token assign-left variable">of</span><span class="token operator">=</span>filename2 <span class="token assign-left variable">bs</span><span class="token operator">=</span>blokc_size <span class="token assign-left variable">count</span><span class="token operator">=</span>num</pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token comment">#读入文件为 filename1，输出文件为 filename2，读取前 count 个块，每个块的大小为 bs</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token function">dd</span> <span class="token assign-left variable">if</span><span class="token operator">=</span>filename1 <span class="token assign-left variable">of</span><span class="token operator">=</span>filename2 <span class="token assign-left variable">bs</span><span class="token operator">=</span>blokc_size <span class="token assign-left variable">count</span><span class="token operator">=</span>num <span class="token assign-left variable">skip</span><span class="token operator">=</span>skip_num</pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token comment">#读入文件为 filename1，输出文件为 filename2，每个块的大小为 bs，在前 count 块中，跳过前 skip 个块，输出后 count-skip 个块</span></pre></td></tr></table></figure></li>
-<li>Linux 下： <code>cat</code><figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">cat</span> file1 file2 file3 <span class="token operator">></span> <span class="token function">file</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token comment">#把文件 1,2,3 合并后输出为文件 file</span></pre></td></tr></table></figure></li>
-<li>Windows 下： <code>copy/B</code><figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre>copy/B file1+file2+file3 <span class="token function">file</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token comment">#把文件 1,2,3 合并后输出到 file</span></pre></td></tr></table></figure></li>
-<li><code>md5sum</code><figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre>md5sum filename</pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token comment">#计算文件的 md5 值，验证文件完整性</span></pre></td></tr></table></figure></li>
+<li>binwalk<pre class="highlight"><code class="shell">binwalk filename #查看文件里面的内容
+binwalk -e filename #分离文件
+</code></pre>
+</li>
+<li><code>dd</code>命令<pre class="highlight"><code class="shell">dd if=filename1 of=filename2 bs=blokc_size count=num
+<span class="hljs-meta prompt_">#</span><span class="language-bash">读入文件为filename1，输出文件为filename2，读取前count个块，每个块的大小为bs</span>
+dd if=filename1 of=filename2 bs=blokc_size count=num skip=skip_num
+<span class="hljs-meta prompt_">#</span><span class="language-bash">读入文件为filename1，输出文件为filename2，每个块的大小为bs，在前count块中，跳过前skip个块，输出后count-skip个块</span>
+</code></pre>
+</li>
+<li>Linux 下：<code>cat</code><pre class="highlight"><code class="shell">cat file1 file2 file3 &gt; file
+<span class="hljs-meta prompt_">#</span><span class="language-bash">把文件1,2,3合并后输出为文件file</span>
+</code></pre>
+</li>
+<li>Windows 下：<code>copy/B</code><pre class="highlight"><code class="shell">copy/B file1+file2+file3 file
+<span class="hljs-meta prompt_">#</span><span class="language-bash">把文件1,2,3合并后输出到file</span>
+</code></pre>
+</li>
+<li><code>md5sum</code><pre class="highlight"><code class="shell">md5sum filename
+<span class="hljs-meta prompt_">#</span><span class="language-bash">计算文件的md5值，验证文件完整性</span>
+</code></pre>
+</li>
 </ul>
-<h2 id="常见文件的文件头"><a class="markdownIt-Anchor" href="#常见文件的文件头">#</a> 常见文件的文件头</h2>
-<figure class="highlight txt"><figcaption data-lang="txt"></figcaption><table><tr><td data-num="1"></td><td><pre>JPEG (jpg)，                        　文件头：FFD8FF　　　　　　　　　　　　　　</pre></td></tr><tr><td data-num="2"></td><td><pre>PNG (png)，                       　  文件头：89504E47  文件尾：0000000049454E44AE426082</pre></td></tr><tr><td data-num="3"></td><td><pre>GIF (gif)，                           文件头：47494638</pre></td></tr><tr><td data-num="4"></td><td><pre>ZIP Archive (zip)，                   文件头：504B0304  文件尾：00000000</pre></td></tr><tr><td data-num="5"></td><td><pre>TIFF (tif)，                          文件头：49492A00</pre></td></tr><tr><td data-num="6"></td><td><pre>Windows Bitmap (bmp)，      　        文件头：424D</pre></td></tr><tr><td data-num="7"></td><td><pre>CAD (dwg)，                        　 文件头：41433130</pre></td></tr><tr><td data-num="8"></td><td><pre>Adobe Photoshop (psd)，               文件头：38425053</pre></td></tr><tr><td data-num="9"></td><td><pre>Rich Text Format (rtf)，              文件头：7B5C727466</pre></td></tr><tr><td data-num="10"></td><td><pre>XML (xml)，                           文件头：3C3F786D6C</pre></td></tr><tr><td data-num="11"></td><td><pre>HTML (html)，                         文件头：68746D6C3E</pre></td></tr><tr><td data-num="12"></td><td><pre>Email [thorough only] (eml)，         文件头：44656C69766572792D646174653A</pre></td></tr><tr><td data-num="13"></td><td><pre>Outlook Express (dbx)，               文件头：CFAD12FEC5FD746F</pre></td></tr><tr><td data-num="14"></td><td><pre>Outlook (pst)，                       文件头：2142444E</pre></td></tr><tr><td data-num="15"></td><td><pre>MS Word/Excel (xls.or.doc)，          文件头：D0CF11E0</pre></td></tr><tr><td data-num="16"></td><td><pre>MS Access (mdb)，                     文件头：5374616E64617264204A</pre></td></tr><tr><td data-num="17"></td><td><pre>WordPerfect (wpd)，                   文件头：FF575043</pre></td></tr><tr><td data-num="18"></td><td><pre>Adobe Acrobat (pdf)，                 文件头：255044462D312E</pre></td></tr><tr><td data-num="19"></td><td><pre>Quicken (qdf)，                       文件头：AC9EBD8F</pre></td></tr><tr><td data-num="20"></td><td><pre>Windows Password (pwl)，              文件头：E3828596</pre></td></tr><tr><td data-num="21"></td><td><pre>RAR Archive (rar)，                   文件头：52617221</pre></td></tr><tr><td data-num="22"></td><td><pre>Wave (wav)，                          文件头：57415645</pre></td></tr><tr><td data-num="23"></td><td><pre>AVI (avi)，                           文件头：41564920</pre></td></tr><tr><td data-num="24"></td><td><pre>Real Audio (ram)，                    文件头：2E7261FD</pre></td></tr><tr><td data-num="25"></td><td><pre>Real Media (rm)，                     文件头：2E524D46</pre></td></tr><tr><td data-num="26"></td><td><pre>MPEG (mpg)，                          文件头：000001BA</pre></td></tr><tr><td data-num="27"></td><td><pre>MPEG (mpg)，                          文件头：000001B3</pre></td></tr><tr><td data-num="28"></td><td><pre>Quicktime (mov)，                     文件头：6D6F6F76</pre></td></tr><tr><td data-num="29"></td><td><pre>Windows Media (asf)，                 文件头：3026B2758E66CF11</pre></td></tr><tr><td data-num="30"></td><td><pre>MIDI (mid)，                          文件头：4D546864</pre></td></tr></table></figure><h2 id="图片隐写常见方法"><a class="markdownIt-Anchor" href="#图片隐写常见方法">#</a> 图片隐写常见方法</h2>
+<h2 id="常见文件的文件头"><a class="markdownIt-Anchor" href="#常见文件的文件头"></a> 常见文件的文件头</h2>
+<pre class="highlight"><code class="txt">JPEG (jpg)，                        　文件头：FFD8FF　　　　　　　　　　　　　　
+PNG (png)，                       　  文件头：89504E47  文件尾：0000000049454E44AE426082
+GIF (gif)，                           文件头：47494638
+ZIP Archive (zip)，                   文件头：504B0304  文件尾：00000000
+TIFF (tif)，                          文件头：49492A00
+Windows Bitmap (bmp)，      　        文件头：424D
+CAD (dwg)，                        　 文件头：41433130
+Adobe Photoshop (psd)，               文件头：38425053
+Rich Text Format (rtf)，              文件头：7B5C727466
+XML (xml)，                           文件头：3C3F786D6C
+HTML (html)，                         文件头：68746D6C3E
+Email [thorough only] (eml)，         文件头：44656C69766572792D646174653A
+Outlook Express (dbx)，               文件头：CFAD12FEC5FD746F
+Outlook (pst)，                       文件头：2142444E
+MS Word/Excel (xls.or.doc)，          文件头：D0CF11E0
+MS Access (mdb)，                     文件头：5374616E64617264204A
+WordPerfect (wpd)，                   文件头：FF575043
+Adobe Acrobat (pdf)，                 文件头：255044462D312E
+Quicken (qdf)，                       文件头：AC9EBD8F
+Windows Password (pwl)，              文件头：E3828596
+RAR Archive (rar)，                   文件头：52617221
+Wave (wav)，                          文件头：57415645
+AVI (avi)，                           文件头：41564920
+Real Audio (ram)，                    文件头：2E7261FD
+Real Media (rm)，                     文件头：2E524D46
+MPEG (mpg)，                          文件头：000001BA
+MPEG (mpg)，                          文件头：000001B3
+Quicktime (mov)，                     文件头：6D6F6F76
+Windows Media (asf)，                 文件头：3026B2758E66CF11
+MIDI (mid)，                          文件头：4D546864
+</code></pre>
+<h2 id="图片隐写常见方法"><a class="markdownIt-Anchor" href="#图片隐写常见方法"></a> 图片隐写常见方法</h2>
 <ol>
 <li>细微的颜色差别</li>
 <li>GIF 图多帧隐藏
@@ -259,7 +307,7 @@ Arashimuのblog = CTFer</title>
     <div class="item left">
       
 
-  <a href="/2022/05/10/pwn-sandbox1/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclwuom7cj20zk0m8dvn.jpg" title="pwn-sandbox1">
+  <a href="/2022/05/10/pwn-sandbox1/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclil3m4ej20zk0m8tn8.jpg" title="pwn-sandbox1">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>pwn-sandbox1</h3>
@@ -269,7 +317,7 @@ Arashimuのblog = CTFer</title>
     <div class="item right">
       
 
-  <a href="/2022/07/06/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipesx5fdwj20zk0m81kx.jpg" title="sql注入学习">
+  <a href="/2022/07/06/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclip4jbpj20zk0m87cv.jpg" title="sql注入学习">
   <span class="type">Next Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>sql注入学习</h3>
@@ -376,7 +424,7 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/04/16/house-of-pig/" title="house_of_pig">house_of_pig</a></span>
+    <span><a href="/2022/09/29/NTRU/" title="NTRU">NTRU</a></span>
   </li>
 
       
@@ -385,43 +433,7 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/10/25/ciscn-pwn%E6%B3%9B%E5%81%9A/" title="ciscn_pwn泛做">ciscn_pwn泛做</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/02/%E5%BC%BA%E7%BD%91%E6%9D%AF-polydiv/" title="强网杯-polydiv">强网杯-polydiv</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/23/BUU-Crypto/" title="BUU_Crypto">BUU_Crypto</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/29/Paillier%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86/" title="Paillier同态加密">Paillier同态加密</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/03/Sage%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Sage的使用">Sage的使用</a></span>
+    <span><a href="/2023/01/06/2022Nepnep%E8%B7%A8%E5%B9%B4%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0%E5%92%8C%E6%80%BB%E7%BB%93/" title="2022Nepnep跨年比赛复现和总结">2022Nepnep跨年比赛复现和总结</a></span>
   </li>
 
       
@@ -439,25 +451,61 @@ Arashimuのblog = CTFer</title>
 <div class="breadcrumb">
 </div>
 
+    <span><a href="/2022/08/02/%E5%BC%BA%E7%BD%91%E6%9D%AF-polydiv/" title="强网杯-polydiv">强网杯-polydiv</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/29/Paillier%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86/" title="Paillier同态加密">Paillier同态加密</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/10/04/Linux-Kernel-Pwn/" title="linux-kernel-pwn&#x2F;">linux-kernel-pwn/</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/23/BUU-Crypto/" title="BUU_Crypto">BUU_Crypto</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/03/08/SROP/" title="SROP">SROP</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/04/16/house-of-pig/" title="house_of_pig">house_of_pig</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
     <span><a href="/2023/02/21/idek2022%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/" title="idek2022部分复现">idek2022部分复现</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/07/06/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0/" title="sql注入学习">sql注入学习</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/12/11/reverse%E6%B3%9B%E5%81%9A1/" title="reverse泛做1">reverse泛做1</a></span>
   </li>
 
   </ul>

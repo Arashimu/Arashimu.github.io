@@ -88,12 +88,12 @@
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclxp31goj20zk0m8qv5.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicitzannuj20zk0m8b29.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclimtf7dj20zk0m8qav.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclhfehz7j20zk0m8u0x.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicitht3xtj20zk0m8k5v.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclhnx9glj20zk0m8npd.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipew8gmvyj20zk0m87wh.jpg"></li>
           <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclh3brzpj20zk0m8ann.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giciundwu5j20zk0m8n9e.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclg5ms2rj20zk0m8u0x.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipet8c1a2j20zk0m8kct.jpg"></li>
         </ul>
       </div>
     </header>
@@ -120,7 +120,45 @@
         
 <article class="item">
   <div class="cover">
-    <a href="/2023/04/16/house-of-pig/" itemprop="url" title="house_of_pig"><img data-src="https://tva1.sinaimg.cn/mw690/6833939bly1gicitzannuj20zk0m8b29.jpg"></a>
+    <a href="/2023/10/04/Linux-Kernel-Pwn/" itemprop="url" title="Linux-Kernel-Pwn"><img data-src="https://tva1.sinaimg.cn/mw690/6833939bly1gicm0fdw5cj20zk0m8hdt.jpg"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="Created: 2023-10-04 23:06:23">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2023-10-04T23:06:23+08:00">2023-10-04</time>
+  </span>
+</div>
+
+    <h3><a href="/2023/10/04/Linux-Kernel-Pwn/" itemprop="url" title="Linux-Kernel-Pwn">Linux-Kernel-Pwn</a></h3>
+    <div class="excerpt">
+        PWNHUB-kheap
+保护与漏洞点
+保护措施：kaslr、kpti、smep
+漏洞点在keap.ko中的keap_ioctl中，存在UAF漏洞
+
+对于ioctl，需要传入的参数是一个指向info结构体的指针
+
+创建的堆大小为0x20，这个大小攻击点感觉就是指向劫持seq_operations了
+
+漏洞利用
+先给出官方的exp
+#include &amp;lt;stdio.h&amp;gt;
+#include &amp;lt;fcntl.h&amp;gt;
+#include &amp;lt;stdlib.h&amp;gt;
+#include...
+    </div>
+    <a href="/2023/10/04/Linux-Kernel-Pwn/" itemprop="url" title="Linux-Kernel-Pwn" class="btn">more...</a>
+  </div>
+</article>
+
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2023/04/16/house-of-pig/" itemprop="url" title="house_of_pig"><img data-src="https://tva1.sinaimg.cn/mw690/6833939bly1giclh3brzpj20zk0m8ann.jpg"></a>
   </div>
   <div class="info">
     
@@ -135,10 +173,16 @@
 
     <h3><a href="/2023/04/16/house-of-pig/" itemprop="url" title="house_of_pig">house_of_pig</a></h3>
     <div class="excerpt">
-        # IO_FILE 相关
-目的：此时我们在 tcache 中布置好了 free_hook 相关的 chunk，但如果题目不能利用 malloc 申请，只能利用 calloc 申请，那么我们是无法申请到 tcache 上的 chunk 的。
-现在来看看 IO_str_overflow ：
-c_IO_str_overflow (FILE *fp, int c)&amp;#123; int flush_only = c == EOF; size_t pos; if (fp-&gt;_flags &amp;amp; _IO_NO_WRITES) return flush_only ? 0 : EOF;...
+        IO_FILE相关
+目的：此时我们在tcache中布置好了free_hook相关的chunk，但如果题目不能利用malloc申请，只能利用calloc申请，那么我们是无法申请到tcache上的chunk的。
+现在来看看IO_str_overflow：
+_IO_str_overflow (FILE *fp, int c)
+&amp;#123;
+int flush_only = c == EOF;
+size_t pos;
+if (fp-&amp;gt;_flags &amp;amp; _IO_NO_WRITES)
+return flush_only ? 0 : EOF;
+if...
     </div>
     <a href="/2023/04/16/house-of-pig/" itemprop="url" title="house_of_pig" class="btn">more...</a>
   </div>
@@ -147,7 +191,7 @@ c_IO_str_overflow (FILE *fp, int c)&amp;#123; int flush_only = c == EOF; size_t 
         
 <article class="item">
   <div class="cover">
-    <a href="/2023/04/16/tcache-stashing-unlink-attack/" itemprop="url" title="tcache_stashing_unlink_attack"><img data-src="https://tva1.sinaimg.cn/mw690/6833939bly1gipexe4oykj20zk0m87ji.jpg"></a>
+    <a href="/2023/04/16/tcache-stashing-unlink-attack/" itemprop="url" title="tcache_stashing_unlink_attack"><img data-src="https://tva1.sinaimg.cn/mw690/6833939bly1giclwrdwyaj20zk0m8are.jpg"></a>
   </div>
   <div class="info">
     
@@ -162,9 +206,16 @@ c_IO_str_overflow (FILE *fp, int c)&amp;#123; int flush_only = c == EOF; size_t 
 
     <h3><a href="/2023/04/16/tcache-stashing-unlink-attack/" itemprop="url" title="tcache_stashing_unlink_attack">tcache_stashing_unlink_attack</a></h3>
     <div class="excerpt">
-        # tcache_stashing_unlink_attack
-# 实验代码
-c#include &amp;lt;stdio.h&gt;#include &amp;lt;stdlib.h&gt;#include &amp;lt;assert.h&gt;int main()&amp;#123; unsigned long stack_var[0x10] = &amp;#123;0&amp;#125;; unsigned long *chunk_lis[0x10] = &amp;#123;0&amp;#125;; unsigned long *target; setbuf(stdout,...
+        tcache_stashing_unlink_attack
+实验代码
+#include &amp;lt;stdio.h&amp;gt;
+#include &amp;lt;stdlib.h&amp;gt;
+#include &amp;lt;assert.h&amp;gt;
+
+int main()&amp;#123;
+unsigned long stack_var[0x10] = &amp;#123;0&amp;#125;;
+unsigned long *chunk_lis[0x10] = &amp;#123;0&amp;#125;;
+unsigned long...
     </div>
     <a href="/2023/04/16/tcache-stashing-unlink-attack/" itemprop="url" title="tcache_stashing_unlink_attack" class="btn">more...</a>
   </div>
@@ -173,7 +224,7 @@ c#include &amp;lt;stdio.h&gt;#include &amp;lt;stdlib.h&gt;#include &amp;lt;asser
         
 <article class="item">
   <div class="cover">
-    <a href="/2023/04/16/largebin-attach/" itemprop="url" title="largebin_attach"><img data-src="https://tva1.sinaimg.cn/mw690/6833939bly1giclize41wj20zk0m87gk.jpg"></a>
+    <a href="/2023/04/16/largebin-attach/" itemprop="url" title="largebin_attach"><img data-src="https://tva1.sinaimg.cn/mw690/6833939bly1giclwuom7cj20zk0m8dvn.jpg"></a>
   </div>
   <div class="info">
     
@@ -188,9 +239,19 @@ c#include &amp;lt;stdio.h&gt;#include &amp;lt;stdlib.h&gt;#include &amp;lt;asser
 
     <h3><a href="/2023/04/16/largebin-attach/" itemprop="url" title="largebin_attach">largebin_attach</a></h3>
     <div class="excerpt">
-        # 2.31 版本下的 largebin attach
-# 实验代码
-#include&amp;lt;stdio.h&gt;#include&amp;lt;stdlib.h&gt;#include&amp;lt;assert.h&gt;/*A revisit to large bin attack for after glibc2.30Relevant code snippet :	if ((unsigned long) (size) &amp;lt; (unsigned long) chunksize_nomask (bck-&gt;bk))&amp;#123;		fwd =...
+        2.31版本下的largebin attach
+实验代码
+#include&amp;lt;stdio.h&amp;gt;
+#include&amp;lt;stdlib.h&amp;gt;
+#include&amp;lt;assert.h&amp;gt;
+
+/*
+
+A revisit to large bin attack for after glibc2.30
+
+Relevant code snippet :
+
+	if ((unsigned long) (size) &amp;lt; (unsigned long) chunksize_nomask...
     </div>
     <a href="/2023/04/16/largebin-attach/" itemprop="url" title="largebin_attach" class="btn">more...</a>
   </div>
@@ -199,7 +260,7 @@ c#include &amp;lt;stdio.h&gt;#include &amp;lt;stdlib.h&gt;#include &amp;lt;asser
         
 <article class="item">
   <div class="cover">
-    <a href="/2023/03/26/2023-3-PWHHUB/" itemprop="url" title="2023_3_PWHHUB"><img data-src="https://tva1.sinaimg.cn/mw690/6833939bly1giclgrvbd6j20zk0m8qv5.jpg"></a>
+    <a href="/2023/03/26/2023-3-PWHHUB/" itemprop="url" title="2023_3_PWHHUB"><img data-src="https://tva1.sinaimg.cn/mw690/6833939bly1gipexbei4hj20zk0m8npd.jpg"></a>
   </div>
   <div class="info">
     
@@ -214,16 +275,16 @@ c#include &amp;lt;stdio.h&gt;#include &amp;lt;stdlib.h&gt;#include &amp;lt;asser
 
     <h3><a href="/2023/03/26/2023-3-PWHHUB/" itemprop="url" title="2023_3_PWHHUB">2023_3_PWHHUB</a></h3>
     <div class="excerpt">
-        # sh_v1.1
-存在 UAF 漏洞，劫持 free_hook 即可
+        sh_v1.1
+存在UAF漏洞，劫持free_hook即可
 程序功能分析
 
-touch：创建一个 chunk 并写入一些东西
-rm：删除一个 chunk，无 UAF 漏洞
-cat：打印一个 chunk 的内容
-ln chunk1 chunk2：将 chunk2 指向 chunk1 指向的地址 (漏洞点，这里存在 UAF)
+touch：创建一个chunk并写入一些东西
+rm：删除一个chunk，无UAF漏洞
+cat：打印一个chunk的内容
+ln chunk1 chunk2：将chunk2指向chunk1指向的地址(漏洞点，这里存在UAF)
 
-漏洞利用思路：先把 tcache 填满，然后 free 一个 chunk 到 unsorted bin 中，然后利用 UAF 泄露 main_arena+96 的地址，之后再次利用 UAF 改写 tcache 链将 free_hook 链入，然后申请出来，写入...
+漏洞利用思路：先把tcache填满，然后free一个chunk到unsorted...
     </div>
     <a href="/2023/03/26/2023-3-PWHHUB/" itemprop="url" title="2023_3_PWHHUB" class="btn">more...</a>
   </div>
@@ -232,7 +293,7 @@ ln chunk1 chunk2：将 chunk2 指向 chunk1 指向的地址 (漏洞点，这里�
         
 <article class="item">
   <div class="cover">
-    <a href="/2023/03/08/SROP/" itemprop="url" title="SROP"><img data-src="https://tva1.sinaimg.cn/mw690/6833939bly1giclg5ms2rj20zk0m8u0x.jpg"></a>
+    <a href="/2023/03/08/SROP/" itemprop="url" title="SROP"><img data-src="https://tva1.sinaimg.cn/mw690/6833939bly1giclimtf7dj20zk0m8qav.jpg"></a>
   </div>
   <div class="info">
     
@@ -247,16 +308,12 @@ ln chunk1 chunk2：将 chunk2 指向 chunk1 指向的地址 (漏洞点，这里�
 
     <h3><a href="/2023/03/08/SROP/" itemprop="url" title="SROP">SROP</a></h3>
     <div class="excerpt">
-        # SROP
-# 原理
-利用 sigreturn 这个系统调用
+        SROP
+原理
+利用sigreturn这个系统调用
 
-当信号触发时，会从用户态陷入内核态，内核会把此时的寄存器和相关的上下文状态 push 进入到用户态的栈中，然后去执行信号处理函数，完成之后，会执行 sigreturn 系统调用，把刚才保存在用户态的栈帧 (SigreturnFrame) 恢复，即不断地 pop 恢复寄存器，因此可以通过这个系统调用控制寄存器的值，前提是要可以控制栈帧。而我们如果有办法可以在调用 sigreturn 之前就布置好栈帧，就可以控制程序流程了。
-# ciscn_2019_s_3
-分析程序
-
-发现有栈溢出漏洞
-题目还给了...
+当信号触发时，会从用户态陷入内核态，内核会把此时的寄存器和相关的上下文状态push进入到用户态的栈中，然后去执行信号处理函数，完成之后，会执行sigreturn系统调用，把刚才保存在用户态的栈帧(SigreturnFrame)恢复，即不断地pop恢复寄存器，因此可以通过这个系统调用控制寄存器的值，前提是要可以控制栈帧。而我们如果有办法可以在调用sigreturn之前就布置好栈帧，就可以控制程序流程了。
+因此我们的利用过程主要是第3、4步，不用信号去触发sigreturn系统调用，那么就不会去push寄存器到栈中，如果直接调用系统调用来触发，...
     </div>
     <a href="/2023/03/08/SROP/" itemprop="url" title="SROP" class="btn">more...</a>
   </div>
@@ -265,7 +322,7 @@ ln chunk1 chunk2：将 chunk2 指向 chunk1 指向的地址 (漏洞点，这里�
         
 <article class="item">
   <div class="cover">
-    <a href="/2023/02/21/idek2022%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/" itemprop="url" title="idek2022部分复现"><img data-src="https://tva1.sinaimg.cn/mw690/6833939bly1gicli9lfebj20zk0m84qp.jpg"></a>
+    <a href="/2023/02/21/idek2022%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/" itemprop="url" title="idek2022部分复现"><img data-src="https://tva1.sinaimg.cn/mw690/6833939bly1giph4fomxoj20zk0m8axp.jpg"></a>
   </div>
   <div class="info">
     
@@ -280,14 +337,13 @@ ln chunk1 chunk2：将 chunk2 指向 chunk1 指向的地址 (漏洞点，这里�
 
     <h3><a href="/2023/02/21/idek2022%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/" itemprop="url" title="idek2022部分复现">idek2022部分复现</a></h3>
     <div class="excerpt">
-        # idek2022 部分复现，主要参考 r3kapig 战队的 wp 进行学习和调试
-# Crypto
-# ecrsa
+        idek2022 部分复现，主要参考 r3kapig 战队的 wp进行学习和调试
+Crypto
+ecrsa
 本题是在有限域上的椭圆曲线，即
 y2≡x3+ax+bmod  ny^2\equiv x^3+ax+b\mod{n}
 y2≡x3+ax+bmodn
-题目给出了M×eM\times eM×e 和P×eP\times eP×e，其中e=3e=3e=3，相当于在加法群下算3M3M3M 和3T3T3T，考虑使用3T3T3T 来计算aaa、bbb 和nnn
-椭圆曲线上的加法，假设P(x1,y1)P(x_1,y_1)P(x1​,y1​)...
+题目给出了M×eM\times eM×e和P×eP\times...
     </div>
     <a href="/2023/02/21/idek2022%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/" itemprop="url" title="idek2022部分复现" class="btn">more...</a>
   </div>
@@ -296,7 +352,7 @@ y2≡x3+ax+bmodn
         
 <article class="item">
   <div class="cover">
-    <a href="/2023/02/21/house-of-botcake/" itemprop="url" title="house_of_botcake"><img data-src="https://tva1.sinaimg.cn/mw690/6833939bly1gipexw3o58j20zk0m8e81.jpg"></a>
+    <a href="/2023/02/21/house-of-botcake/" itemprop="url" title="house_of_botcake"><img data-src="https://tva1.sinaimg.cn/mw690/6833939bly1gicitcxhpij20zk0m8hdt.jpg"></a>
   </div>
   <div class="info">
     
@@ -311,9 +367,18 @@ y2≡x3+ax+bmodn
 
     <h3><a href="/2023/02/21/house-of-botcake/" itemprop="url" title="house_of_botcake">house_of_botcake</a></h3>
     <div class="excerpt">
-        # Houst_of_botcake
-# 实验代码
-#include &amp;lt;stdio.h&gt;#include &amp;lt;stdlib.h&gt;#include &amp;lt;stdint.h&gt;#include &amp;lt;assert.h&gt;int main()&amp;#123; /* * This attack should bypass the restriction introduced in *...
+        Houst_of_botcake
+实验代码
+#include &amp;lt;stdio.h&amp;gt;
+#include &amp;lt;stdlib.h&amp;gt;
+#include &amp;lt;stdint.h&amp;gt;
+#include &amp;lt;assert.h&amp;gt;
+
+int main()
+&amp;#123;
+/*
+* This attack should bypass the restriction introduced in
+*...
     </div>
     <a href="/2023/02/21/house-of-botcake/" itemprop="url" title="house_of_botcake" class="btn">more...</a>
   </div>
@@ -322,7 +387,7 @@ y2≡x3+ax+bmodn
         
 <article class="item">
   <div class="cover">
-    <a href="/2023/01/06/2022Nepnep%E8%B7%A8%E5%B9%B4%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0%E5%92%8C%E6%80%BB%E7%BB%93/" itemprop="url" title="2022Nepnep跨年比赛复现和总结"><img data-src="https://tva1.sinaimg.cn/mw690/6833939bly1gipeyonbf9j20zk0m8e81.jpg"></a>
+    <a href="/2023/01/06/2022Nepnep%E8%B7%A8%E5%B9%B4%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0%E5%92%8C%E6%80%BB%E7%BB%93/" itemprop="url" title="2022Nepnep跨年比赛复现和总结"><img data-src="https://tva1.sinaimg.cn/mw690/6833939bly1gipexbei4hj20zk0m8npd.jpg"></a>
   </div>
   <div class="info">
     
@@ -337,12 +402,12 @@ y2≡x3+ax+bmodn
 
     <h3><a href="/2023/01/06/2022Nepnep%E8%B7%A8%E5%B9%B4%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0%E5%92%8C%E6%80%BB%E7%BB%93/" itemprop="url" title="2022Nepnep跨年比赛复现和总结">2022Nepnep跨年比赛复现和总结</a></h3>
     <div class="excerpt">
-        # Crypto
-# 总结
-本次 Crypto 赛道一开始一道同态的题很快做出来了，然后就开始看盖茨比这题，得到相邻两个明文的异或以及明文和密钥的异或很简单，这也很快想到，但之后没思路了，尝试爆破密钥但觉得复杂度太高没有尝试，直到比赛也没做出来，赛后看 wp 发现原来这种形式可以用 mtp 来攻击，学习了。另一道 DDH 则是关于椭圆曲线的，赛后看题解发现涉及双线性对这个知识，没有接触过，这次比赛学习了。
-# cat_theory
-# problem
-nfrom Crypto.Util.number import bytes_to_long, getStrongPrime,...
+        Crypto
+总结
+本次Crypto赛道一开始一道同态的题很快做出来了，然后就开始看盖茨比这题，得到相邻两个明文的异或以及明文和密钥的异或很简单，这也很快想到，但之后没思路了，尝试爆破密钥但觉得复杂度太高没有尝试，直到比赛也没做出来，赛后看wp发现原来这种形式可以用mtp来攻击，学习了。另一道DDH则是关于椭圆曲线的，赛后看题解发现涉及双线性对这个知识，没有接触过，这次比赛学习了。
+cat_theory
+problem
+from Crypto.Util.number import bytes_to_long, getStrongPrime, getRandomRange,...
     </div>
     <a href="/2023/01/06/2022Nepnep%E8%B7%A8%E5%B9%B4%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0%E5%92%8C%E6%80%BB%E7%BB%93/" itemprop="url" title="2022Nepnep跨年比赛复现和总结" class="btn">more...</a>
   </div>
@@ -351,7 +416,7 @@ nfrom Crypto.Util.number import bytes_to_long, getStrongPrime,...
         
 <article class="item">
   <div class="cover">
-    <a href="/2022/12/26/PWNHUB-%E5%A4%8D%E7%8E%B0/" itemprop="url" title="PWNHUB-复现"><img data-src="https://tva1.sinaimg.cn/mw690/6833939bly1gipexw3o58j20zk0m8e81.jpg"></a>
+    <a href="/2022/12/26/PWNHUB-%E5%A4%8D%E7%8E%B0/" itemprop="url" title="PWNHUB-复现"><img data-src="https://tva1.sinaimg.cn/mw690/6833939bly1giclflwv2aj20zk0m84qp.jpg"></a>
   </div>
   <div class="info">
     
@@ -366,38 +431,25 @@ nfrom Crypto.Util.number import bytes_to_long, getStrongPrime,...
 
     <h3><a href="/2022/12/26/PWNHUB-%E5%A4%8D%E7%8E%B0/" itemprop="url" title="PWNHUB-复现">PWNHUB-复现</a></h3>
     <div class="excerpt">
-        # Crypto
-# ASR
+        Crypto
+ASR
 problem
-nfrom gmpy2 import *from Crypto.Util.number import *from secret import flagm = bytes_to_long(flag)R = getPrime(256)S = getPrime(512)A = getPrime(1024)N = R * S * Ac = pow(m, 0x10001, N)RA = R &amp;amp; Aprint(&#39;RSA1&#39;,hex(RA * S))print(&#39;RSA2&#39;,hex(RA |...
+from gmpy2 import *
+from Crypto.Util.number import *
+from secret import flag
+m = bytes_to_long(flag)
+
+R = getPrime(256)
+S = getPrime(512)
+A = getPrime(1024)
+
+N = R * S * A
+c = pow(m, 0x10001, N)
+
+RA = R &amp;amp; A
+print(&amp;#x27;RSA1&amp;#x27;,hex(RA *...
     </div>
     <a href="/2022/12/26/PWNHUB-%E5%A4%8D%E7%8E%B0/" itemprop="url" title="PWNHUB-复现" class="btn">more...</a>
-  </div>
-</article>
-
-        
-<article class="item">
-  <div class="cover">
-    <a href="/2022/12/11/reverse%E6%B3%9B%E5%81%9A1/" itemprop="url" title="reverse泛做1"><img data-src="https://tva1.sinaimg.cn/mw690/6833939bly1giclj61ylzj20zk0m8b29.jpg"></a>
-  </div>
-  <div class="info">
-    
-<div class="meta">
-  <span class="item" title="Created: 2022-12-11 17:49:17">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <time itemprop="dateCreated datePublished" datetime="2022-12-11T17:49:17+08:00">2022-12-11</time>
-  </span>
-</div>
-
-    <h3><a href="/2022/12/11/reverse%E6%B3%9B%E5%81%9A1/" itemprop="url" title="reverse泛做1">reverse泛做1</a></h3>
-    <div class="excerpt">
-        # [网鼎杯 2020 青龙组] singal
-# 思路 1：angr
-nimport...
-    </div>
-    <a href="/2022/12/11/reverse%E6%B3%9B%E5%81%9A1/" itemprop="url" title="reverse泛做1" class="btn">more...</a>
   </div>
 </article>
 
@@ -436,7 +488,7 @@ nimport...
 <nav class="state">
     <div class="item posts">
       <a href="/archives/">
-        <span class="count">27</span>
+        <span class="count">28</span>
         <span class="name">posts</span>
       </a>
     </div>
@@ -513,16 +565,7 @@ nimport...
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/02/21/idek2022%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/" title="idek2022部分复现">idek2022部分复现</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2023/01/06/2022Nepnep%E8%B7%A8%E5%B9%B4%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0%E5%92%8C%E6%80%BB%E7%BB%93/" title="2022Nepnep跨年比赛复现和总结">2022Nepnep跨年比赛复现和总结</a></span>
+    <span><a href="/2022/09/13/Crypto%E5%A4%8D%E7%8E%B01/" title="Crypto复现1">Crypto复现1</a></span>
   </li>
 
       
@@ -540,7 +583,7 @@ nimport...
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/09/03/Sage%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Sage的使用">Sage的使用</a></span>
+    <span><a href="/2022/08/07/Lucky-7-%E4%BA%8C%E5%85%83%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B%E7%BB%84/" title="Lucky 7 二元非线性同余方程组">Lucky 7 二元非线性同余方程组</a></span>
   </li>
 
       
@@ -549,7 +592,16 @@ nimport...
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/12/26/PWNHUB-%E5%A4%8D%E7%8E%B0/" title="PWNHUB-复现">PWNHUB-复现</a></span>
+    <span><a href="/2022/07/06/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0/" title="sql注入学习">sql注入学习</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/10/25/ciscn-pwn%E6%B3%9B%E5%81%9A/" title="ciscn_pwn泛做">ciscn_pwn泛做</a></span>
   </li>
 
       
@@ -567,7 +619,7 @@ nimport...
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/09/03/%E6%A0%BC%E5%AF%86%E7%A0%81/" title="格密码">格密码</a></span>
+    <span><a href="/2022/12/26/PWNHUB-%E5%A4%8D%E7%8E%B0/" title="PWNHUB-复现">PWNHUB-复现</a></span>
   </li>
 
       
@@ -576,7 +628,7 @@ nimport...
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/04/16/tcache-stashing-unlink-attack/" title="tcache_stashing_unlink_attack">tcache_stashing_unlink_attack</a></span>
+    <span><a href="/2023/04/16/house-of-pig/" title="house_of_pig">house_of_pig</a></span>
   </li>
 
       
@@ -585,7 +637,7 @@ nimport...
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/04/16/largebin-attach/" title="largebin_attach">largebin_attach</a></span>
+    <span><a href="/2022/08/24/%E9%95%BF%E5%9F%8E%E6%9D%AFCrypto/" title="长城杯Crypto">长城杯Crypto</a></span>
   </li>
 
   </ul>

